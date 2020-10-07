@@ -1,8 +1,10 @@
-<mat-tab-group>
+<mat-tab-group [selectedIndex]="'1'">
   <mat-tab [label]="translate.instant('labels.details')">
     <app-details></app-details>
   </mat-tab>
-  <mat-tab  [label]="translate.instant('labels.menu')"> Menu </mat-tab>
+  <mat-tab [label]="translate.instant('labels.menu')">
+    <app-menu></app-menu>
+  </mat-tab>
   <mat-tab disabled>
     <ng-template mat-tab-label>
       <div class="d-flex justify-content-end">

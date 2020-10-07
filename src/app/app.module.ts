@@ -17,12 +17,14 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MenuComponent } from './dashboard/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    DetailsComponent
+    DetailsComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

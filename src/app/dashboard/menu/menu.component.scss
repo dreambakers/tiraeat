@@ -1,0 +1,25 @@
+.add-meal-btn {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border-color: #EFEFEF;
+    background: #EFEFEF;
+    .add-icon {
+        font-size: 10px;
+    }
+}
+
+.meal-list {
+    list-style: none;
+    li {
+        font-weight: 500;
+    }
+}
+
+
+.preview-fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 0;
+    transition: bottom 0.1s ease;
+  }

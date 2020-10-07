@@ -1,0 +1,46 @@
+<div>
+    <div class="mt-3 mr-4 d-flex justify-content-end">
+      <img src="assets/logo.png" alt="" />
+    </div>
+
+    <div class="container py-5">
+      <div class="d-flex flex-column justify-content-center align-items-center mb-3">
+        <h4 class="m-0 text-uppercase">
+          {{ "labels.categories" | translate }}
+        </h4>
+        <p class="m-0 text-muted">
+          <span><i class="far fa-edit mr-2"></i></span>
+          <span>
+            {{ "labels.editDetails" | translate }}
+          </span>
+        </p>
+      </div>
+
+      <div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <mat-label class="w-25 text-ellipsis">American foods</mat-label>
+            <div class="flex-fill border-bottom w-auto"></div>
+            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                <i class="fas fa-plus text-primary add-icon"></i>
+            </button>
+        </div>
+
+        <ul class="meal-list p-0">
+            <li>Ham Burger</li>
+            <li>Chicken Submarine</li>
+            <li>Hot Dog</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="mr-4 preview-fab-container">
+        <button mat-fab color="primary">
+            +
+        </button>
+    </div>
+
+</div>
+

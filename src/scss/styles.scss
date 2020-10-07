@@ -6,12 +6,18 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.mat-tab-header-pagination {
+  display: none !important;
+}
+
 .mat-tab-labels {
   background: $color-primary !important;
 
   .mat-tab-label {
     border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    &:not(:first-child) {
+      border-top-left-radius: 10px;
+    }
     background-color: #D1D1D1 !important;
     color: white;
     opacity: 1 !important;
@@ -30,6 +36,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .cursor-pointer {
   cursor: pointer !important;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .font-weight-500 {
@@ -91,6 +103,11 @@ mat-label {
 .mat-tab-label {
   min-width: 200px !important;
 }
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: $color-primary !important;
+}
+
 
 @media (max-width: 599px) {
   .mat-tab-label {
