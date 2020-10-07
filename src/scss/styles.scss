@@ -1,0 +1,94 @@
+
+@import './customize-bootstrap.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-tab-labels {
+  background: $color-primary !important;
+
+  .mat-tab-label {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #D1D1D1 !important;
+    color: white;
+    opacity: 1 !important;
+    height: 40px;
+    &.mat-tab-label-active {
+      color: $color-primary;
+      background-color: white !important;
+    }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.font-weight-500 {
+  font-weight: 500 !important;
+}
+
+.invisible-tabs {
+  .mat-tab-header {
+    display: none;
+  }
+}
+
+mat-label {
+  color: $color-primary !important;
+  font-weight: 500;
+}
+
+.mat-form-field-outline {
+  background-color: #F6F6F6;
+
+}
+
+.mat-input-element {
+  font-weight: 500 !important;
+}
+
+.mat-field-no-margin {
+  .mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+  // dropdown specific styling
+  &.dropdown {
+      .mat-form-field-infix {
+          padding: 0 !important;
+          margin: 0 !important;
+          border: 0;
+      }
+      .mat-form-field-label-wrapper {
+          top: 0;
+          padding: 0;
+      }
+  }
+
+  &.input-no-label {
+      .mat-form-field-infix {
+          border: 0;
+      }
+      .mat-input-element {
+          margin-top: 0.25em;
+      }
+  }
+}
+
+.mat-ink-bar {
+  visibility: hidden !important;
+}
+
+.mat-tab-label {
+  min-width: 200px !important;
+}
+
+@media (max-width: 599px) {
+  .mat-tab-label {
+    min-width: 123px !important;
+  }
+}
