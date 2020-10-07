@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: TiraEat Deployment
 on:
   push:
     branches:
