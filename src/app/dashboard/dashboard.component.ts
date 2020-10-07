@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {

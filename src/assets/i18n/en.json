@@ -1,0 +1,26 @@
+{
+    "labels": {
+        "restaurantName": "Restaurant name",
+        "editDetails": "Edit details",
+        "description": "Description",
+        "location": "Location",
+        "restaurantPhone": "Restaurant phone",
+        "contactName": "Contact name",
+        "preparingTime": "Preparing time",
+        "openHours": "Open hours",
+        "details": "Details",
+        "menu": "Menu"
+    },
+
+    "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+    }
+
+
+}
