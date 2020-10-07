@@ -20,6 +20,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       color: $color-primary;
       background-color: white !important;
     }
+    &:last-child {
+      min-width: 40px !important;
+      background-color: unset !important;
+      margin-left: auto;
+    }
   }
 }
 
