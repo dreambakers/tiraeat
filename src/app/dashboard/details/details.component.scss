@@ -1,0 +1,98 @@
+@import '../../../scss/variables.scss';
+
+.outer-div{
+    height:255px;
+    img{
+        height:200px;
+        width:100%;
+        object-fit: cover;
+    }
+}
+
+.logo {
+    height: 70px;
+    width: 70px;
+}
+
+.logo-container {
+    height:70px;
+    width: 70px;
+    margin-right: auto;
+    top: 20px;
+    left: 35px;
+    img{
+        border-radius: 10px;
+        border: 4px solid white;
+        height:70px;
+        width:100%;
+        object-fit: cover;
+    }
+}
+
+.heading {
+    margin: 20px 0;
+    div {
+        border-bottom: 1px solid #6FD1BC;
+    }
+}
+
+// ---------------------------
+
+.checkbox-container {
+    label {
+        display: block;
+        width: 64px;
+        height: 32px;
+        margin: 0px auto;
+        border-radius: 100px;
+        transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        background-color: #FC5830;
+
+        span {
+            height: 20px;
+            width: 20px;
+            background: #ffffff;
+            display: inline-block;
+            border-radius: 100px;
+            top: 6px;
+            left: 5px;
+            position: relative;
+            transition: all 0.2s ease-in-out;
+            -webkit-transition: all 0.2s ease-in-out;
+            pointer-events: none;
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+
+            &::after {
+                text-align: center;
+                content: "a";
+                position: relative;
+                left: 7px;
+                bottom: 4px;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                content: "\f00d";
+                font-size: 9px;
+                color: #FC5830;
+            }
+        }
+
+    }
+
+    input {
+        display: none;
+
+        &:checked+label {
+            background-color: $color-primary;
+            span {
+                left: 38px;
+                &::after {
+                    color: $color-primary;
+                    left: 5px;
+                    bottom: 4px;
+                    content: "\f00c";
+                }
+            }
+        }
+    }
+}
