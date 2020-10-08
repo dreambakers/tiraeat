@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailsComponent } from './dashboard/details/details.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddMealComponent } from './dashboard/menu/add-meal/add-meal.component';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +28,8 @@ import { AddCategoryComponent } from './dashboard/menu/add-category/add-category
     DashboardComponent,
     DetailsComponent,
     MenuComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    AddMealComponent
   ],
   imports: [
     BrowserModule,

@@ -108,6 +108,12 @@ mat-label {
   color: $color-primary !important;
 }
 
+.heading-with-line {
+  margin: 20px 0;
+  div {
+      border-bottom: 1px solid #6FD1BC;
+  }
+}
 
 @media (max-width: 599px) {
   .mat-tab-label {
