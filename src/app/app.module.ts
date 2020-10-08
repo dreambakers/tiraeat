@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -42,8 +43,8 @@ import { MenuComponent } from './dashboard/menu/menu.component';
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
       }
-  })
-
+    }),
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

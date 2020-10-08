@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-menu',
@@ -40,11 +41,21 @@ export class MenuComponent implements OnInit {
         'Cannele'
       ]
     }
-  ]
+  ];
+
+  editMode = false;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  dropCategory(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
+  }
+
+  dropItem(event: CdkDragDrop<string[]>, category) {
+    moveItemInArray(category.items, event.previousIndex, event.currentIndex);
   }
 
 }

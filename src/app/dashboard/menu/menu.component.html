@@ -1,41 +1,58 @@
 <div>
-    <div class="mt-3 mr-4 d-flex justify-content-end">
-      <img src="assets/logo.png" alt="" />
+  <div class="mt-3 mr-4 d-flex justify-content-end">
+    <img src="assets/logo.png" alt="" />
+  </div>
+
+  <div class="container py-5">
+    <div class="d-flex flex-column justify-content-center align-items-center mb-3">
+      <h4 class="m-0 text-uppercase">
+        {{ "labels.categories" | translate }}
+      </h4>
+      <p class="m-0 text-muted" (click)="editMode = !editMode">
+        <span><i class="far fa-edit mr-2"></i></span>
+        <span>
+          {{ "labels.editDetails" | translate }}
+        </span>
+      </p>
     </div>
 
-    <div class="container py-5">
-      <div class="d-flex flex-column justify-content-center align-items-center mb-3">
-        <h4 class="m-0 text-uppercase">
-          {{ "labels.categories" | translate }}
-        </h4>
-        <p class="m-0 text-muted">
-          <span><i class="far fa-edit mr-2"></i></span>
-          <span>
-            {{ "labels.editDetails" | translate }}
-          </span>
-        </p>
-      </div>
-
-      <div *ngFor="let category of categories">
+    <div cdkDropList (cdkDropListDropped)="dropCategory($event)" >
+      <div
+        *ngFor="let category of categories"
+        class="mb-2"
+        cdkDrag
+        [cdkDragDisabled]="!editMode">
         <div class="d-flex justify-content-between align-items-center">
-            <mat-label class="w-25 text-ellipsis">{{category.name}}</mat-label>
-            <div class="flex-fill border-bottom w-auto"></div>
-            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
-                <i class="fas fa-plus text-primary add-icon"></i>
-            </button>
+          <div class="d-flex align-items-center w-25">
+            <i class="mr-2 fas fa-bars drag-handle" cdkDragHandle *ngIf="editMode"></i>
+            <mat-label class=" text-ellipsis">{{category.name}}</mat-label>
+          </div>
+          <div class="flex-fill border-bottom w-auto"></div>
+          <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+              <i class="fas fa-plus text-primary add-icon"></i>
+          </button>
         </div>
 
-        <ul class="meal-list p-0">
-            <li *ngFor="let item of category.items">{{item}}</li>
-        </ul>
+        <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropItem($event, category)">
+          <div
+            *ngFor="let item of category.items"
+            cdkDrag
+            [cdkDragDisabled]="!editMode">
+            <div class="d-flex align-items-center">
+              <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
+              <div>{{item}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="mr-4 preview-fab-container">
-        <button mat-fab class="bg-primary">
-          <i class="fas fa-plus add-icon"></i>
-        </button>
-    </div>
+  <div class="mr-4 preview-fab-container">
+      <button mat-fab class="bg-primary">
+        <i class="fas fa-plus add-icon"></i>
+      </button>
+  </div>
 
 </div>
 

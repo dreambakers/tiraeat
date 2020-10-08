@@ -11,7 +11,7 @@
 
 .meal-list {
     list-style: none;
-    li {
+    div {
         font-weight: 500;
     }
 }
@@ -22,4 +22,8 @@
     bottom: 15px;
     right: 0;
     transition: bottom 0.1s ease;
-  }
+}
+
+.drag-handle {
+    font-size: 10px;
+}
