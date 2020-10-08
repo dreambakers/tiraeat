@@ -10,7 +10,10 @@
         "openHours": "Open hours",
         "details": "Details",
         "menu": "Menu",
-        "categories": "Categories"
+        "categories": "Categories",
+        "addCategory": "Add category",
+        "name": "Name",
+        "add": "Add"
     },
 
     "days": {

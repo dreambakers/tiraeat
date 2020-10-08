@@ -19,13 +19,15 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './dashboard/menu/menu.component';
+import { AddCategoryComponent } from './dashboard/menu/add-category/add-category.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     DetailsComponent,
-    MenuComponent
+    MenuComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,

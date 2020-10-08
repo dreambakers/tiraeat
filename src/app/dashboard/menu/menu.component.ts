@@ -1,10 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {trigger, transition, style, animate, state} from '@angular/animations'
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  animations: [
+    trigger(
+      'myAnimation',
+      [
+        transition(
+        ':enter', [
+          style({opacity: 0}),
+          animate('500ms', style({'opacity': 1}))
+        ]
+      ),
+      ]
+    )
+  ],
 })
 export class MenuComponent implements OnInit {
 
@@ -44,6 +58,7 @@ export class MenuComponent implements OnInit {
   ];
 
   editMode = false;
+  addCategory = false;
 
   constructor() { }
 
