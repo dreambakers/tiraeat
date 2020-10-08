@@ -19,7 +19,11 @@
         "image": "Image",
         "price": "Price",
         "addMeal": "Add meal",
-        "addOptions": "Add Options"
+        "addOptions": "Add Options",
+        "email": "Email",
+        "password": "Password",
+        "login": "Login to TiraEat",
+        "signIn": "Sign In"
     },
 
     "days": {
@@ -30,6 +34,10 @@
         "friday": "Friday",
         "saturday": "Saturday",
         "sunday": "Sunday"
+    },
+
+    "messages": {
+        "invalidLogin": "Incorrect username or password."
     }
 
 

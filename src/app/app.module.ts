@@ -5,6 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+
 import { DetailsComponent } from './dashboard/details/details.component';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,6 +25,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './dashboard/menu/menu.component';
 import { AddCategoryComponent } from './dashboard/menu/add-category/add-category.component';
+import { LoginComponent } from './login/login.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,8 @@ import { AddCategoryComponent } from './dashboard/menu/add-category/add-category
     DetailsComponent,
     MenuComponent,
     AddCategoryComponent,
-    AddMealComponent
+    AddMealComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +44,8 @@ import { AddCategoryComponent } from './dashboard/menu/add-category/add-category
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     MatTabsModule,
     MatButtonModule,
     MatInputModule,
@@ -50,7 +59,9 @@ import { AddCategoryComponent } from './dashboard/menu/add-category/add-category
     }),
     DragDropModule
   ],
-  providers: [],
+  providers: [
+    AngularFireAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,43 @@
+<div class="global-container">
+  <div class="card login-form">
+    <div class="card-body">
+      <div class="d-flex justify-content-center">
+        <img src="assets/logo.png" alt="" />
+      </div>
+      <h4 class="my-3 ml-auto text-center">
+        {{ "labels.login" | translate }}
+      </h4>
+      <div class="card-text">
+        <div class="alert alert-danger alert-dismissible fade show my-2" role="alert" [class.d-none]="showError === false">
+            {{ "messages.invalidLogin" | translate }}
+            <button type="button" class="close" (click)="showError = false">
+                <span>&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+          <div class="form-group">
+            <mat-label>
+              {{ "labels.email" | translate }}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="email" type="email" required/>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-label>
+              {{ "labels.password" | translate }}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="password" type="password" required/>
+            </mat-form-field>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            {{ "labels.signIn" | translate }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
