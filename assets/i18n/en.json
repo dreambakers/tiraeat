@@ -13,7 +13,13 @@
         "categories": "Categories",
         "addCategory": "Add category",
         "name": "Name",
-        "add": "Add"
+        "add": "Add",
+        "options": "Options",
+        "ingredients": "Ingredients",
+        "image": "Image",
+        "price": "Price",
+        "addMeal": "Add meal",
+        "addOptions": "Add Options"
     },
 
     "days": {
