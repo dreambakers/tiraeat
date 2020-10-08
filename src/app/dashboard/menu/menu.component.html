@@ -1,4 +1,5 @@
-<div *ngIf="!addCategory">
+<!-- TODO: refactor this check -->
+<div *ngIf="!addMeal && !addCategory">
   <div class="mt-3 mr-4 d-flex justify-content-end">
     <img src="assets/logo.png" alt="" />
   </div>
@@ -28,7 +29,10 @@
             <mat-label class=" text-ellipsis">{{category.name}}</mat-label>
           </div>
           <div class="flex-fill border-bottom w-auto"></div>
-          <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn" *ngIf="!editMode; else editButtons">
+          <button
+            (click)="addMeal = true"
+            class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn"
+            *ngIf="!editMode; else editButtons">
               <i class="fas fa-plus text-primary add-icon"></i>
           </button>
 
@@ -68,4 +72,9 @@
 <div [@myAnimation] *ngIf="addCategory">
   <app-add-category (close)="addCategory = false">
   </app-add-category>
+</div>
+
+<div [@myAnimation] *ngIf="addMeal">
+  <app-add-meal (close)="addMeal = false">
+  </app-add-meal>
 </div>

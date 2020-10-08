@@ -59,6 +59,7 @@ export class MenuComponent implements OnInit {
 
   editMode = false;
   addCategory = false;
+  addMeal = false;
 
   constructor() { }
 
