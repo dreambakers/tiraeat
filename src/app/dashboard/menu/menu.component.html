@@ -28,9 +28,18 @@
             <mat-label class=" text-ellipsis">{{category.name}}</mat-label>
           </div>
           <div class="flex-fill border-bottom w-auto"></div>
-          <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+          <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn" *ngIf="!editMode; else editButtons">
               <i class="fas fa-plus text-primary add-icon"></i>
           </button>
+
+          <ng-template #editButtons>
+            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+              <i class="fas fa-pen text-primary add-icon"></i>
+            </button>
+            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+              <i class="fas fa-trash text-primary add-icon"></i>
+            </button>
+          </ng-template>
         </div>
 
         <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropItem($event, category)">
