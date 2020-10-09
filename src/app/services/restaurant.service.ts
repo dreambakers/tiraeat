@@ -13,35 +13,28 @@ export class RestaurantService {
   ) {}
 
   createRestaurant(data) {
-    return new Promise<any>((resolve, reject) => {
-      this.firestore
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.firestore
         .collection('restaurants')
-        .add(data)
-        .then(
-          (res) => {},
-          (err) => reject(err)
-        );
-    });
+        .doc(user.email.split('@')[0])
+        .set(data)
+      })
+    );
   }
 
   getRestaurant() {
     return this.fireAuth.authState.pipe(
       switchMap((user) => {
         return this.firestore
-          .collection('restaurants', (ref) =>
-            ref.where('uid', '==', user.uid).limit(1)
-          )
-          .snapshotChanges()
+          .collection('restaurants')
+          .doc(user.email.split('@')[0])
+          .get()
           .pipe(
-            map((restaurants: any) => {
-              if (restaurants.length) {
-                const data = restaurants[0].payload.doc.data();
-                const id = restaurants[0].payload.doc.id;
-                return { id, ...data };
-              }
-              return false;
-            })
-          );
+            map(
+              res => res.data()
+            )
+          )
       })
     );
   }

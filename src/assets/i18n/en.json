@@ -23,7 +23,8 @@
         "email": "Email",
         "password": "Password",
         "login": "Login to TiraEat",
-        "signIn": "Sign In"
+        "signIn": "Sign In",
+        "done": "Done"
     },
 
     "days": {

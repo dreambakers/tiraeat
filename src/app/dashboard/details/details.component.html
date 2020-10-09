@@ -10,20 +10,22 @@
       <img src="assets/banner.jpeg" />
     </div>
 
-    <div class="container py-5">
+    <form class="container py-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="d-flex flex-column justify-content-center align-items-center mb-3">
         <h4 class="m-0 text-primary">
           {{ "labels.restaurantName" | translate }}
         </h4>
         <h4 class="m-0 my-2 text-uppercase">The coke cafe</h4>
-        <p class="m-0 text-muted cursor-pointer" (click)="editMode = true" *ngIf="!editMode; else editBtn">
+        <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
           <span>
             {{ "labels.editDetails" | translate }}
           </span>
         </p>
         <ng-template #editBtn>
-          <button class="btn btn-primary done-btn" (click)="editMode = false">Done</button>
+          <button class="btn btn-primary done-btn" type="submit">
+            {{ "labels.done" | translate }}
+          </button>
         </ng-template>
       </div>
 
@@ -33,7 +35,7 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput />
+          <input matInput formControlName="restDesc"/>
         </mat-form-field>
       </div>
 
@@ -43,7 +45,8 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput />
+          <input matInput disabled [value]="getLocationValue()"/>
+          <i class="fas fa-location-arrow cursor-pointer text-{{editMode ? 'primary' : 'muted'}}" matSuffix (click)="editMode && setPosition()"></i>
         </mat-form-field>
       </div>
 
@@ -53,7 +56,7 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput />
+          <input matInput formControlName="restPhoneNumber"/>
         </mat-form-field>
       </div>
 
@@ -84,125 +87,24 @@
         <div class="flex-fill ml-3"></div>
       </div>
 
-      <div class="form-group">
-        <mat-label>
-          {{ "days.monday" | translate }}
-        </mat-label>
+      <div class="form-group" formArrayName="openHours" *ngFor="let control of getDayControls(); let i = index;">
+        <div [formGroupName]="i">
+          <mat-label>
+            {{ getLabelForDay(control) | translate }}
+          </mat-label>
 
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
+          <div class="d-flex align-items-center">
 
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly1" />
-            <label for="toggly1"><span></span></label>
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="open"/>
+            </mat-form-field>
+
+            <div class="checkbox-container ml-2">
+              <input type="checkbox" [id]="i" />
+              <label [for]="i"><span></span></label>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.tuesday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly2" />
-            <label for="toggly2"><span></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.wednesday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly3" />
-            <label for="toggly3"><span></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.thursday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly4" />
-            <label for="toggly4"><span></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.friday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly5" />
-            <label for="toggly5"><span></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.saturday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly6" />
-            <label for="toggly6"><span></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <mat-label>
-          {{ "days.sunday" | translate }}
-        </mat-label>
-
-        <div class="d-flex align-items-center">
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput />
-          </mat-form-field>
-
-          <div class="checkbox-container ml-2">
-            <input type="checkbox" id="toggly7" />
-            <label for="toggly7"><span></span></label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <button (click)="createRestaurant()"> create</button>
+    </form>
 </div>
