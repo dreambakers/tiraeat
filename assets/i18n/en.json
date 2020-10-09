@@ -39,6 +39,10 @@
 
     "messages": {
         "invalidLogin": "Incorrect username or password."
+    },
+
+    "placeholders": {
+        "enterRestaurantName": "Enter restaurant name here..."
     }
 
 
