@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { DetailsComponent } from './dashboard/details/details.component';
 import { AppComponent } from './app.component';
@@ -45,6 +46,7 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
     AngularFireAuthModule,
     MatTabsModule,
     MatButtonModule,

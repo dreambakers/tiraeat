@@ -16,12 +16,15 @@
           {{ "labels.restaurantName" | translate }}
         </h4>
         <h4 class="m-0 my-2 text-uppercase">The coke cafe</h4>
-        <p class="m-0 text-muted">
+        <p class="m-0 text-muted cursor-pointer" (click)="editMode = true" *ngIf="!editMode; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
           <span>
             {{ "labels.editDetails" | translate }}
           </span>
         </p>
+        <ng-template #editBtn>
+          <button class="btn btn-primary done-btn" (click)="editMode = false">Done</button>
+        </ng-template>
       </div>
 
       <div class="form-group">
@@ -200,4 +203,6 @@
         </div>
       </div>
     </div>
+
+    <button (click)="createRestaurant()"> create</button>
 </div>
