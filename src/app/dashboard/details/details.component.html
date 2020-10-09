@@ -15,14 +15,23 @@
         <h4 class="m-0 text-primary">
           {{ "labels.restaurantName" | translate }}
         </h4>
-        <div class="m-0 my-2">
-          <h4 class="text-uppercase" *ngIf="detailsForm.controls['nameUnique'].value; else noName">
+        <div class="my-2" *ngIf="!editMode; else nameEdit">
+          <h4 class="mb-1" *ngIf="detailsForm.controls['nameUnique'].value; else noName">
             {{ detailsForm.controls['nameUnique'].value }}
           </h4>
           <ng-template #noName>
             <h4 class="text-muted"><i>-</i></h4>
           </ng-template>
         </div>
+
+        <ng-template #nameEdit>
+          <input
+            matInput
+            formControlName="nameUnique"
+            class="m-0 my-2 text-center name-input"
+            [placeholder]="translate.instant('placeholders.enterRestaurantName')"/>
+        </ng-template>
+
         <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
           <span>
@@ -34,16 +43,6 @@
             {{ "labels.done" | translate }}
           </button>
         </ng-template>
-      </div>
-
-      <div class="form-group w-100" *ngIf="editMode">
-        <mat-label>
-          {{ "labels.name" | translate }}
-        </mat-label>
-
-        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput formControlName="nameUnique"/>
-        </mat-form-field>
       </div>
 
       <div class="form-group">
@@ -63,7 +62,7 @@
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
           <input matInput disabled [value]="getLocationValue()"/>
-          <i class="fas fa-location-arrow cursor-pointer text-{{editMode ? 'primary' : 'muted'}}" matSuffix (click)="editMode && setPosition()"></i>
+          <i *ngIf="editMode" class="fas fa-location-arrow cursor-pointer text-primary" matSuffix (click)="setPosition()"></i>
         </mat-form-field>
       </div>
 
