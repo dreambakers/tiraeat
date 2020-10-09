@@ -281,10 +281,16 @@ Apache-2.0
 @firebase/component
 Apache-2.0
 
+@firebase/firestore
+Apache-2.0
+
 @firebase/logger
 Apache-2.0
 
 @firebase/util
+Apache-2.0
+
+@firebase/webchannel-wrapper
 Apache-2.0
 
 @ngx-translate/core
@@ -346,6 +352,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 firebase/app
 
 firebase/auth
+
+firebase/firestore
 
 rxjs
 Apache-2.0
