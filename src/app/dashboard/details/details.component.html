@@ -15,7 +15,14 @@
         <h4 class="m-0 text-primary">
           {{ "labels.restaurantName" | translate }}
         </h4>
-        <h4 class="m-0 my-2 text-uppercase">The coke cafe</h4>
+        <div class="m-0 my-2">
+          <h4 class="text-uppercase" *ngIf="detailsForm.controls['nameUnique'].value; else noName">
+            {{ detailsForm.controls['nameUnique'].value }}
+          </h4>
+          <ng-template #noName>
+            <h4 class="text-muted"><i>-</i></h4>
+          </ng-template>
+        </div>
         <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
           <span>
@@ -27,6 +34,16 @@
             {{ "labels.done" | translate }}
           </button>
         </ng-template>
+      </div>
+
+      <div class="form-group w-100" *ngIf="editMode">
+        <mat-label>
+          {{ "labels.name" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <input matInput formControlName="nameUnique"/>
+        </mat-form-field>
       </div>
 
       <div class="form-group">

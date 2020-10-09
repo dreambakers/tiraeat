@@ -25,7 +25,8 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.detailsForm = this.formBuilder.group({
-      restPhoneNumber: ['', []],
+      nameUnique: [],
+      restPhoneNumber: [],
       openHours: this.formBuilder.array(this.setDayControls()),
       latitude: [],
       longitude: [],
@@ -40,7 +41,8 @@ export class DetailsComponent implements OnInit {
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
       if (restaurant) {
         this.restaurant = restaurant;
-        console.log(this.restaurant);
+        console.log(this.restaurant)
+        this.populateForm();
       } else {
         console.log('no');
       }
@@ -58,6 +60,19 @@ export class DetailsComponent implements OnInit {
       );
     }
     return controls;
+  }
+
+  populateForm() {
+    this.detailsForm.controls['nameUnique'].setValue(this.restaurant.nameUnique);
+    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber);
+    this.detailsForm.controls['latitude'].setValue(this.restaurant.latitude);
+    this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude);
+    this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc);
+    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber);
+    const openHoursControls = this.getDayControls();
+    for (let i = 0; i < this.days.length; i ++) {
+      openHoursControls[i].setValue({... this.restaurant.openHours[i]});
+    }
   }
 
   setPosition() {
