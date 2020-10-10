@@ -8,7 +8,8 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./add-category.component.scss'],
 })
 export class AddCategoryComponent implements OnInit {
-  @Output() close: EventEmitter<Boolean> = new EventEmitter();
+  @Output() close = new EventEmitter();
+  @Output() updateCommon = new EventEmitter();
   @Input() commonObj;
   addCategoryForm;
   categoryIndex;
@@ -16,36 +17,41 @@ export class AddCategoryComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private formBuilder: FormBuilder
-    ) {}
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.commonObj);
     this.addCategoryForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: [],
     });
   }
 
-  onSubmit(event) {
+  onSubmit() {
+    let updatedCommonObject;
+
     if (this.commonObj.mealsCategoriesOrder) {
       if (this.categoryIndex) {
-
       } else {
-        this.menuService.updateCommonObject({
+        updatedCommonObject = {
           ...this.commonObj,
           mealsCategoriesOrder: [
             ...this.commonObj.mealsCategoriesOrder,
-            this.addCategoryForm.value['name']
-          ]
-         }).subscribe();
+            this.addCategoryForm.value['name'],
+          ],
+        };
       }
     } else {
-      this.menuService.updateCommonObject({
-       ...this.commonObj,
-       mealsCategoriesOrder: [
-        this.addCategoryForm.value['name']
-       ]
-      }).subscribe();
+      updatedCommonObject = {
+        ...this.commonObj,
+        mealsCategoriesOrder: [this.addCategoryForm.value['name']],
+      };
     }
+
+    this.menuService
+      .updateCommonObject(updatedCommonObject)
+      .subscribe((res) => {
+        this.updateCommon.emit({ ...updatedCommonObject });
+        this.close.emit();
+      });
   }
 }

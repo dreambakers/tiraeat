@@ -73,4 +73,16 @@ export class MenuComponent implements OnInit {
   dropItem(event: CdkDragDrop<string[]>, category) {
     moveItemInArray(category.items, event.previousIndex, event.currentIndex);
   }
+
+  onCommonUpdate(newObj) {
+    this.commonObj = { ...newObj };
+  }
+
+  submit() {
+    this.menuService.updateCommonObject(this.commonObj).subscribe(
+      result => {
+        this.editMode = false;
+      }
+    );
+  }
 }
