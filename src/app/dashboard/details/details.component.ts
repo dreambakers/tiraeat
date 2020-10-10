@@ -41,7 +41,7 @@ export class DetailsComponent implements OnInit {
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
       if (restaurant) {
         this.restaurant = restaurant;
-        console.log(this.restaurant)
+        // console.log(this.restaurant)
         this.populateForm();
       } else {
         console.log('no');

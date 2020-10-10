@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {trigger, transition, style, animate, state} from '@angular/animations'
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -56,14 +57,26 @@ export class MenuComponent implements OnInit {
       ]
     }
   ];
+  menu;
+  addMealCategory;
 
   editMode = false;
   addCategory = false;
   addMeal = false;
 
-  constructor() { }
+  constructor(
+    private menuService: MenuService
+  ) { }
 
   ngOnInit(): void {
+    this.menuService.getMenu().subscribe(menu => {
+      this.menu = menu;
+    })
+  }
+
+  onAddMealClick(category) {
+    this.addMealCategory = category;
+    this.addMeal = true;
   }
 
   dropCategory(event: CdkDragDrop<string[]>) {

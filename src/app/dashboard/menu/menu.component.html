@@ -30,7 +30,7 @@
           </div>
           <div class="flex-fill border-bottom w-auto"></div>
           <button
-            (click)="addMeal = true"
+            (click)="onAddMealClick(category.name)"
             class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn"
             *ngIf="!editMode; else editButtons">
               <i class="fas fa-plus text-primary add-icon"></i>
@@ -75,6 +75,6 @@
 </div>
 
 <div [@myAnimation] *ngIf="addMeal">
-  <app-add-meal (close)="addMeal = false">
+  <app-add-meal (close)="addMeal = false" [category]="addMealCategory">
   </app-add-meal>
 </div>
