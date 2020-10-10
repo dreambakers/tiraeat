@@ -19,18 +19,18 @@
 
     <div cdkDropList (cdkDropListDropped)="dropCategory($event)" >
       <div
-        *ngFor="let category of categories"
+        *ngFor="let category of commonObj?.mealsCategoriesOrder"
         class="mb-2"
         cdkDrag
         [cdkDragDisabled]="!editMode">
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center w-25">
             <i class="mr-2 fas fa-bars drag-handle" cdkDragHandle *ngIf="editMode"></i>
-            <mat-label class=" text-ellipsis">{{category.name}}</mat-label>
+            <mat-label class=" text-ellipsis">{{category}}</mat-label>
           </div>
           <div class="flex-fill border-bottom w-auto"></div>
           <button
-            (click)="onAddMealClick(category.name)"
+            (click)="onAddMealClick(category)"
             class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn"
             *ngIf="!editMode; else editButtons">
               <i class="fas fa-plus text-primary add-icon"></i>
@@ -70,7 +70,7 @@
 </div>
 
 <div [@myAnimation] *ngIf="addCategory">
-  <app-add-category (close)="addCategory = false">
+  <app-add-category (close)="addCategory = false" [commonObj]="commonObj">
   </app-add-category>
 </div>
 

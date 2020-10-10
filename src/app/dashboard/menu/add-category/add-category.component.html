@@ -3,7 +3,7 @@
     <img src="assets/logo.png" alt="" />
   </div>
 
-  <div class="container py-5">
+  <form class="container py-5" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="d-flex justify-content-center align-items-center mb-3">
       <h4 class="m-0 ml-auto text-uppercase">
         {{ "labels.addCategory" | translate }}
@@ -19,7 +19,7 @@
       </mat-label>
 
       <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <input matInput />
+        <input matInput formControlName="name" required/>
       </mat-form-field>
     </div>
 
@@ -33,8 +33,9 @@
       </mat-form-field>
     </div>
 
-    <button type="button" class="btn btn-primary btn-block">
+    <button type="button" class="btn btn-primary btn-block" type="submit">
         {{ "labels.add" | translate }}
     </button>
 
-  </div>
+  </form>
+</div>

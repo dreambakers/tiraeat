@@ -51,4 +51,30 @@ export class MenuService {
     );
   }
 
+  getCommonObj() {
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.firestore
+          .collection('menu')
+          .doc(`${user.email.split('@')[0]}Common`)
+          .get()
+          .pipe(
+            map(
+              res => res.data()
+            )
+          )
+      })
+    );
+  }
+
+  updateCommonObject(newData) {
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.firestore
+        .collection('menu')
+        .doc(`${user.email.split('@')[0]}Common`)
+        .set({ ...newData }, { merge: true });
+      })
+    );
+  }
 }

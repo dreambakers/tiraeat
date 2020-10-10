@@ -19,14 +19,12 @@ export class AddMealComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.addMealForm = this.formBuilder.group({
       mealName: ['', [Validators.required]],
       mealDesc: [],
       price: [],
       mealCat: [this.category]
     });
-
   }
 
   onSubmit() {
