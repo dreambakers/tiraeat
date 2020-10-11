@@ -25,7 +25,7 @@ export class AddMealComponent implements OnInit {
       mealDesc: [],
       price: [],
       mealCat: [this.category.name],
-      positionByCat: [this.category.meals.length + 1]
+      positionByCat: [this.category?.meals?.length ? this.category?.meals?.length + 1 : 1 ]
     });
   }
 

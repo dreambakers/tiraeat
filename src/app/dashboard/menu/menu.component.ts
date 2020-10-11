@@ -71,7 +71,10 @@ export class MenuComponent implements OnInit {
   }
 
   onMealAdded(newMeal) {
-    this.categoriesMealsMap[newMeal.mealCat].push(newMeal);
+    this.categoriesMealsMap[newMeal.mealCat] = [
+      ...this.categoriesMealsMap[newMeal.mealCat] || [],
+      newMeal
+    ];
   }
 
   dropCategory(event: CdkDragDrop<string[]>) {
