@@ -19,6 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -28,6 +29,7 @@ import { MenuComponent } from './dashboard/menu/menu.component';
 import { AddCategoryComponent } from './dashboard/menu/add-category/add-category.component';
 import { LoginComponent } from './login/login.component';
 import { environment } from 'src/environments/environment';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { environment } from 'src/environments/environment';
     MenuComponent,
     AddCategoryComponent,
     AddMealComponent,
-    LoginComponent
+    LoginComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,13 +48,14 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
     MatTabsModule,
     MatButtonModule,
     MatInputModule,
-    HttpClientModule,
+    MatDialogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

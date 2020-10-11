@@ -6,6 +6,8 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+:focus { outline:0 !important; }
+
 .mat-tab-header-pagination {
   display: none !important;
 }
@@ -117,6 +119,12 @@ mat-label {
   margin: 20px 0;
   div {
       border-bottom: 1px solid #6FD1BC;
+  }
+}
+
+.mat-button {
+  &.mat-primary {
+    color: $color-primary;
   }
 }
 
