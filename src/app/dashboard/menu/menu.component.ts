@@ -117,9 +117,14 @@ export class MenuComponent implements OnInit {
     this.commonObj.mealsCategoriesOrder[updatedCategoryIndex] = updateObj.newName;
 
     if (updateObj.oldName in this.categoriesMealsMap) {
+      // in the categoriesMealsMap, we have to update two things:
+      // 1. the old cat key which holds the array of meals
+      // 2. each of 'mealCat' fields of the meal objects of the array
       this.categoriesMealsMap = {
         ...this.categoriesMealsMap,
-        [updateObj.newName]: this.categoriesMealsMap[updateObj.oldName]
+        [updateObj.newName]: this.categoriesMealsMap[updateObj.oldName].map(
+          meal => ({ ...meal,  mealCat: updateObj.newName })
+        )
       };
       delete this.categoriesMealsMap[updateObj.oldName];
     }
