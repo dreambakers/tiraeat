@@ -8,6 +8,7 @@ import {
   state,
 } from '@angular/animations';
 import { MenuService } from '../../services/menu.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -23,24 +24,6 @@ import { MenuService } from '../../services/menu.service';
   ],
 })
 export class MenuComponent implements OnInit {
-  categories = [
-    {
-      name: 'American Foods',
-      items: ['Ham Burger', 'Chicken Submarine', 'Hot Dog'],
-    },
-    {
-      name: 'Italian Foods',
-      items: ['Cheese Pasta', 'Pan Pizza', 'Mutton Lasagna'],
-    },
-    {
-      name: 'Chinese Foods',
-      items: ['Fried Rice', 'Chinese Noodles', 'Chinese Soup'],
-    },
-    {
-      name: 'Drinks',
-      items: ['Baguette', 'Beignet', 'Cannele'],
-    },
-  ];
   menu;
   addMealCategory;
 
@@ -48,12 +31,30 @@ export class MenuComponent implements OnInit {
   addCategory = false;
   addMeal = false;
   commonObj;
+  categoriesMealsMap = {};
 
   constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    this.menuService.getMenu().subscribe((menu) => {
+    this.menuService.getMenu().pipe(take(1)).subscribe((menu: any) => {
       this.menu = menu;
+
+      for (let meal of menu) {
+        if (meal?.mealCat in this.categoriesMealsMap) {
+          this.categoriesMealsMap[meal.mealCat] = [
+            ...this.categoriesMealsMap[meal.mealCat],
+            meal,
+          ];
+        } else {
+          this.categoriesMealsMap[meal.mealCat] = [ meal ];
+        }
+      }
+
+      Object.values(this.categoriesMealsMap).forEach((categoryMeals: any) => {
+        categoryMeals.sort(function(meal1: any, meal2: any) {
+          return meal1.positionByCat - meal2.positionByCat;
+        });
+      })
     });
 
     this.menuService.getCommonObj().subscribe((commonObj) => {
@@ -67,11 +68,19 @@ export class MenuComponent implements OnInit {
   }
 
   dropCategory(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.commonObj?.mealsCategoriesOrder, event.previousIndex, event.currentIndex);
+    moveItemInArray(
+      this.commonObj?.mealsCategoriesOrder,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
-  dropItem(event: CdkDragDrop<string[]>, category) {
-    moveItemInArray(category.items, event.previousIndex, event.currentIndex);
+  dropMeal(event: CdkDragDrop<string[]>, category) {
+    moveItemInArray(
+      this.categoriesMealsMap[category],
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 
   onCommonUpdate(newObj) {
@@ -79,8 +88,18 @@ export class MenuComponent implements OnInit {
   }
 
   submit() {
-    this.menuService.updateCommonObject(this.commonObj).subscribe(
-      result => {
+    // Update the positionByCat value for all meals
+    Object.values(this.categoriesMealsMap).forEach((mealArr: any[]) => {
+      mealArr.forEach((meal: any, index) => {
+        mealArr[index] = { ...meal, positionByCat: index + 1 };
+      });
+    });
+
+    // flaten array
+    const meals = [].concat(...Object.values(this.categoriesMealsMap))
+
+    this.menuService.updateMenu(meals, this.commonObj).then(
+      res => {
         this.editMode = false;
       }
     );

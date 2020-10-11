@@ -43,7 +43,10 @@ export class MenuService {
         .pipe(
           map(menuItems => {
             return menuItems.map(
-              menuItem => menuItem.payload.doc.data()
+              menuItem => ({
+                ...menuItem.payload.doc.data() as {},
+                id: menuItem.payload.doc.id
+              })
             );
           })
         )
@@ -73,8 +76,20 @@ export class MenuService {
         return this.firestore
         .collection('menu')
         .doc(`${user.email.split('@')[0]}Common`)
-        .set({ ...newData }, { merge: true });
+        .set({ ...newData, restName: user.email.split('@')[0] }, { merge: true });
       })
     );
   }
+
+  updateMenu(meals, commonObj) {
+    let batch = this.firestore.firestore.batch();
+    meals.forEach((meal: any) => {
+      const sampleRef = this.firestore.collection('menu').doc(meal.id)
+      batch.update(sampleRef.ref, {...meal});
+    })
+    const commonObjRef = this.firestore.collection('menu').doc(`${commonObj.restName}Common`);
+    batch.update(commonObjRef.ref, {...commonObj});
+    return batch.commit().catch(err => console.error(err));
+  }
+
 }

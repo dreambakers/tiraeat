@@ -51,14 +51,14 @@
           </ng-template>
         </div>
 
-        <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropItem($event, category)">
+        <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropMeal($event, category)">
           <div
-            *ngFor="let item of category.items"
+            *ngFor="let meal of categoriesMealsMap[category]"
             cdkDrag
             [cdkDragDisabled]="!editMode">
             <div class="d-flex align-items-center">
               <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
-              <div>{{item}}</div>
+              <div>{{meal.mealName}}</div>
             </div>
           </div>
         </div>

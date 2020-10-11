@@ -34,6 +34,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+.mat-tab-body-wrapper {
+  height: 100% !important;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }
