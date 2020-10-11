@@ -43,7 +43,8 @@
         "invalidLogin": "Incorrect username or password.",
         "areYouSure": "Are you sure?",
         "logoutConfirmation": "You will be logged out of TiraEat.",
-        "categoryDeletionConfirmation": "The category and all of the associated meals will be deleted."
+        "categoryDeletionConfirmation": "The category and all of the associated meals will be deleted.",
+        "mealDeletionConfirmation": "The selected meal will be deleted."
     },
 
     "placeholders": {
