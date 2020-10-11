@@ -85,6 +85,29 @@ export class MenuComponent implements OnInit {
     ];
   }
 
+  editMeal(meal) {
+
+  }
+
+  deleteMeal(meal, category) {
+    this.dialogService.confirm(
+      'messages.areYouSure',
+      'messages.mealDeletionConfirmation'
+    ).subscribe(
+      res => {
+        if (res) {
+          this.menuService.deleteMeal(meal).then(
+            res => {
+              this.categoriesMealsMap[category] = this.categoriesMealsMap[category].filter(
+                _meal => _meal.id !== meal.id
+              );
+            }
+          );
+        }
+      }
+    );
+  }
+
   dropCategory(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.commonObj?.mealsCategoriesOrder,

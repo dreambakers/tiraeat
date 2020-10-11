@@ -8,6 +8,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :focus { outline:0 !important; }
 
+.w-35 {
+  width: 35% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
 .mat-tab-header-pagination {
   display: none !important;
 }

@@ -29,11 +29,11 @@
         cdkDrag
         [cdkDragDisabled]="!editMode">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center w-25">
+          <div class="d-flex align-items-center" style="max-width: 30%;">
             <i class="mr-2 fas fa-bars drag-handle" cdkDragHandle *ngIf="editMode"></i>
             <mat-label class=" text-ellipsis">{{category}}</mat-label>
           </div>
-          <div class="flex-fill border-bottom w-auto"></div>
+          <div class="flex-fill border-bottom w-auto mx-3"></div>
           <button
             (click)="onAddMealClick(category)"
             class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn"
@@ -62,7 +62,21 @@
             [cdkDragDisabled]="!editMode">
             <div class="d-flex align-items-center">
               <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
-              <div>{{meal.mealName}}</div>
+              <div class="flex-fill d-flex align-items-center">
+                <div class="w-25 text-ellipsis">{{meal.mealName}}</div>
+                <div class="flex-fill d-flex" *ngIf="editMode">
+                  <button
+                    (click)="editMeal(meal)"
+                    class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                    <i class="fas fa-pen text-primary add-icon"></i>
+                  </button>
+                  <button
+                    (click)="deleteMeal(meal, category)"
+                    class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                    <i class="fas fa-trash text-primary add-icon"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -82,7 +96,7 @@
   <app-add-category
     [commonObj]="commonObj"
     [categoryToEdit]="categoryToEdit"
-    (close)="addCategory = false"
+    (close)="addCategory = false; categoryToEdit = null"
     (updateCommon)="onCommonUpdate($event)"
     (categoryEdited)="onCategoryEdited($event)">
   </app-add-category>

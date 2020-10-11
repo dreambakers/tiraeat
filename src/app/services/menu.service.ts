@@ -125,4 +125,11 @@ export class MenuService {
     });
     return batch.commit().catch(err => console.error(err));
   }
+
+  deleteMeal(meal) {
+    return this.firestore
+      .collection('menu')
+      .doc(meal.id)
+      .delete();
+  }
 }
