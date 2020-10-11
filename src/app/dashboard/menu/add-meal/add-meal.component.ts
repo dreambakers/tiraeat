@@ -10,6 +10,7 @@ import { MenuService } from 'src/app/services/menu.service';
 export class AddMealComponent implements OnInit {
 
   @Output() close:EventEmitter<Boolean> = new EventEmitter();
+  @Output() mealAdded:EventEmitter<Boolean> = new EventEmitter();
   @Input() category;
   addMealForm;
 
@@ -23,14 +24,16 @@ export class AddMealComponent implements OnInit {
       mealName: ['', [Validators.required]],
       mealDesc: [],
       price: [],
-      mealCat: [this.category]
+      mealCat: [this.category.name],
+      positionByCat: [this.category.meals.length + 1]
     });
   }
 
   onSubmit() {
     this.menuService.addMeal(this.addMealForm.value).subscribe(
-      res => {
-        console.log(res)
+      newMeal => {
+        this.mealAdded.emit(newMeal);
+        this.close.emit();
       }
     )
   }

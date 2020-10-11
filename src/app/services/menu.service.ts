@@ -25,6 +25,11 @@ export class MenuService {
               .collection('menu')
               .doc(mealId)
               .set({...data, restName: user.email.split('@')[0]})
+              .then(
+                res => {
+                  return {...data, id: mealId, restName: user.email.split('@')[0] }
+                }
+              )
             }
           )
         )

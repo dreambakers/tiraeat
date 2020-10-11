@@ -63,8 +63,15 @@ export class MenuComponent implements OnInit {
   }
 
   onAddMealClick(category) {
-    this.addMealCategory = category;
+    this.addMealCategory = {
+      name: category,
+      meals: this.categoriesMealsMap[category]
+    };
     this.addMeal = true;
+  }
+
+  onMealAdded(newMeal) {
+    this.categoriesMealsMap[newMeal.mealCat].push(newMeal);
   }
 
   dropCategory(event: CdkDragDrop<string[]>) {
