@@ -24,7 +24,9 @@
         "password": "Password",
         "login": "Login to TiraEat",
         "signIn": "Sign In",
-        "done": "Done"
+        "done": "Done",
+        "cancel": "Cancel",
+        "yes": "Yes"
     },
 
     "days": {
@@ -38,7 +40,9 @@
     },
 
     "messages": {
-        "invalidLogin": "Incorrect username or password."
+        "invalidLogin": "Incorrect username or password.",
+        "areYouSure": "Are you sure?",
+        "logoutConfirmation": "You will be logged out of TiraEat"
     },
 
     "placeholders": {
