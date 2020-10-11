@@ -28,9 +28,11 @@ export class MenuComponent implements OnInit {
   menu;
   addMealCategory;
 
+  addMeal = false;
   editMode = false;
   addCategory = false;
-  addMeal = false;
+  categoryToEdit; // category to edit
+
   commonObj;
   categoriesMealsMap = {};
 
@@ -44,6 +46,8 @@ export class MenuComponent implements OnInit {
       this.menu = menu;
 
       for (let meal of menu) {
+        if (meal.isCommon) { continue; }
+
         if (meal?.mealCat in this.categoriesMealsMap) {
           this.categoriesMealsMap[meal.mealCat] = [
             ...this.categoriesMealsMap[meal.mealCat],
@@ -95,6 +99,33 @@ export class MenuComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  editCategory(category) {
+    this.categoryToEdit = {
+      name: category,
+      meals: this.categoriesMealsMap[category]
+    }
+    this.addCategory = true;
+  }
+
+  onCategoryEdited(updateObj) {
+    const updatedCategoryIndex = this.commonObj.mealsCategoriesOrder.findIndex(
+      category => category === updateObj.oldName
+    );
+
+    this.commonObj.mealsCategoriesOrder[updatedCategoryIndex] = updateObj.newName;
+
+    if (updateObj.oldName in this.categoriesMealsMap) {
+      this.categoriesMealsMap = {
+        ...this.categoriesMealsMap,
+        [updateObj.newName]: this.categoriesMealsMap[updateObj.oldName]
+      };
+      delete this.categoriesMealsMap[updateObj.oldName];
+    }
+
+    this.categoryToEdit = null;
+    this.addCategory = false;
   }
 
   onCommonUpdate(newObj) {

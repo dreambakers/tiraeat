@@ -10,9 +10,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class AddCategoryComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Output() updateCommon = new EventEmitter();
+  @Output() categoryEdited = new EventEmitter();
   @Input() commonObj;
+  @Input() categoryToEdit;
   addCategoryForm;
-  categoryIndex;
 
   constructor(
     private menuService: MenuService,
@@ -21,37 +22,66 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.addCategoryForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: [
+        this.categoryToEdit ? this.categoryToEdit.name : '',
+        [Validators.required]
+      ],
       description: [],
     });
   }
 
   onSubmit() {
     let updatedCommonObject;
+    const categoryName = this.addCategoryForm.value['name'];
 
-    if (this.commonObj.mealsCategoriesOrder) {
-      if (this.categoryIndex) {
-      } else {
-        updatedCommonObject = {
-          ...this.commonObj,
-          mealsCategoriesOrder: [
-            ...this.commonObj.mealsCategoriesOrder,
-            this.addCategoryForm.value['name'],
-          ],
-        };
-      }
-    } else {
+    // if editing an existing category
+    if (this.categoryToEdit) {
       updatedCommonObject = {
-        ...this.commonObj,
-        mealsCategoriesOrder: [this.addCategoryForm.value['name']],
+        ...this.commonObj
       };
+
+      const categoryToEditIndex = updatedCommonObject.mealsCategoriesOrder.findIndex(
+        category => category === this.categoryToEdit.name
+      );
+
+      updatedCommonObject.mealsCategoriesOrder[categoryToEditIndex] = categoryName;
+
+      this.menuService.updateCategory(this.categoryToEdit.meals, updatedCommonObject, categoryName).then(
+        res => {
+          this.categoryEdited.emit({
+            oldName: this.categoryToEdit.name,
+            newName: categoryName
+          });
+        }
+      );
     }
 
-    this.menuService
+    // New category being added
+    else {
+      if (this.commonObj.mealsCategoriesOrder) {
+        // category being added to existing list
+          updatedCommonObject = {
+            ...this.commonObj,
+            mealsCategoriesOrder: [
+              ...this.commonObj.mealsCategoriesOrder,
+              categoryName,
+            ],
+          };
+      }
+      // first category being added
+      else {
+        updatedCommonObject = {
+          ...this.commonObj,
+          mealsCategoriesOrder: [categoryName],
+        };
+      }
+
+      this.menuService
       .updateCommonObject(updatedCommonObject)
       .subscribe((res) => {
         this.updateCommon.emit({ ...updatedCommonObject });
         this.close.emit();
       });
+    }
   }
 }

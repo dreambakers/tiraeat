@@ -42,7 +42,9 @@
           </button>
 
           <ng-template #editButtons>
-            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+            <button
+              (click)="editCategory(category)"
+              class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
               <i class="fas fa-pen text-primary add-icon"></i>
             </button>
             <button
@@ -78,9 +80,11 @@
 
 <div [@myAnimation] *ngIf="addCategory">
   <app-add-category
-    (close)="addCategory = false"
     [commonObj]="commonObj"
-    (updateCommon)="onCommonUpdate($event)">
+    [categoryToEdit]="categoryToEdit"
+    (close)="addCategory = false"
+    (updateCommon)="onCommonUpdate($event)"
+    (categoryEdited)="onCategoryEdited($event)">
   </app-add-category>
 </div>
 

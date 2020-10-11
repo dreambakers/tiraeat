@@ -20,7 +20,7 @@ export class MenuService {
           take(1),
           switchMap(
             meals => {
-              const mealId = (`${user.email.split('@')[0]}${meals.length + 1}`)
+              const mealId = (`${user.email.split('@')[0]}${meals.length}`)
               return this.firestore
               .collection('menu')
               .doc(mealId)
@@ -81,7 +81,11 @@ export class MenuService {
         return this.firestore
         .collection('menu')
         .doc(`${user.email.split('@')[0]}Common`)
-        .set({ ...newData, restName: user.email.split('@')[0] }, { merge: true });
+        .set({
+          ...newData,
+          restName: user.email.split('@')[0],
+          isCommon: true
+        }, { merge: true });
       })
     );
   }
@@ -91,6 +95,17 @@ export class MenuService {
     meals.forEach((meal: any) => {
       const sampleRef = this.firestore.collection('menu').doc(meal.id)
       batch.update(sampleRef.ref, {...meal});
+    })
+    const commonObjRef = this.firestore.collection('menu').doc(`${commonObj.restName}Common`);
+    batch.update(commonObjRef.ref, {...commonObj});
+    return batch.commit().catch(err => console.error(err));
+  }
+
+  updateCategory(meals, commonObj, updatedCat) {
+    let batch = this.firestore.firestore.batch();
+    meals?.forEach((meal: any) => {
+      const sampleRef = this.firestore.collection('menu').doc(meal.id)
+      batch.update(sampleRef.ref, {...meal, mealCat: updatedCat });
     })
     const commonObjRef = this.firestore.collection('menu').doc(`${commonObj.restName}Common`);
     batch.update(commonObjRef.ref, {...commonObj});
