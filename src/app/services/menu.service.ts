@@ -97,4 +97,17 @@ export class MenuService {
     return batch.commit().catch(err => console.error(err));
   }
 
+  deleteCategory(category, commonObj) {
+    let batch = this.firestore.firestore.batch();
+    category?.meals?.forEach((meal: any) => {
+      const mealRef = this.firestore.collection('menu').doc(meal.id)
+      batch.delete(mealRef.ref);
+    })
+    const commonObjRef = this.firestore.collection('menu').doc(commonObj.id);
+    batch.update(commonObjRef.ref, {
+      ...commonObj,
+      mealsCategoriesOrder: commonObj.mealsCategoriesOrder.filter(cat => cat !== category.name)
+    });
+    return batch.commit().catch(err => console.error(err));
+  }
 }

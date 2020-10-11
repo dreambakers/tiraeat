@@ -45,7 +45,9 @@
             <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
               <i class="fas fa-pen text-primary add-icon"></i>
             </button>
-            <button class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+            <button
+              (click)="deleteCategory(category)"
+              class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
               <i class="fas fa-trash text-primary add-icon"></i>
             </button>
           </ng-template>

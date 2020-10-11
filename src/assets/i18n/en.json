@@ -42,7 +42,8 @@
     "messages": {
         "invalidLogin": "Incorrect username or password.",
         "areYouSure": "Are you sure?",
-        "logoutConfirmation": "You will be logged out of TiraEat"
+        "logoutConfirmation": "You will be logged out of TiraEat.",
+        "categoryDeletionConfirmation": "The category and all of the associated meals will be deleted."
     },
 
     "placeholders": {

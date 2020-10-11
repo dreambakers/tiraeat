@@ -9,6 +9,7 @@ import {
 } from '@angular/animations';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs/operators';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-menu',
@@ -33,7 +34,10 @@ export class MenuComponent implements OnInit {
   commonObj;
   categoriesMealsMap = {};
 
-  constructor(private menuService: MenuService) {}
+  constructor(
+    private dialogService: DialogService,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.menuService.getMenu().pipe(take(1)).subscribe((menu: any) => {
@@ -54,7 +58,7 @@ export class MenuComponent implements OnInit {
         categoryMeals.sort(function(meal1: any, meal2: any) {
           return meal1.positionByCat - meal2.positionByCat;
         });
-      })
+      });
     });
 
     this.menuService.getCommonObj().subscribe((commonObj) => {
@@ -95,6 +99,27 @@ export class MenuComponent implements OnInit {
 
   onCommonUpdate(newObj) {
     this.commonObj = { ...newObj };
+  }
+
+  deleteCategory(category) {
+    this.dialogService.confirm(
+      'messages.areYouSure',
+      'messages.categoryDeletionConfirmation'
+    ).subscribe((res) => {
+      if (res) {
+        this.menuService.deleteCategory({
+          name: category,
+          meals: this.categoriesMealsMap[category],
+        }, this.commonObj).then(
+          res => {
+            delete this.categoriesMealsMap[category];
+            this.commonObj.mealsCategoriesOrder = this.commonObj.mealsCategoriesOrder.filter(
+              cat => cat !== category
+            );
+          }
+        );
+      }
+    });
   }
 
   submit() {
