@@ -29,8 +29,7 @@ export class AddMealComponent implements OnInit {
       price: [this.mealToEdit?.price],
       mealCat: [this.mealToEdit?.mealCat || this.category.name],
       positionByCat: [
-        this.mealToEdit?.positionByCat ||
-        (this.category?.meals?.length ? this.category?.meals?.length + 1 : 1)
+        this.mealToEdit?.positionByCat || ((this.category?.meals?.length || 0) + 1)
       ]
     });
   }

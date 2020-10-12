@@ -23,7 +23,7 @@ export class AddCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.addCategoryForm = this.formBuilder.group({
       name: [
-        this.categoryToEdit ? this.categoryToEdit.name : '',
+        this.categoryToEdit?.name || '',
         [Validators.required]
       ],
       description: [],
