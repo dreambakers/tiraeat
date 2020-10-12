@@ -31,9 +31,9 @@ export class MenuComponent implements OnInit {
   addMeal = false;
   editMode = false;
   addCategory = false;
+  loading = false;
   categoryToEdit; // category to edit
   mealToEdit;     // meal to edit
-
   commonObj;
   categoriesMealsMap = {};
 
@@ -43,9 +43,9 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.menuService.getMenu().pipe(take(1)).subscribe((menu: any) => {
       this.menu = menu;
-
       for (let meal of menu) {
         if (meal.isCommon) { continue; }
 
@@ -64,6 +64,8 @@ export class MenuComponent implements OnInit {
           return meal1.positionByCat - meal2.positionByCat;
         });
       });
+
+      this.loading = false;
     });
 
     this.menuService.getCommonObj().subscribe((commonObj) => {

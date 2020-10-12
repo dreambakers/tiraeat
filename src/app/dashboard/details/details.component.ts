@@ -115,7 +115,7 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.restaurant) {
+    if (!this.restaurant) {
       this.restaurantService.createRestaurant(this.detailsForm.value).subscribe(
         res => {
           console.log(res)

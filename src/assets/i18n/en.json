@@ -28,7 +28,8 @@
         "cancel": "Cancel",
         "yes": "Yes",
         "editCategory": "Edit category",
-        "editMeal": "Edit meal"
+        "editMeal": "Edit meal",
+        "save": "Save"
     },
 
     "days": {
@@ -46,7 +47,8 @@
         "areYouSure": "Are you sure?",
         "logoutConfirmation": "You will be logged out of TiraEat.",
         "categoryDeletionConfirmation": "The category and all of the associated meals will be deleted.",
-        "mealDeletionConfirmation": "The selected meal will be deleted."
+        "mealDeletionConfirmation": "The selected meal will be deleted.",
+        "noMenuItems": "There are no items in your restaurant's menu. Add a new category using the add button below."
     },
 
     "placeholders": {

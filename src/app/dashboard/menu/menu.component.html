@@ -9,16 +9,34 @@
       <h4 class="m-0 text-uppercase">
         {{ "labels.categories" | translate }}
       </h4>
-      <p class="m-0 text-muted cursor-pointer" (click)="editMode = !editMode" *ngIf="!editMode; else editBtn">
-        <span><i class="far fa-edit mr-2"></i></span>
-        <span>
-          {{ "labels.editDetails" | translate }}
-        </span>
-      </p>
-      <ng-template #editBtn>
-        <button class="btn btn-primary done-btn" (click)="submit()">
-          {{ "labels.done" | translate }}
-        </button>
+      <div *ngIf="commonObj?.mealsCategoriesOrder?.length; else noMenu">
+        <p
+          class="m-0 text-muted cursor-pointer"
+          (click)="editMode = !editMode"
+          *ngIf="!editMode; else editBtn">
+          <span><i class="far fa-edit mr-2"></i></span>
+          <span>
+            {{ "labels.editDetails" | translate }}
+          </span>
+        </p>
+        <ng-template #editBtn>
+          <button class="btn btn-primary done-btn" (click)="submit()">
+            {{ "labels.done" | translate }}
+          </button>
+        </ng-template>
+      </div>
+
+      <ng-template #noMenu>
+        <div class="d-flex flex-column align-items-center justify-content-center" *ngIf="!loading">
+          <span class="my-4">
+            {{ "messages.noMenuItems" | translate }}
+          </span>
+          <div>
+            <button class="btn btn-primary" (click)="addCategory = true">
+              {{ 'labels.addCategory' | translate }}
+            </button>
+          </div>
+        </div>
       </ng-template>
     </div>
 

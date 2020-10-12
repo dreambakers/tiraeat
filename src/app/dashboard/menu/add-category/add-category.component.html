@@ -39,7 +39,12 @@
     </div>
 
     <button type="button" class="btn btn-primary btn-block" type="submit">
+      <span *ngIf="categoryToEdit; else addCategory">
+        {{ "labels.save" | translate }}
+      </span>
+      <ng-template #addCategory>
         {{ "labels.add" | translate }}
+      </ng-template>
     </button>
 
   </form>
