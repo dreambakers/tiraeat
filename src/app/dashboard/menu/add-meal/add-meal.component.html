@@ -6,7 +6,12 @@
   <form class="container py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="d-flex justify-content-center align-items-center mb-3">
       <h4 class="m-0 ml-auto text-uppercase">
-        {{ "labels.addMeal" | translate }}
+        <span *ngIf="mealToEdit; else addMeal">
+          {{ "labels.editMeal" | translate }}
+        </span>
+        <ng-template #addMeal>
+          {{ "labels.addMeal" | translate }}
+        </ng-template>
       </h4>
       <button mat-icon-button class="ml-auto" (click)="close.emit()">
         <i class="fas fa-times"></i>

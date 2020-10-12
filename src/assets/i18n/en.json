@@ -26,7 +26,9 @@
         "signIn": "Sign In",
         "done": "Done",
         "cancel": "Cancel",
-        "yes": "Yes"
+        "yes": "Yes",
+        "editCategory": "Edit category",
+        "editMeal": "Edit meal"
     },
 
     "days": {
