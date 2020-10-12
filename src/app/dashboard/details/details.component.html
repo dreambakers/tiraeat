@@ -120,18 +120,19 @@
           </mat-label>
 
           <div class="d-flex align-items-center">
+            <div class="d-flex flex-column flex-sm-row flex-fill align-items-center">
+              <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+                <input matInput type="time" formControlName="from"/>
+              </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-              <input matInput type="time" formControlName="from"/>
-            </mat-form-field>
+              <div class="mx-3">
+                —
+              </div>
 
-            <div class="mx-3">
-              —
+              <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+                <input matInput type="time" formControlName="to"/>
+              </mat-form-field>
             </div>
-
-            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-              <input matInput type="time" formControlName="to"/>
-            </mat-form-field>
 
             <div class="checkbox-container ml-2">
               <input type="checkbox" [id]="i" checked="true"/>
