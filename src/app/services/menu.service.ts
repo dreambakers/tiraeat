@@ -113,8 +113,6 @@ export class MenuService {
   }
 
   deleteCategory(category, commonObj) {
-
-    console.log(commonObj)
     let batch = this.firestore.firestore.batch();
     category?.meals?.forEach((meal: any) => {
       const mealRef = this.firestore.collection('menu').doc(meal.id)
