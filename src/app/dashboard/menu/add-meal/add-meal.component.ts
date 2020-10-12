@@ -11,7 +11,10 @@ export class AddMealComponent implements OnInit {
 
   @Output() close:EventEmitter<Boolean> = new EventEmitter();
   @Output() mealAdded:EventEmitter<Boolean> = new EventEmitter();
+  @Output() mealEdited = new EventEmitter();
   @Input() category;
+  @Input() mealToEdit;
+
   addMealForm;
 
   constructor(
@@ -21,20 +24,32 @@ export class AddMealComponent implements OnInit {
 
   ngOnInit(): void {
     this.addMealForm = this.formBuilder.group({
-      mealName: ['', [Validators.required]],
-      mealDesc: [],
-      price: [],
-      mealCat: [this.category.name],
-      positionByCat: [this.category?.meals?.length ? this.category?.meals?.length + 1 : 1 ]
+      mealName: [this.mealToEdit?.mealName, [Validators.required]],
+      mealDesc: [this.mealToEdit?.mealDesc],
+      price: [this.mealToEdit?.price],
+      mealCat: [this.mealToEdit?.mealCat || this.category.name],
+      positionByCat: [
+        this.mealToEdit?.positionByCat ||
+        (this.category?.meals?.length ? this.category?.meals?.length + 1 : 1)
+      ]
     });
   }
 
   onSubmit() {
-    this.menuService.addMeal(this.addMealForm.value).subscribe(
-      newMeal => {
-        this.mealAdded.emit(newMeal);
-        this.close.emit();
-      }
-    )
+    if (this.mealToEdit) {
+      this.menuService.editMeal({...this.addMealForm.value, id: this.mealToEdit.id}).then(
+        updatedMeal => {
+          this.mealEdited.emit(updatedMeal);
+          this.close.emit();
+        }
+      );
+    } else {
+      this.menuService.addMeal(this.addMealForm.value).subscribe(
+        newMeal => {
+          this.mealAdded.emit(newMeal);
+          this.close.emit();
+        }
+      );
+    }
   }
 }

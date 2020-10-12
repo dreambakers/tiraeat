@@ -132,4 +132,17 @@ export class MenuService {
       .doc(meal.id)
       .delete();
   }
+
+  editMeal(updatedMeal) {
+    return this.firestore
+    .collection('menu')
+    .doc(updatedMeal.id)
+    .set({
+      ...updatedMeal
+    }, { merge: true }).then(
+      res => {
+        return updatedMeal;
+      }
+    )
+  }
 }

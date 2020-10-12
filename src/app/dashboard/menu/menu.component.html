@@ -104,8 +104,10 @@
 
 <div [@myAnimation] *ngIf="addMeal">
   <app-add-meal
+    [mealToEdit]="mealToEdit"
     [category]="addMealCategory"
-    (close)="addMeal = false"
-    (mealAdded)="onMealAdded($event)">
+    (close)="addMeal = false; mealToEdit = null"
+    (mealAdded)="onMealAdded($event)"
+    (mealEdited)="onMealEdited($event)">
   </app-add-meal>
 </div>

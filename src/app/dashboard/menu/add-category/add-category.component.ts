@@ -52,6 +52,7 @@ export class AddCategoryComponent implements OnInit {
             oldName: this.categoryToEdit.name,
             newName: categoryName
           });
+          this.close.emit();
         }
       );
     }

@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
   editMode = false;
   addCategory = false;
   categoryToEdit; // category to edit
+  mealToEdit;     // meal to edit
 
   commonObj;
   categoriesMealsMap = {};
@@ -85,8 +86,16 @@ export class MenuComponent implements OnInit {
     ];
   }
 
-  editMeal(meal) {
+  onMealEdited(updatedMeal) {
+    const updatedMealIndex = this.categoriesMealsMap[updatedMeal.mealCat].findIndex(
+      meal => meal.id === updatedMeal.id
+    );
+    this.categoriesMealsMap[updatedMeal.mealCat][updatedMealIndex] = updatedMeal;
+  }
 
+  editMeal(meal) {
+    this.mealToEdit = meal;
+    this.addMeal = true;
   }
 
   deleteMeal(meal, category) {
@@ -151,9 +160,6 @@ export class MenuComponent implements OnInit {
       };
       delete this.categoriesMealsMap[updateObj.oldName];
     }
-
-    this.categoryToEdit = null;
-    this.addCategory = false;
   }
 
   onCommonUpdate(newObj) {
