@@ -30,7 +30,10 @@ export class DetailsComponent implements OnInit {
       openHours: this.formBuilder.array(this.setDayControls()),
       latitude: [],
       longitude: [],
-      restDesc: []
+      restDesc: [],
+      contactName: [],
+      contactNumber: [],
+      preparingTime: []
     });
     this.detailsForm.disable();
 
@@ -41,10 +44,7 @@ export class DetailsComponent implements OnInit {
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
       if (restaurant) {
         this.restaurant = restaurant;
-        // console.log(this.restaurant)
         this.populateForm();
-      } else {
-        console.log('no');
       }
     });
   }
@@ -54,8 +54,8 @@ export class DetailsComponent implements OnInit {
     for (let day of this.days) {
       controls.push(
         this.formBuilder.group({
-          day,
-          open: '',
+          from: '',
+          to: '',
         })
       );
     }
@@ -69,9 +69,15 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude);
     this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc);
     this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber);
+    this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber);
+    this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime);
+    this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName);
     const openHoursControls = this.getDayControls();
     for (let i = 0; i < this.days.length; i ++) {
-      openHoursControls[i].setValue({... this.restaurant.openHours[i]});
+      openHoursControls[i].setValue({
+        from: this.restaurant.openHours[i].split('-')[0].trim(),
+        to: this.restaurant.openHours[i].split('-')[1].trim()
+      });
     }
   }
 
@@ -110,20 +116,30 @@ export class DetailsComponent implements OnInit {
     return (this.detailsForm.get('openHours') as FormArray).controls;
   }
 
-  getLabelForDay(control) {
-    return `days.${control.value.day}`;
+  getLabelForDay(index) {
+    return `days.${this.days[index]}`;
   }
 
   onSubmit() {
+    const detailsToSubmit = {
+      ...this.detailsForm.value
+    };
+
+    detailsToSubmit.openHours.forEach(
+      (hour, index) => {
+        detailsToSubmit.openHours[index] = `${hour.from} - ${hour.to}`
+      }
+    );
+
     if (!this.restaurant) {
-      this.restaurantService.createRestaurant(this.detailsForm.value).subscribe(
+      this.restaurantService.createRestaurant(detailsToSubmit).subscribe(
         res => {
           console.log(res)
         }
       )
     } else {
       this.restaurantService.updateRestaurant(this.restaurant, {
-        ...this.detailsForm.value
+        ...detailsToSubmit
       });
     }
     this.editMode = false;

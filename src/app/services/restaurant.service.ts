@@ -32,10 +32,14 @@ export class RestaurantService {
           .get()
           .pipe(
             map(
-              res => ({
-                ...res.data() as {},
-                id: res.id
-              })
+              res => {
+                if (res.data()) {
+                  return {
+                    ...res.data() as {},
+                    id: res.id
+                  }
+                }
+              }
             )
           )
       })

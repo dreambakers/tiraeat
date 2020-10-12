@@ -77,7 +77,8 @@
           <div
             *ngFor="let meal of categoriesMealsMap[category]"
             cdkDrag
-            [cdkDragDisabled]="!editMode">
+            [cdkDragDisabled]="!editMode"
+            class="my-1">
             <div class="d-flex align-items-center">
               <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
               <div class="flex-fill d-flex align-items-center">
