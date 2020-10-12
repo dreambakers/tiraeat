@@ -56,6 +56,7 @@ export class DetailsComponent implements OnInit {
         this.formBuilder.group({
           from: '',
           to: '',
+          active: true
         })
       );
     }
@@ -76,7 +77,8 @@ export class DetailsComponent implements OnInit {
     for (let i = 0; i < this.days.length; i ++) {
       openHoursControls[i].setValue({
         from: this.restaurant.openHours[i].split('-')[0].trim(),
-        to: this.restaurant.openHours[i].split('-')[1].trim()
+        to: this.restaurant.openHours[i].split('-')[1].trim(),
+        active: this.restaurant.openHours[i] !== '00:00 - 00:00'
       });
     }
   }
@@ -118,6 +120,14 @@ export class DetailsComponent implements OnInit {
 
   getLabelForDay(index) {
     return `days.${this.days[index]}`;
+  }
+
+  switchOffHours(event, index) {
+    const openHoursControls = this.getDayControls();
+    if (!event) {
+      openHoursControls[index].get('from').setValue('00:00');
+      openHoursControls[index].get('to').setValue('00:00');
+    }
   }
 
   onSubmit() {
