@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
+import { PendingChangesGuard } from './guards/pending-changes.guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']);
@@ -22,6 +23,7 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DashboardComponent,
     canActivate: [AngularFireAuthGuard],
+    canDeactivate: [PendingChangesGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin }
   }
 ];

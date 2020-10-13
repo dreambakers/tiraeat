@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddMealComponent } from './dashboard/menu/add-meal/add-meal.component';
 
+import { PendingChangesGuard } from './guards/pending-changes.guard';
+
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -66,7 +68,8 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     DragDropModule
   ],
   providers: [
-    AngularFireAuthGuard
+    AngularFireAuthGuard,
+    PendingChangesGuard
   ],
   bootstrap: [AppComponent]
 })
