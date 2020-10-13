@@ -1,25 +1,27 @@
-<mat-tab-group [selectedIndex]="1" class="h-100">
-  <mat-tab disabled class="mr-auto p-0">
-    <ng-template mat-tab-label>
-      <div class="d-flex justify-content-start">
-        <img src="assets/logo_white.png" alt="" width="70px" class="p-0">
-      </div>
-    </ng-template>
-  </mat-tab>
+<section id="dashboard">
+  <mat-tab-group [selectedIndex]="1" class="h-100">
+    <mat-tab disabled class="mr-auto p-0">
+      <ng-template mat-tab-label>
+        <div class="d-flex justify-content-start">
+          <img src="assets/logo_white.png" alt="" width="70px" class="p-0">
+        </div>
+      </ng-template>
+    </mat-tab>
 
-  <mat-tab [label]="translate.instant('labels.details')">
-    <app-details></app-details>
-  </mat-tab>
-  <mat-tab [label]="translate.instant('labels.menu')">
-    <app-menu></app-menu>
-  </mat-tab>
-  <mat-tab disabled>
-    <ng-template mat-tab-label>
-      <div class="d-flex justify-content-end">
-        <button mat-icon-button (click)="logout()">
-          <i class="fas fa-power-off"></i>
-        </button>
-      </div>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
+    <mat-tab [label]="translate.instant('labels.details')">
+      <app-details></app-details>
+    </mat-tab>
+    <mat-tab [label]="translate.instant('labels.menu')">
+      <app-menu></app-menu>
+    </mat-tab>
+    <mat-tab disabled>
+      <ng-template mat-tab-label>
+        <div class="d-flex justify-content-end">
+          <button mat-icon-button (click)="logout()">
+            <i class="fas fa-power-off"></i>
+          </button>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</section>
