@@ -105,6 +105,14 @@ export class DetailsComponent implements OnInit {
   enableEditMode() {
     this.editMode = true;
     this.detailsForm.enable();
+    const openHoursControls = this.getDayControls();
+    // we need to keep the time fields disabled which have 00:00 - 00:00
+    for (let i = 0; i < this.days.length; i ++) {
+      if (!openHoursControls[i].get('active').value) {
+        openHoursControls[i].get('from').disable({onlySelf: true});
+        openHoursControls[i].get('to').disable({onlySelf: true});
+      }
+    }
   }
 
   getLocationValue() {
@@ -127,6 +135,13 @@ export class DetailsComponent implements OnInit {
     if (!event) {
       openHoursControls[index].get('from').setValue('00:00');
       openHoursControls[index].get('to').setValue('00:00');
+      openHoursControls[index].get('from').disable({onlySelf: true});
+      openHoursControls[index].get('to').disable({onlySelf: true});
+    } else {
+      if (this.detailsForm.enabled) {
+        openHoursControls[index].get('from').enable();
+        openHoursControls[index].get('to').enable();
+      }
     }
   }
 
