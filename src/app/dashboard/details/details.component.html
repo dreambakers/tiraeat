@@ -7,14 +7,7 @@
       <img src="assets/banner.jpeg" />
     </div>
 
-    <div class="d-flex justify-content-center">
-      <button (click)="test = test + 10">Plus</button>
-      <button (click)="test = test - 10">Minus</button>
-      <span>Width {{ formWidth }}</span>
-    </div>
-
-    <form class="container-fluid py-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate
-    [style.maxWidth]="formWidth">
+    <form class="container py-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="d-flex flex-column justify-content-center align-items-center mb-3">
         <h4 class="m-0 text-primary">
           {{ "labels.restaurantName" | translate }}
