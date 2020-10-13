@@ -3,9 +3,9 @@
   <div class="container py-5">
     <div class="d-flex flex-column justify-content-center align-items-center mb-3">
       <h4 class="m-0 text-uppercase">
-        {{ "labels.categories" | translate }}
+        {{ "labels.menu" | translate }}
       </h4>
-      <div *ngIf="commonObj?.mealsCategoriesOrder?.length; else noMenu">
+      <div class="mt-2" *ngIf="commonObj?.mealsCategoriesOrder?.length; else noMenu">
         <p
           class="m-0 text-muted cursor-pointer"
           (click)="editMode = !editMode"
@@ -74,7 +74,7 @@
             *ngFor="let meal of categoriesMealsMap[category]"
             cdkDrag
             [cdkDragDisabled]="!editMode"
-            class="my-1">
+            class="my-2">
             <div class="d-flex align-items-center">
               <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
               <div class="flex-fill d-flex align-items-center">
