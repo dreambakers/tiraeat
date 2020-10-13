@@ -16,7 +16,7 @@ export class DetailsComponent implements OnInit {
   editMode = false;
   detailsForm: FormGroup;
   days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-
+  test = 500;
   constructor(
     public translate: TranslateService,
     private restaurantService: RestaurantService,
@@ -175,6 +175,10 @@ export class DetailsComponent implements OnInit {
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.editMode;
+  }
+
+  get formWidth() {
+    return `${this.test}px`;
   }
 
 }
