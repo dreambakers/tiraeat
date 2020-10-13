@@ -73,7 +73,9 @@
             <div class="d-flex align-items-center">
               <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
               <div class="flex-fill d-flex align-items-center">
-                <div class="w-25 text-ellipsis">{{meal.mealName}}</div>
+                <div class="w-25 text-ellipsis">
+                  <span class="meal-name">{{meal.mealName}}</span>
+                </div>
                 <div class="flex-fill d-flex" *ngIf="editMode">
                   <button
                     (click)="editMeal(meal)"
