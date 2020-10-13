@@ -48,14 +48,9 @@
             <mat-label class=" text-ellipsis">{{category}}</mat-label>
           </div>
           <div class="flex-fill border-bottom w-auto mx-3"></div>
-          <button
-            (click)="onAddMealClick(category)"
-            class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn"
-            *ngIf="!editMode; else editButtons">
-              <i class="fas fa-plus text-primary add-icon"></i>
-          </button>
 
-          <ng-template #editButtons>
+
+          <div *ngIf="editMode" class="d-flex">
             <button
               (click)="editCategory(category)"
               class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
@@ -66,7 +61,7 @@
               class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
               <i class="fas fa-trash text-primary add-icon"></i>
             </button>
-          </ng-template>
+          </div>
         </div>
 
         <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropMeal($event, category)">
@@ -95,6 +90,14 @@
             </div>
           </div>
         </div>
+
+        <button
+            (click)="onAddMealClick(category)"
+            class="btn d-flex align-items-center justify-content-center add-meal-btn"
+            *ngIf="!editMode">
+            <i class="fas fa-plus text-primary add-icon"></i>
+        </button>
+
       </div>
     </div>
   </div>

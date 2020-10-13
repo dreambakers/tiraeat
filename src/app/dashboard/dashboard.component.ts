@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/dialog.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,4 +36,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return true;
+  }
 }
