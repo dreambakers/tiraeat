@@ -36,10 +36,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       color: $color-primary;
       background-color: white !important;
     }
-    &:last-child {
-      min-width: 40px !important;
+    &:last-child, &:first-child {
+      padding: 0 10px;
+
       background-color: unset !important;
-      margin-left: auto;
+      &:last-child {
+        margin-left: auto;
+      }
+      &:first-child {
+        margin-right: auto;
+      }
     }
   }
 }
@@ -136,8 +142,15 @@ mat-label {
   }
 }
 
-@media (max-width: 599px) {
+
+@media (max-width: 711px) {
   .mat-tab-label {
-    min-width: 123px !important;
+    min-width: 130px !important;
+  }
+}
+
+@media (max-width: 499px) {
+  .mat-tab-label {
+    min-width: 25px !important;
   }
 }
