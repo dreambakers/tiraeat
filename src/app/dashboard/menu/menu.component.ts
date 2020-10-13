@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   trigger,
@@ -10,6 +10,7 @@ import {
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs/operators';
 import { DialogService } from 'src/app/services/dialog.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -205,5 +206,10 @@ export class MenuComponent implements OnInit {
         this.editMode = false;
       }
     );
+  }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.editMode && !this.addCategory && !this.addMeal;
   }
 }
