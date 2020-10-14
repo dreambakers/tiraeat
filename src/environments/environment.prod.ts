@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyAv6yOBGrBwyeZ4Y44-b0MEqiv1-s6groo",
-    authDomain: "tiraeat-f2853.firebaseapp.com",
-    databaseURL: "https://tiraeat-f2853.firebaseio.com",
-    projectId: "tiraeat-f2853",
-    storageBucket: "tiraeat-f2853.appspot.com",
-    messagingSenderId: "215185632854",
-    appId: "1:215185632854:web:5a2c531e1f3afa387a55f7"
+    apiKey: "AIzaSyBzFRzoRTHUwta3wqKKoGrd3pcVESv7uwE",
+    authDomain: "tiraeat-15f1b.firebaseapp.com",
+    databaseURL: "https://tiraeat-15f1b.firebaseio.com",
+    projectId: "tiraeat-15f1b",
+    storageBucket: "tiraeat-15f1b.appspot.com",
+    messagingSenderId: "609205682492",
+    appId: "1:609205682492:web:a65226bd0759c74b309e39"
   }
 };
