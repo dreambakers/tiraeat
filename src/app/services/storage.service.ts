@@ -22,7 +22,7 @@ export class StorageService {
     fileToUpload: File,
   ): FilesUploadMetadata {
     const { name } = fileToUpload;
-    const filePath = `${mediaFolderPath}/${new Date().getTime()}_${name}`;
+    const filePath = `${mediaFolderPath}/${name}`;
     const uploadTask: AngularFireUploadTask = this.storage.upload(
       filePath,
       fileToUpload,

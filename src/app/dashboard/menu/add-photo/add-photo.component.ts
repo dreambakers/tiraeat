@@ -15,12 +15,8 @@ export class AddPhotoComponent implements OnInit {
 
   destroy$: Subject<null> = new Subject();
   fileToUpload: File;
-  kittyImagePreview: string | ArrayBuffer;
-  pictureForm: FormGroup;
   user: firebase.User;
-  test;
   @Output() close = new EventEmitter();
-
   @Input() imageChangedEvent: any = '';
 
   constructor(
@@ -28,48 +24,35 @@ export class AddPhotoComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly storageService: StorageService,
     private dialogService: DialogService
-    // private readonly utilService: UtilService,
   ) {
   }
 
   ngOnInit(): void {
-    this.pictureForm = this.formBuilder.group({
-      photo: [null, Validators.required],
-      description: [null, Validators.required],
-    });
-
     this.authService.user
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: firebase.User) => (this.user = user));
-
-    this.pictureForm
-      .get('photo')
-      .valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe((newValue) => {
-        this.handleFileChange(newValue.files);
-      });
   }
 
-  handleFileChange([ kittyImage ]) {
-    this.fileToUpload = kittyImage;
-    const reader = new FileReader();
-    reader.onload = (loadEvent) => (this.kittyImagePreview =
-    loadEvent.target.result);
-    reader.readAsDataURL(kittyImage);
+  dataURLtoFile(dataurl, filename) {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
   }
 
-
-  postKitty() {
-    // this.submitted = true;
-    const mediaFolderPath = `${this.user.email.split('@')[0]}/picPathSmall/`;
-
+  uploadPhoto() {
+    const mediaFolderPath = `${this.user.email.split('@')[0]}/picPathBig/`;
     const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
       mediaFolderPath,
-      this.fileToUpload,
+      this.dataURLtoFile(this.fileToUpload, 'test.png')
     );
-
-    // this.uploadProgress$ = uploadProgress$;
-
+    uploadProgress$.subscribe(
+      res => {
+        console.log(res)
+      }
+    );
     downloadUrl$
       .pipe(
         takeUntil(this.destroy$),
@@ -78,11 +61,7 @@ export class AddPhotoComponent implements OnInit {
         // }),
       )
       .subscribe((downloadUrl) => {
-
         console.log(downloadUrl)
-
-        // this.submitted = false;
-        // this.router.navigate([ `/${ FEED }` ]);
       });
   }
 
@@ -102,8 +81,7 @@ export class AddPhotoComponent implements OnInit {
         if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
           this.dialogService.cropImage(this.imageChangedEvent).subscribe(
             res => {
-              this.test = res;
-              console.log(res)
+              this.fileToUpload = res;
             }
           )
         } else {
@@ -112,11 +90,6 @@ export class AddPhotoComponent implements OnInit {
       };
     };
   }
-
-  onImageCropped(tes) {
-    this.test = tes;
-  }
-
 
   ngOnDestroy() {
     this.destroy$.next(null);
