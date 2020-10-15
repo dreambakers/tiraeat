@@ -1,0 +1,41 @@
+<!-- <form
+  *ngIf="user"
+  class="form"
+  [formGroup]="pictureForm">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img class="avatar" [src]="user.photoURL" />
+      </div>
+      <mat-card-title>Post a cute Kitty </mat-card-title>
+      <mat-card-subtitle>{{ user.displayName }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      *ngIf="kittyImagePreview"
+      class="preview-image"
+      [src]="kittyImagePreview"
+      alt="Cute Kitty Picture"
+    />
+  </mat-card>
+
+
+</form> -->
+
+<div class="d-flex flex-column">
+  <input type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+
+
+  <div class="outer-div d-flex flex-column justify-content-end align-items-end">
+    <img [src]="test">
+  </div>
+
+
+
+  <!-- <button (click)="postKitty()">upload</button> -->
+
+</div>
+
+
+
+
+
