@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!addPhoto">
   <form class="container py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
     <div class="d-flex justify-content-center align-items-center mb-3">
       <h4 class="m-0 ml-auto text-uppercase">
@@ -51,6 +51,7 @@
 
       <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
         <input matInput />
+        <i class="fas fa-camera cursor-pointer text-primary" matSuffix (click)="addPhoto = true"></i>
       </mat-form-field>
     </div>
 
@@ -76,4 +77,10 @@
     </button>
 
   </form>
+</div>
+
+<div [@myAnimation] *ngIf="addPhoto">
+  <app-add-photo
+    (close)="this.addPhoto = false">
+  </app-add-photo>
 </div>

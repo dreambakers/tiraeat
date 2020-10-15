@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +19,7 @@ export class AddPhotoComponent implements OnInit {
   pictureForm: FormGroup;
   user: firebase.User;
   test;
-  show = false;
+  @Output() close = new EventEmitter();
 
   @Input() imageChangedEvent: any = '';
 

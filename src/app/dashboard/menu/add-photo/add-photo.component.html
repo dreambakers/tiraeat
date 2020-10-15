@@ -1,41 +1,37 @@
-<!-- <form
-  *ngIf="user"
-  class="form"
-  [formGroup]="pictureForm">
-  <mat-card>
-    <mat-card-header>
-      <div mat-card-avatar>
-        <img class="avatar" [src]="user.photoURL" />
+<div>
+  <div class="container-fluid py-5" style="max-width: 400px;">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <h4 class="m-0 ml-auto text-uppercase">
+          {{ "labels.addPhoto" | translate }}
+      </h4>
+      <button mat-icon-button class="ml-auto" (click)="close.emit()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div style="background-color: #EFEFEF" class="py-3 px-2">
+      <div class="img-container d-flex flex-column justify-content-center align-items-center">
+        <p *ngIf="!test">
+          {{'messages.noImgSet' | translate}}
+        </p>
+        <img [src]="test" alt="" style='height: 100%; width: 100%; object-fit: contain'>
       </div>
-      <mat-card-title>Post a cute Kitty </mat-card-title>
-      <mat-card-subtitle>{{ user.displayName }}</mat-card-subtitle>
-    </mat-card-header>
-    <img
-      *ngIf="kittyImagePreview"
-      class="preview-image"
-      [src]="kittyImagePreview"
-      alt="Cute Kitty Picture"
-    />
-  </mat-card>
 
+      <input #imgInput class="d-none" type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
 
-</form> -->
+      <div class="image-actions d-flex justify-content-center mt-3">
+        <button mat-stroked-button (click)="imgInput.click()">
+          <i class="fas fa-camera"></i>
+        </button>
 
-<div class="d-flex flex-column">
-  <input type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+        <button mat-stroked-button >
+          <i class="fas fa-crop-alt"></i>
+        </button>
+      </div>
+    </div>
 
-
-  <div class="outer-div d-flex flex-column justify-content-end align-items-end">
-    <img [src]="test">
+    <button type="button" class="btn btn-primary btn-block mt-5" type="submit">
+        {{ "labels.add" | translate }}
+    </button>
   </div>
-
-
-
-  <!-- <button (click)="postKitty()">upload</button> -->
-
 </div>
-
-
-
-
-

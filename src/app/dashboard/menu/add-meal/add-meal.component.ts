@@ -1,11 +1,20 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-add-meal',
   templateUrl: './add-meal.component.html',
-  styleUrls: ['./add-meal.component.scss']
+  styleUrls: ['./add-meal.component.scss'],
+  animations: [
+    trigger('myAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class AddMealComponent implements OnInit {
 
@@ -14,6 +23,7 @@ export class AddMealComponent implements OnInit {
   @Output() mealEdited = new EventEmitter();
   @Input() category;
   @Input() mealToEdit;
+  addPhoto = false;
 
   addMealForm;
 
