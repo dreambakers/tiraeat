@@ -35,7 +35,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddMealComponent } from './dashboard/menu/add-meal/add-meal.component';
 import { ImageCropperComponent } from './dialogs/image-cropper/image-cropper.component';
-import { AddPhotoComponent } from './dashboard/menu/add-photo/add-photo.component';
+import { AddPhotoComponent } from './dashboard/menu/add-meal/add-photo/add-photo.component';
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 import { MenuComponent } from './dashboard/menu/menu.component';
 import { AddCategoryComponent } from './dashboard/menu/add-category/add-category.component';

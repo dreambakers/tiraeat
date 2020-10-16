@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { Subject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { StorageService } from '../../../services/storage.service';
+import { StorageService } from '../../../../services/storage.service';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { DialogService } from 'src/app/services/dialog.service';
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
