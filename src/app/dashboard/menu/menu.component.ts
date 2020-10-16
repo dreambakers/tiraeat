@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   animations: [
-    trigger('myAnimation', [
+    trigger('sectionAnimation', [
       transition(':enter', [
         style({ opacity: 0 }),
         animate('500ms', style({ opacity: 1 })),
@@ -29,9 +29,15 @@ export class MenuComponent implements OnInit {
   menu;
   addMealCategory;
 
-  addMeal = false;
   editMode = false;
-  addCategory = false;
+
+  sections = {
+    menu: 'menu',
+    manageCategory: 'manageCategory',
+    manageMeal: 'manageMeal'
+  }
+  section = this.sections.menu;
+
   loading = false;
   categoryToEdit; // category to edit
   mealToEdit;     // meal to edit
@@ -79,7 +85,7 @@ export class MenuComponent implements OnInit {
       name: category,
       meals: this.categoriesMealsMap[category]
     };
-    this.addMeal = true;
+    this.updateSection(this.sections.manageMeal);
   }
 
   onMealAdded(newMeal) {
@@ -98,7 +104,7 @@ export class MenuComponent implements OnInit {
 
   editMeal(meal) {
     this.mealToEdit = meal;
-    this.addMeal = true;
+    this.updateSection(this.sections.manageMeal);
   }
 
   deleteMeal(meal, category) {
@@ -118,6 +124,10 @@ export class MenuComponent implements OnInit {
         }
       }
     );
+  }
+
+  updateSection(section) {
+    this.section = this.sections[section];
   }
 
   dropCategory(event: CdkDragDrop<string[]>) {
@@ -141,7 +151,7 @@ export class MenuComponent implements OnInit {
       name: category,
       meals: this.categoriesMealsMap[category]
     }
-    this.addCategory = true;
+    this.updateSection(this.sections.manageCategory);
   }
 
   onCategoryEdited(updateObj) {
@@ -210,6 +220,6 @@ export class MenuComponent implements OnInit {
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    return !this.editMode && !this.addCategory && !this.addMeal;
+    return !this.editMode && (this.section === this.sections.menu);
   }
 }

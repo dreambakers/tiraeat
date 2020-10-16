@@ -1,133 +1,132 @@
-<!-- TODO: refactor this check -->
-<div *ngIf="!addMeal && !addCategory">
-  <div class="container py-5">
-    <div class="d-flex flex-column justify-content-center align-items-center mb-3">
-      <h4 class="m-0 text-uppercase">
-        {{ "labels.menu" | translate }}
-      </h4>
-      <div class="mt-2" *ngIf="commonObj?.mealsCategoriesOrder?.length; else noMenu">
-        <p
-          class="m-0 text-muted cursor-pointer"
-          (click)="editMode = !editMode"
-          *ngIf="!editMode; else editBtn">
-          <span><i class="far fa-edit mr-2"></i></span>
-          <span>
-            {{ "labels.editDetails" | translate }}
-          </span>
-        </p>
-        <ng-template #editBtn>
-          <button class="btn btn-primary done-btn" (click)="submit()">
-            {{ "labels.done" | translate }}
-          </button>
+<div [ngSwitch]="section">
+  <div *ngSwitchCase="sections.menu">
+    <div class="container py-5">
+      <div class="d-flex flex-column justify-content-center align-items-center mb-3">
+        <h4 class="m-0 text-uppercase">
+          {{ "labels.menu" | translate }}
+        </h4>
+        <div class="mt-2" *ngIf="commonObj?.mealsCategoriesOrder?.length; else noMenu">
+          <p
+            class="m-0 text-muted cursor-pointer"
+            (click)="editMode = !editMode"
+            *ngIf="!editMode; else editBtn">
+            <span><i class="far fa-edit mr-2"></i></span>
+            <span>
+              {{ "labels.editDetails" | translate }}
+            </span>
+          </p>
+          <ng-template #editBtn>
+            <button class="btn btn-primary done-btn" (click)="submit()">
+              {{ "labels.done" | translate }}
+            </button>
+          </ng-template>
+        </div>
+
+        <ng-template #noMenu>
+          <div class="d-flex flex-column align-items-center justify-content-center" *ngIf="!loading">
+            <span class="my-4">
+              {{ "messages.noMenuItems" | translate }}
+            </span>
+            <div>
+              <button class="btn btn-primary" (click)="updateSection(sections.manageCategory)">
+                {{ 'labels.addCategory' | translate }}
+              </button>
+            </div>
+          </div>
         </ng-template>
       </div>
 
-      <ng-template #noMenu>
-        <div class="d-flex flex-column align-items-center justify-content-center" *ngIf="!loading">
-          <span class="my-4">
-            {{ "messages.noMenuItems" | translate }}
-          </span>
-          <div>
-            <button class="btn btn-primary" (click)="addCategory = true">
-              {{ 'labels.addCategory' | translate }}
-            </button>
+      <div cdkDropList (cdkDropListDropped)="dropCategory($event)" >
+        <div
+          *ngFor="let category of commonObj?.mealsCategoriesOrder"
+          class="mb-2"
+          cdkDrag
+          [cdkDragDisabled]="!editMode">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center" style="max-width: 30%;">
+              <i class="mr-2 fas fa-bars drag-handle" cdkDragHandle *ngIf="editMode"></i>
+              <mat-label class=" text-ellipsis">{{category}}</mat-label>
+            </div>
+            <div class="flex-fill border-bottom w-auto mx-3"></div>
+            <div *ngIf="editMode" class="d-flex">
+              <button
+                (click)="editCategory(category)"
+                class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                <i class="fas fa-pen text-primary add-icon"></i>
+              </button>
+              <button
+                (click)="deleteCategory(category)"
+                class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                <i class="fas fa-trash text-primary add-icon"></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </div>
 
-    <div cdkDropList (cdkDropListDropped)="dropCategory($event)" >
-      <div
-        *ngFor="let category of commonObj?.mealsCategoriesOrder"
-        class="mb-2"
-        cdkDrag
-        [cdkDragDisabled]="!editMode">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex align-items-center" style="max-width: 30%;">
-            <i class="mr-2 fas fa-bars drag-handle" cdkDragHandle *ngIf="editMode"></i>
-            <mat-label class=" text-ellipsis">{{category}}</mat-label>
-          </div>
-          <div class="flex-fill border-bottom w-auto mx-3"></div>
-
-
-          <div *ngIf="editMode" class="d-flex">
-            <button
-              (click)="editCategory(category)"
-              class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
-              <i class="fas fa-pen text-primary add-icon"></i>
-            </button>
-            <button
-              (click)="deleteCategory(category)"
-              class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
-              <i class="fas fa-trash text-primary add-icon"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropMeal($event, category)">
-          <div
-            *ngFor="let meal of categoriesMealsMap[category]"
-            cdkDrag
-            [cdkDragDisabled]="!editMode"
-            class="my-2">
-            <div class="d-flex align-items-center">
-              <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
-              <div class="flex-fill d-flex align-items-center">
-                <div class="w-25 text-ellipsis">
-                  <span class="meal-name">{{meal.mealName}}</span>
-                </div>
-                <div class="flex-fill d-flex" *ngIf="editMode">
-                  <button
-                    (click)="editMeal(meal)"
-                    class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
-                    <i class="fas fa-pen text-primary add-icon"></i>
-                  </button>
-                  <button
-                    (click)="deleteMeal(meal, category)"
-                    class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
-                    <i class="fas fa-trash text-primary add-icon"></i>
-                  </button>
+          <div class="meal-list p-0" cdkDropList (cdkDropListDropped)="dropMeal($event, category)">
+            <div
+              *ngFor="let meal of categoriesMealsMap[category]"
+              cdkDrag
+              [cdkDragDisabled]="!editMode"
+              class="my-2">
+              <div class="d-flex align-items-center">
+                <i class="mr-2 fas fa-bars drag-handle ml-2" cdkDragHandle *ngIf="editMode"></i>
+                <div class="flex-fill d-flex align-items-center">
+                  <div class="w-25 text-ellipsis">
+                    <span class="meal-name">{{meal.mealName}}</span>
+                  </div>
+                  <div class="flex-fill d-flex" *ngIf="editMode">
+                    <button
+                      (click)="editMeal(meal)"
+                      class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                      <i class="fas fa-pen text-primary add-icon"></i>
+                    </button>
+                    <button
+                      (click)="deleteMeal(meal, category)"
+                      class="btn ml-2 d-flex align-items-center justify-content-center add-meal-btn">
+                      <i class="fas fa-trash text-primary add-icon"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <button
+              (click)="onAddMealClick(category)"
+              class="btn d-flex align-items-center justify-content-center add-meal-btn"
+              *ngIf="!editMode">
+              <i class="fas fa-plus text-primary add-icon"></i>
+          </button>
+
         </div>
-
-        <button
-            (click)="onAddMealClick(category)"
-            class="btn d-flex align-items-center justify-content-center add-meal-btn"
-            *ngIf="!editMode">
-            <i class="fas fa-plus text-primary add-icon"></i>
-        </button>
-
       </div>
     </div>
+
+    <div class="mr-4 preview-fab-container">
+        <button mat-fab class="bg-primary" (click)="updateSection(sections.manageCategory)">
+          <i class="fas fa-plus add-icon"></i>
+        </button>
+    </div>
+
   </div>
 
-  <div class="mr-4 preview-fab-container">
-      <button mat-fab class="bg-primary" (click)="addCategory = true">
-        <i class="fas fa-plus add-icon"></i>
-      </button>
+  <div [@sectionAnimation] *ngSwitchCase="sections.manageCategory">
+    <app-add-category
+      [commonObj]="commonObj"
+      [categoryToEdit]="categoryToEdit"
+      (close)="updateSection(sections.menu); categoryToEdit = null"
+      (updateCommon)="onCommonUpdate($event)"
+      (categoryEdited)="onCategoryEdited($event)">
+    </app-add-category>
   </div>
 
-</div>
-
-<div [@myAnimation] *ngIf="addCategory">
-  <app-add-category
-    [commonObj]="commonObj"
-    [categoryToEdit]="categoryToEdit"
-    (close)="addCategory = false; categoryToEdit = null"
-    (updateCommon)="onCommonUpdate($event)"
-    (categoryEdited)="onCategoryEdited($event)">
-  </app-add-category>
-</div>
-
-<div [@myAnimation] *ngIf="addMeal">
-  <app-add-meal
-    [mealToEdit]="mealToEdit"
-    [category]="addMealCategory"
-    (close)="addMeal = false; mealToEdit = null"
-    (mealAdded)="onMealAdded($event)"
-    (mealEdited)="onMealEdited($event)">
-  </app-add-meal>
+  <div [@sectionAnimation] *ngSwitchCase="sections.manageMeal">
+    <app-add-meal
+      [mealToEdit]="mealToEdit"
+      [category]="addMealCategory"
+      (close)="updateSection(sections.menu); mealToEdit = null"
+      (mealAdded)="onMealAdded($event)"
+      (mealEdited)="onMealEdited($event)">
+    </app-add-meal>
+  </div>
 </div>
