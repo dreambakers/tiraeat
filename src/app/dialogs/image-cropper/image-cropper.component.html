@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>
+  {{ getDialogTitle() | translate }}
+</h1>
+
+<div *ngIf="cropping.isLoaded" class="controls d-flex justify-content-between">
+  <button (click)="cropping.zoomIn()" mat-raised-button appearance="icon">
+    <ly-icon>zoom_in</ly-icon>
+  </button>
+  <button (click)="cropping.zoomOut()" mat-raised-button appearance="icon">
+    <ly-icon>zoom_out</ly-icon>
+  </button>
+  <button (click)="cropping.center()" mat-raised-button appearance="icon">
+    <ly-icon>filter_center_focus</ly-icon>
+  </button>
+  <button (click)="cropping.rotate(-90)" mat-raised-button appearance="icon">
+    <ly-icon>rotate_90_degrees_ccw</ly-icon>
+  </button>
+</div>
+
+<div style="width: 250px" class="my-3">
+  <ly-img-cropper [withClass]="classes.cropper" #cropping [config]="imgCropperConfig" [(scale)]="scale"
+    (cropped)="onCropped($event)" (loaded)="onLoaded($event)" (error)="onError($event)">
+    <span>Drag and drop image</span>
+  </ly-img-cropper>
+</div>
+
+<div *ngIf="cropping.isLoaded" class="d-flex justify-content-center">
+  <mat-slider [min]="cropping.minScale" [max]="1" [(ngModel)]="scale"
+    (input)="scale = $event.value" step="0.000001">
+  </mat-slider>
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-end" id="confirmationDialogActions">
+  <button mat-button color="primary" (click)="onDismiss()">
+    {{ "labels.cancel" | translate }}
+  </button>
+  <button mat-button (click)="onConfirm()">
+    {{ "labels.done" | translate }}
+  </button>
+</div>

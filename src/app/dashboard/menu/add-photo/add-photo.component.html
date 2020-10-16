@@ -1,0 +1,37 @@
+<div>
+  <div class="container-fluid py-5" style="max-width: 400px;">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <h4 class="m-0 ml-auto text-uppercase">
+        {{ "labels.addPhoto" | translate }}
+      </h4>
+      <button mat-icon-button class="ml-auto" (click)="close.emit()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div style="background-color: #EFEFEF" class="py-3 px-2">
+      <div class="img-container d-flex flex-column justify-content-center align-items-center">
+        <p *ngIf="!picture1 && !picture2">
+          {{'messages.noImgSet' | translate}}
+        </p>
+        <img [src]="picture1" alt="" style='height: 100%; width: 100%; object-fit: contain'>
+      </div>
+
+      <input #imgInput class="d-none" type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+
+      <div class="image-actions d-flex justify-content-center mt-3">
+        <button mat-stroked-button (click)="imgInput.click()">
+          <i class="fas fa-camera"></i>
+        </button>
+
+        <button mat-stroked-button >
+          <i class="fas fa-crop-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block mt-5" (click)="uploadPhoto()">
+      {{ "labels.add" | translate }}
+    </button>
+  </div>
+</div>
