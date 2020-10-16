@@ -14,14 +14,14 @@
 </div>
 
 <div style="width: 250px" class="my-3">
-  <ly-img-cropper [withClass]="classes.cropper" #cropping [config]="myConfig" [(scale)]="scale"
+  <ly-img-cropper [withClass]="classes.cropper" #cropping [config]="imgCropperConfig" [(scale)]="scale"
     (cropped)="onCropped($event)" (loaded)="onLoaded($event)" (error)="onError($event)">
     <span>Drag and drop image</span>
   </ly-img-cropper>
 </div>
 
 <div *ngIf="cropping.isLoaded" class="d-flex justify-content-center">
-  <mat-slider [thumbVisible]="false" [min]="cropping.minScale" [max]="1" [(ngModel)]="scale"
+  <mat-slider [min]="cropping.minScale" [max]="1" [(ngModel)]="scale"
     (input)="scale = $event.value" step="0.000001">
   </mat-slider>
 </div>

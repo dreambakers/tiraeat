@@ -50,6 +50,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatStepperModule } from '@angular/material/stepper';
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -96,7 +97,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
           deps: [HttpClient]
       }
     }),
-    DragDropModule
+    DragDropModule,
+    MatStepperModule
   ],
   providers: [
     AngularFireAuthGuard,

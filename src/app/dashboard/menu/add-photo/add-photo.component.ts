@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from '../../../services/storage.service';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { DialogService } from 'src/app/services/dialog.service';
+import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 
 @Component({
   selector: 'app-add-photo',
@@ -79,7 +80,17 @@ export class AddPhotoComponent implements OnInit {
         const width = img.naturalWidth;
 
         if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
-          this.dialogService.cropImage(this.imageChangedEvent).subscribe(
+          const imageCropperConfig: ImgCropperConfig = {
+            keepAspectRatio: true,
+            width: 200, // Default `250`
+            height: 125, // Default `200`
+            // type: 'image/png', // Or you can also use `image/jpeg`,
+            output: {
+              width: 400,
+              height: 250
+            },
+          }
+          this.dialogService.cropImage(this.imageChangedEvent, imageCropperConfig).subscribe(
             res => {
               this.fileToUpload = res;
             }

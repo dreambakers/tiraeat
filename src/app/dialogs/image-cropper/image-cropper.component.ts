@@ -25,27 +25,17 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
   scale: number;
   @ViewChild(LyImageCropper) cropper: LyImageCropper;
   @Input() imageChangedEvent;
-  @Output() cropped = new EventEmitter();
   outputImg;
-
-  myConfig: ImgCropperConfig = {
-    keepAspectRatio: true,
-    width: 200, // Default `250`
-    height: 125, // Default `200`
-    // type: 'image/png', // Or you can also use `image/jpeg`,
-    output: {
-      width: 400,
-      height: 250
-    },
-  };
+  imgCropperConfig: ImgCropperConfig;
 
   constructor(
     readonly sRenderer: StyleRenderer,
     public dialogRef: MatDialogRef<ImageCropperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ImageCropperComponent
+    @Inject(MAT_DIALOG_DATA) public data
   ) { }
 
   ngAfterViewInit() {
+    this.imgCropperConfig = this.data.imageCropperConfig;
     this.cropper.selectInputEvent(this.data.imageChangedEvent);
     this.cropper.ready.subscribe(
       res => {

@@ -4,6 +4,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../dialogs/confirm-d
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCropperComponent } from '../dialogs/image-cropper/image-cropper.component';
+import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,12 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  cropImage(imageChangedEvent): Observable<any> {
+  cropImage(imageChangedEvent, imageCropperConfig: ImgCropperConfig): Observable<any> {
     const dialogRef = this.dialog.open(ImageCropperComponent, {
       minWidth: '300px',
       data: {
-        imageChangedEvent
+        imageChangedEvent,
+        imageCropperConfig
       },
       panelClass:'p-0'
     });
