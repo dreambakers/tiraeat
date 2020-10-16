@@ -25,14 +25,14 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  cropImage(imageChangedEvent, imageCropperConfig: ImgCropperConfig): Observable<any> {
+  cropImage(source: { imageChangedEvent?, image? }, imageCropperConfig: ImgCropperConfig, title): Observable<any> {
     const dialogRef = this.dialog.open(ImageCropperComponent, {
       minWidth: '300px',
       data: {
-        imageChangedEvent,
-        imageCropperConfig
+        source,
+        imageCropperConfig,
+        title
       },
-      panelClass:'p-0'
     });
     return dialogRef.afterClosed();
   }

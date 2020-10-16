@@ -15,10 +15,12 @@ import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 export class AddPhotoComponent implements OnInit {
 
   destroy$: Subject<null> = new Subject();
-  fileToUpload: File;
   user: firebase.User;
   @Output() close = new EventEmitter();
   @Input() imageChangedEvent: any = '';
+
+  picture1: File;
+  picture2: File;
 
   constructor(
     private readonly authService: AuthService,
@@ -47,7 +49,7 @@ export class AddPhotoComponent implements OnInit {
     const mediaFolderPath = `${this.user.email.split('@')[0]}/picPathBig/`;
     const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
       mediaFolderPath,
-      this.dataURLtoFile(this.fileToUpload, 'test.png')
+      this.dataURLtoFile(this.picture1, 'test.png')
     );
     uploadProgress$.subscribe(
       res => {
@@ -76,11 +78,8 @@ export class AddPhotoComponent implements OnInit {
       const img = new Image();
       img.src = reader.result as string;
       img.onload = () => {
-        const height = img.naturalHeight;
-        const width = img.naturalWidth;
-
         if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
-          const imageCropperConfig: ImgCropperConfig = {
+          const firstPictureConfig: ImgCropperConfig = {
             keepAspectRatio: true,
             width: 200, // Default `250`
             height: 125, // Default `200`
@@ -90,9 +89,28 @@ export class AddPhotoComponent implements OnInit {
               height: 250
             },
           }
-          this.dialogService.cropImage(this.imageChangedEvent, imageCropperConfig).subscribe(
-            res => {
-              this.fileToUpload = res;
+          this.dialogService.cropImage({ imageChangedEvent: this.imageChangedEvent }, firstPictureConfig, 'labels.adjustFirstPicture').subscribe(
+            picture1 => {
+              if (picture1) {
+                this.picture1 = picture1;
+
+                const secondPictureConfig: ImgCropperConfig = {
+                 keepAspectRatio: true,
+                  width: 150,
+                  height: 150,
+                  output: {
+                    width: 150,
+                    height: 150
+                  }
+                }
+                this.dialogService.cropImage({ image: picture1 }, secondPictureConfig, 'labels.adjustSecondPicture').subscribe(
+                  picture2 => {
+                    if (picture2) {
+                      this.picture2 = picture2;
+                    }
+                  }
+                );
+              }
             }
           )
         } else {

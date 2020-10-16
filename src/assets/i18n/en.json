@@ -30,7 +30,9 @@
         "editMeal": "Edit meal",
         "save": "Save",
         "contactNumber": "Contact number",
-        "addPhoto": "Add photo"
+        "addPhoto": "Add photo",
+        "adjustFirstPicture": "Adjust first picture",
+        "adjustSecondPicture": "Adjust second picture"
     },
 
     "days": {

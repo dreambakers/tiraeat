@@ -1,3 +1,7 @@
+<h1 mat-dialog-title>
+  {{ getDialogTitle() | translate }}
+</h1>
+
 <div *ngIf="cropping.isLoaded" class="controls d-flex justify-content-between">
   <button (click)="cropping.zoomIn()" mat-raised-button appearance="icon">
     <ly-icon>zoom_in</ly-icon>

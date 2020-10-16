@@ -11,10 +11,10 @@
 
     <div style="background-color: #EFEFEF" class="py-3 px-2">
       <div class="img-container d-flex flex-column justify-content-center align-items-center">
-        <p *ngIf="!fileToUpload">
+        <p *ngIf="!picture1 && !picture2">
           {{'messages.noImgSet' | translate}}
         </p>
-        <img [src]="fileToUpload" alt="" style='height: 100%; width: 100%; object-fit: contain'>
+        <img [src]="picture1" alt="" style='height: 100%; width: 100%; object-fit: contain'>
       </div>
 
       <input #imgInput class="d-none" type="file" (change)="fileChangeEvent($event)" accept="image/*"/>

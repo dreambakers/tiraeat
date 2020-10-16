@@ -36,14 +36,22 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
 
   ngAfterViewInit() {
     this.imgCropperConfig = this.data.imageCropperConfig;
-    this.cropper.selectInputEvent(this.data.imageChangedEvent);
+    if (this.data.source.image) {
+      this.cropper.setImageUrl(this.data.source.image)
+    } else {
+      this.cropper.selectInputEvent(this.data.source.imageChangedEvent);
+    }
     this.cropper.ready.subscribe(
       res => {
         setTimeout(() => {
           this.cropper.center();
-        },10);
+        },100);
       }
     );
+  }
+
+  getDialogTitle() {
+    return this.data.title;
   }
 
   onDismiss() {
