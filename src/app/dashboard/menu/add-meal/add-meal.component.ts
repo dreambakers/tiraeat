@@ -23,7 +23,12 @@ export class AddMealComponent implements OnInit {
   @Output() mealEdited = new EventEmitter();
   @Input() category;
   @Input() mealToEdit;
-  addPhoto = false;
+
+  sections = {
+    manageMeal: 'manageMeal',
+    addPhoto: 'addPhoto'
+  }
+  section = this.sections.manageMeal;
 
   addMealForm;
 
@@ -42,6 +47,10 @@ export class AddMealComponent implements OnInit {
         this.mealToEdit?.positionByCat || ((this.category?.meals?.length || 0) + 1)
       ]
     });
+  }
+
+  updateSection(newSection) {
+    this.section = this.sections[newSection];
   }
 
   onSubmit() {

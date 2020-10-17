@@ -1,86 +1,88 @@
-<div *ngIf="!addPhoto">
-  <form class="container py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-    <div class="d-flex justify-content-center align-items-center mb-3">
-      <h4 class="m-0 ml-auto text-uppercase">
+<div [ngSwitch]="section">
+  <div *ngSwitchCase="sections.manageMeal">
+    <form class="container py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+      <div class="d-flex justify-content-center align-items-center mb-3">
+        <h4 class="m-0 ml-auto text-uppercase">
+          <span *ngIf="mealToEdit; else addMeal">
+            {{ "labels.editMeal" | translate }}
+          </span>
+          <ng-template #addMeal>
+            {{ "labels.addMeal" | translate }}
+          </ng-template>
+        </h4>
+        <button mat-icon-button class="ml-auto" (click)="close.emit()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <mat-label>
+          {{ "labels.name" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <input matInput formControlName="mealName" required/>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>
+          {{ "labels.description" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <textarea matInput formControlName="mealDesc"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>
+          {{ "labels.price" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <input matInput formControlName="price" type="number" step="0.01" min="0"/>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-label>
+          {{ "labels.image" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <input matInput />
+          <i class="fas fa-camera cursor-pointer text-primary" matSuffix (click)="updateSection(sections.addPhoto)"></i>
+        </mat-form-field>
+      </div>
+
+      <div class="heading-with-line d-flex align-items-end">
+        <h4 class="m-0 text-primary">
+          {{ "labels.options" | translate }}
+        </h4>
+        <div class="flex-fill ml-3"></div>
+      </div>
+
+      <button type="button" class="btn btn-info btn-block d-flex justify-content-center align-items-center">
+        <i class="fas fa-plus-circle mr-2"></i>
+        {{ "labels.addOptions" | translate }}
+      </button>
+
+      <button type="button" class="btn btn-primary btn-block mt-5" type="submit">
         <span *ngIf="mealToEdit; else addMeal">
-          {{ "labels.editMeal" | translate }}
+          {{ "labels.save" | translate }}
         </span>
         <ng-template #addMeal>
-          {{ "labels.addMeal" | translate }}
+          {{ "labels.add" | translate }}
         </ng-template>
-      </h4>
-      <button mat-icon-button class="ml-auto" (click)="close.emit()">
-        <i class="fas fa-times"></i>
       </button>
-    </div>
 
-    <div class="form-group">
-      <mat-label>
-        {{ "labels.name" | translate }}
-      </mat-label>
+    </form>
+  </div>
 
-      <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <input matInput formControlName="mealName" required/>
-      </mat-form-field>
-    </div>
-
-    <div class="form-group">
-      <mat-label>
-        {{ "labels.description" | translate }}
-      </mat-label>
-
-      <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <textarea matInput formControlName="mealDesc"></textarea>
-      </mat-form-field>
-    </div>
-
-    <div class="form-group">
-      <mat-label>
-        {{ "labels.price" | translate }}
-      </mat-label>
-
-      <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <input matInput formControlName="price" type="number" step="0.01" min="0"/>
-      </mat-form-field>
-    </div>
-
-    <div class="form-group">
-      <mat-label>
-        {{ "labels.image" | translate }}
-      </mat-label>
-
-      <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <input matInput />
-        <i class="fas fa-camera cursor-pointer text-primary" matSuffix (click)="addPhoto = true"></i>
-      </mat-form-field>
-    </div>
-
-    <div class="heading-with-line d-flex align-items-end">
-      <h4 class="m-0 text-primary">
-        {{ "labels.options" | translate }}
-      </h4>
-      <div class="flex-fill ml-3"></div>
-    </div>
-
-    <button type="button" class="btn btn-info btn-block d-flex justify-content-center align-items-center">
-      <i class="fas fa-plus-circle mr-2"></i>
-      {{ "labels.addOptions" | translate }}
-    </button>
-
-    <button type="button" class="btn btn-primary btn-block mt-5" type="submit">
-      <span *ngIf="mealToEdit; else addMeal">
-        {{ "labels.save" | translate }}
-      </span>
-      <ng-template #addMeal>
-        {{ "labels.add" | translate }}
-      </ng-template>
-    </button>
-
-  </form>
-</div>
-
-<div [@myAnimation] *ngIf="addPhoto">
-  <app-add-photo
-    (close)="this.addPhoto = false">
-  </app-add-photo>
+  <div [@myAnimation] *ngSwitchCase="sections.addPhoto">
+    <app-add-photo
+      (close)="updateSection(sections.manageMeal)">
+    </app-add-photo>
+  </div>
 </div>
