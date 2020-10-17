@@ -201,6 +201,7 @@ export class MenuComponent implements OnInit {
   }
 
   submit() {
+    this.loading = true;
     // Update the positionByCat value for all meals
     Object.values(this.categoriesMealsMap).forEach((mealArr: any[]) => {
       mealArr.forEach((meal: any, index) => {
@@ -215,7 +216,9 @@ export class MenuComponent implements OnInit {
       res => {
         this.editMode = false;
       }
-    );
+    ).finally(() => {
+      this.loading = false;
+    });
   }
 
   @HostListener('window:beforeunload')

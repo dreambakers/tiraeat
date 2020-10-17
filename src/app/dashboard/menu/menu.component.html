@@ -16,8 +16,13 @@
             </span>
           </p>
           <ng-template #editBtn>
-            <button class="btn btn-primary done-btn" (click)="submit()">
-              {{ "labels.done" | translate }}
+            <button class="btn btn-primary done-btn" (click)="submit()" [disabled]="loading">
+              <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <ng-template #notLoading>
+                {{ "labels.done" | translate }}
+              </ng-template>
             </button>
           </ng-template>
         </div>
