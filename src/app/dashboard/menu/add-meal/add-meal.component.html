@@ -71,21 +71,26 @@
         {{ "labels.addOptions" | translate }}
       </button>
 
-      <button type="button" class="btn btn-primary btn-block mt-5" type="submit">
-        <span *ngIf="mealToEdit; else addMeal">
-          {{ "labels.save" | translate }}
-        </span>
-        <ng-template #addMeal>
-          {{ "labels.add" | translate }}
+      <button type="button" class="btn btn-primary btn-block mt-5" type="submit" [disabled]="loading">
+        <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+          <span class="sr-only">Loading...</span>
+        </div>
+
+        <ng-template #notLoading>
+          <span *ngIf="mealToEdit; else addMeal">
+            {{ "labels.save" | translate }}
+          </span>
+          <ng-template #addMeal>
+            {{ "labels.add" | translate }}
+          </ng-template>
         </ng-template>
       </button>
-
     </form>
   </div>
 
   <div [@myAnimation] *ngSwitchCase="sections.addPhoto">
     <app-add-photo
-      (close)="updateSection(sections.manageMeal)">
+      (close)="onAddPhotoClose($event)">
     </app-add-photo>
   </div>
 

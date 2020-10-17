@@ -14,6 +14,10 @@
 .existing-option {
     background-color: $color-muted;
 
+    &.selected {
+        border-color: $color-primary !important;
+    }
+
     .round-checkbox-container {
         label {
             background-color: #fff;
@@ -34,7 +38,7 @@
                 font-size: 9px;
                 color: $color-primary;
                 position: absolute;
-                left: 3px;
+                left: 4px;
                 top: 2px;
             }
           }

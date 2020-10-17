@@ -24,7 +24,6 @@ export class AddPhotoComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly formBuilder: FormBuilder,
     private readonly storageService: StorageService,
     private dialogService: DialogService
   ) {
@@ -34,38 +33,6 @@ export class AddPhotoComponent implements OnInit {
     this.authService.user
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: firebase.User) => (this.user = user));
-  }
-
-  dataURLtoFile(dataurl, filename) {
-    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while(n--){
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, {type:mime});
-  }
-
-  uploadPhoto() {
-    const mediaFolderPath = `${this.user.email.split('@')[0]}/picPathBig/`;
-    const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
-      mediaFolderPath,
-      this.dataURLtoFile(this.picture1, 'test.png')
-    );
-    uploadProgress$.subscribe(
-      res => {
-        console.log(res)
-      }
-    );
-    downloadUrl$
-      .pipe(
-        takeUntil(this.destroy$),
-        // catchError((error:ant) => {
-        //   console.log(error)
-        // }),
-      )
-      .subscribe((downloadUrl) => {
-        console.log(downloadUrl)
-      });
   }
 
   fileChangeEvent(event: any): void {
@@ -118,6 +85,15 @@ export class AddPhotoComponent implements OnInit {
         }
       };
     };
+  }
+
+  returnPhotos() {
+    this.close.emit({
+      images: {
+        Big: this.picture1,
+        Small: this.picture2
+      }
+    });
   }
 
   ngOnDestroy() {
