@@ -56,7 +56,8 @@
         "categoryDeletionConfirmation": "The category and all of the associated meals will be deleted.",
         "mealDeletionConfirmation": "The selected meal will be deleted.",
         "noMenuItems": "There are no items in your restaurant's menu. Add a new category using the add button below.",
-        "noImgSet": "No image set"
+        "noImgSet": "No image set",
+        "imgSet": "Image set"
     },
 
     "placeholders": {
