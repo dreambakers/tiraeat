@@ -17,8 +17,8 @@ export class AddPhotoComponent implements OnInit {
   destroy$: Subject<null> = new Subject();
   user: firebase.User;
   @Output() close = new EventEmitter();
-  @Input() imageChangedEvent: any = '';
-
+  @Input() picPathBig?;
+  imgSrc;
   picture1: File;
   picture2: File;
 
@@ -33,58 +33,68 @@ export class AddPhotoComponent implements OnInit {
     this.authService.user
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: firebase.User) => (this.user = user));
+
+    this.imgSrc = this.picPathBig;
   }
 
   fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-
     const reader = new FileReader();
-    reader.readAsDataURL(this.imageChangedEvent.target.files[0]);
+    reader.readAsDataURL(event.target.files[0]);
 
     reader.onload = () => {
       const img = new Image();
       img.src = reader.result as string;
       img.onload = () => {
         if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
-          const firstPictureConfig: ImgCropperConfig = {
-            keepAspectRatio: true,
-            width: 200, // Default `250`
-            height: 125, // Default `200`
-            // type: 'image/png', // Or you can also use `image/jpeg`,
-            output: {
-              width: 400,
-              height: 250
-            },
-          }
-          this.dialogService.cropImage({ imageChangedEvent: this.imageChangedEvent }, firstPictureConfig, 'labels.adjustFirstPicture').subscribe(
-            picture1 => {
-              if (picture1) {
-                this.picture1 = picture1;
-
-                const secondPictureConfig: ImgCropperConfig = {
-                 keepAspectRatio: true,
-                  width: 150,
-                  height: 150,
-                  output: {
-                    width: 150,
-                    height: 150
-                  }
-                }
-                this.dialogService.cropImage({ image: picture1 }, secondPictureConfig, 'labels.adjustSecondPicture').subscribe(
-                  picture2 => {
-                    if (picture2) {
-                      this.picture2 = picture2;
-                    }
-                  }
-                );
-              }
-            }
-          )
+          this.cropPictures({ imageChangedEvent: event });
         } else {
           alert('The photo is too small. Please select a photo with height of 250px and width of 400 pixels atleast');
         }
       };
     };
+  }
+
+  cropPictures(firstPictureSource: { imageChangedEvent?, image? }) {
+    const firstPictureConfig: ImgCropperConfig = {
+      keepAspectRatio: true,
+      width: 200, // Default `250`
+      height: 125, // Default `200`
+      // type: 'image/png', // Or you can also use `image/jpeg`,
+      output: {
+        width: 400,
+        height: 250
+      },
+    }
+
+    this.dialogService.cropImage(firstPictureSource, firstPictureConfig, 'labels.adjustFirstPicture').subscribe(
+      picture1 => {
+        if (picture1) {
+          this.picture1 = picture1;
+
+          const secondPictureConfig: ImgCropperConfig = {
+           keepAspectRatio: true,
+            width: 150,
+            height: 150,
+            output: {
+              width: 150,
+              height: 150
+            }
+          }
+          this.dialogService.cropImage({ image: picture1 }, secondPictureConfig, 'labels.adjustSecondPicture').subscribe(
+            picture2 => {
+              if (picture2) {
+                this.picture2 = picture2;
+                this.imgSrc = this.picture1;
+              }
+              // 2nd dialog cancelled
+              else {
+                this.picture1 = null;
+              }
+            }
+          );
+        }
+      }
+    )
   }
 
   returnPhotos() {

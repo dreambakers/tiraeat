@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { takeUntil } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
 import { Subject, Observable, forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-meal',
@@ -45,7 +46,8 @@ export class AddMealComponent implements OnInit {
     private formBuilder: FormBuilder,
     private menuService: MenuService,
     private authService: AuthService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +77,13 @@ export class AddMealComponent implements OnInit {
     }
   }
 
+  getImageStatus() {
+    if (this.mealToEdit?.picPathBig || this.images) {
+      return this.translate.instant('messages.imgSet');
+    }
+    return this.translate.instant('messages.noImgSet');
+  }
+
   dataURLtoFile(dataurl, filename) {
     let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -84,13 +93,11 @@ export class AddMealComponent implements OnInit {
     return new File([u8arr], filename, {type:mime});
   }
 
-  uploadImages() {
+  uploadImages(mealId = this.user.email.split('@')[0] + this.addMealForm.value['positionByCat']) {
     let observables: Observable<string>[];
 
     for (let key of Object.keys(this.images)) {
       const img = this.images[key];
-      const mealId = this.user.email.split('@')[0] + this.addMealForm.value['positionByCat'];
-
       const mediaFolderPath = `${this.user.email.split('@')[0]}/picPath${key}/`;
       const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
         mediaFolderPath,
@@ -110,12 +117,44 @@ export class AddMealComponent implements OnInit {
     this.loading = true;
 
     if (this.mealToEdit) {
-      this.menuService.editMeal({...this.addMealForm.value, id: this.mealToEdit.id}).then(
-        updatedMeal => {
-          this.mealEdited.emit(updatedMeal);
-          this.close.emit();
-        }
-      );
+      if (this.images) {
+        forkJoin(this.uploadImages(this.mealToEdit.id)).subscribe(
+          results => {
+            if (results) {
+              this.menuService.editMeal({
+                ... this.addMealForm.value,
+                id: this.mealToEdit.id,
+                picPathBig: results[0],
+                picPathSmall: results[1]
+              }).then(
+                updatedMeal => {
+                  this.mealEdited.emit(updatedMeal);
+                  this.close.emit();
+                }, err => {
+                  this.loading = false;
+                  console.log(err);
+                }
+              );
+            }
+          }, err => {
+            this.loading = false;
+            console.log(err);
+          }
+        );
+      } else {
+        this.menuService.editMeal({
+          ...this.addMealForm.value,
+          id: this.mealToEdit.id,
+        }).then(
+          updatedMeal => {
+            this.mealEdited.emit(updatedMeal);
+            this.close.emit();
+          }, err => {
+            this.loading = false;
+            console.log(err);
+          }
+        );
+      }
     } else {
       if (this.images) {
         forkJoin(this.uploadImages()).subscribe(
