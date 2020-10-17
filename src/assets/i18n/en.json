@@ -32,7 +32,11 @@
         "contactNumber": "Contact number",
         "addPhoto": "Add photo",
         "adjustFirstPicture": "Adjust first picture",
-        "adjustSecondPicture": "Adjust second picture"
+        "adjustSecondPicture": "Adjust second picture",
+        "selections": "Selections",
+        "mandatory": "Mandatory",
+        "addOption": "Add option",
+        "or": "Or"
     },
 
     "days": {

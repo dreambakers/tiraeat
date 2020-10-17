@@ -26,7 +26,8 @@ export class AddMealComponent implements OnInit {
 
   sections = {
     manageMeal: 'manageMeal',
-    addPhoto: 'addPhoto'
+    addPhoto: 'addPhoto',
+    addOptions: 'addOptions'
   }
   section = this.sections.manageMeal;
 

@@ -63,7 +63,10 @@
         <div class="flex-fill ml-3"></div>
       </div>
 
-      <button type="button" class="btn btn-info btn-block d-flex justify-content-center align-items-center">
+      <button
+        type="button"
+        class="btn btn-info btn-block d-flex justify-content-center align-items-center"
+        (click)="updateSection(sections.addOptions)">
         <i class="fas fa-plus-circle mr-2"></i>
         {{ "labels.addOptions" | translate }}
       </button>
@@ -84,5 +87,11 @@
     <app-add-photo
       (close)="updateSection(sections.manageMeal)">
     </app-add-photo>
+  </div>
+
+  <div [@myAnimation] *ngSwitchCase="sections.addOptions">
+    <app-add-option
+      (close)="updateSection(sections.manageMeal)">
+    </app-add-option>
   </div>
 </div>

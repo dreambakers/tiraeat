@@ -55,6 +55,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-option.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     ConfirmDialogComponent,
     AddPhotoComponent,
     ImageCropperComponent,
+    AddOptionComponent,
   ],
   imports: [
     BrowserModule,
