@@ -1,12 +1,6 @@
 @import '../../../dashboard.component.scss';
 @import '../../../../../scss/variables.scss';
 
-.selection-buttons {
-    min-width: 44px;
-    height: 44px;
-    background: $color-muted;
-}
-
 .custom-border {
     border-bottom: 1px solid $color-primary;
 }

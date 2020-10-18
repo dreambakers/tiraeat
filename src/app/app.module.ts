@@ -43,6 +43,7 @@ import { LoginComponent } from './login/login.component';
 import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-option.component';
 import { ExportComponent } from './export/export.component';
 import { ImportComponent } from './import/import.component';
+import { AddDrinkComponent } from './dashboard/menu/add-meal/add-drink/add-drink.component';
 
 import { PendingChangesGuard } from './guards/pending-changes.guard';
 
@@ -74,6 +75,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     AddOptionComponent,
     ExportComponent,
     ImportComponent,
+    AddDrinkComponent,
   ],
   imports: [
     BrowserModule,
