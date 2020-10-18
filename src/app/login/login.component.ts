@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   showError = false;
   loginForm: FormGroup;
+  loading = false;
 
   constructor(
     private authService: AuthService,
@@ -28,14 +29,19 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.invalid) { return; }
-
+    this.loading = true;
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).then(
       result => {
         if (result.success) {
           this.router.navigate(['dashboard']);
         } else {
+          this.loading = false;
           this.showError = true;
         }
+      }, err => {
+        console.log(err);
+        this.loading = false;
+        this.showError = true;
       }
     );
   }

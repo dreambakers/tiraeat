@@ -33,8 +33,13 @@
               <input matInput formControlName="password" type="password" required/>
             </mat-form-field>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            {{ "labels.signIn" | translate }}
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+            <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <ng-template #notLoading>
+              {{ "labels.signIn" | translate }}
+            </ng-template>
           </button>
         </form>
       </div>
