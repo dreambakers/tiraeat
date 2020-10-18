@@ -68,7 +68,6 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
   }
   onLoaded(e: ImgCropperEvent) {
     this.outputImg = e;
-    console.log('img loaded', e);
   }
   onError(e: ImgCropperErrorEvent) {
     console.warn(`'${e.name}' is not a valid image`, e);

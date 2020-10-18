@@ -145,4 +145,28 @@ export class MenuService {
       }
     )
   }
+
+  bulkAdd(meals) {
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.getMenu().pipe(
+          take(1),
+          switchMap((menu) => {
+            let batch = this.firestore.firestore.batch();
+            let index = menu.length + 1;
+            meals.forEach((meal: any) => {
+              const restName = user.email.split('@')[0];
+              const mealId = meal.isCommon ? `${restName}Common`: (`${restName}${index}`);
+              meal['restName'] = restName;
+              delete meal.id;
+              index ++;
+              const sampleRef = this.firestore.collection('menu').doc(mealId);
+              batch.set(sampleRef.ref, meal);
+            })
+            return batch.commit().catch(err => console.error(err));
+          })
+        )
+      })
+    );
+  }
 }

@@ -40,6 +40,9 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
 import { MenuComponent } from './dashboard/menu/menu.component';
 import { AddCategoryComponent } from './dashboard/menu/add-category/add-category.component';
 import { LoginComponent } from './login/login.component';
+import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-option.component';
+import { ExportComponent } from './export/export.component';
+import { ImportComponent } from './import/import.component';
 
 import { PendingChangesGuard } from './guards/pending-changes.guard';
 
@@ -55,7 +58,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-option.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-opt
     AddPhotoComponent,
     ImageCropperComponent,
     AddOptionComponent,
+    ExportComponent,
+    ImportComponent,
   ],
   imports: [
     BrowserModule,

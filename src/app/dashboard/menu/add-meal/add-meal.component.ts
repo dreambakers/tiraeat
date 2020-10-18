@@ -23,8 +23,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AddMealComponent implements OnInit {
 
-  @Output() close:EventEmitter<Boolean> = new EventEmitter();
-  @Output() mealAdded:EventEmitter<Boolean> = new EventEmitter();
+  @Output() close = new EventEmitter();
+  @Output() mealAdded = new EventEmitter();
   @Output() mealEdited = new EventEmitter();
   @Input() category;
   @Input() mealToEdit;
