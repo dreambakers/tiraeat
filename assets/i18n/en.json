@@ -36,7 +36,10 @@
         "selections": "Selections",
         "mandatory": "Mandatory",
         "addOption": "Add option",
-        "or": "Or"
+        "or": "Or",
+        "addDrink": "Add drink",
+        "volume": "Volume",
+        "ingredients": "Ingredients"
     },
 
     "days": {
