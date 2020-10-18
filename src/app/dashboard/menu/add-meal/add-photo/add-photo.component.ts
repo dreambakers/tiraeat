@@ -17,8 +17,7 @@ export class AddPhotoComponent implements OnInit {
   destroy$: Subject<null> = new Subject();
   user: firebase.User;
   @Output() close = new EventEmitter();
-  @Input() picPathBig?;
-  imgSrc;
+  @Input() imgSrc;
   picture1: File;
   picture2: File;
 
@@ -33,8 +32,6 @@ export class AddPhotoComponent implements OnInit {
     this.authService.user
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: firebase.User) => (this.user = user));
-
-    this.imgSrc = this.picPathBig;
   }
 
   fileChangeEvent(event: any): void {

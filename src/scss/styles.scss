@@ -44,6 +44,11 @@ mat-label {
 }
 
 .mat-field-no-margin {
+  .mat-form-field-prefix,
+  .mat-form-field-suffix {
+    top: unset !important;
+  }
+
   .mat-form-field-wrapper {
     padding: 0;
     margin: 0;

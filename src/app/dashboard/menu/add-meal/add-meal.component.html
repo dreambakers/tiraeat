@@ -51,6 +51,7 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary" (click)="updateSection(sections.addPhoto)">
+          <i class="fas fa-check text-success mr-2" matPrefix *ngIf="imgSet"></i>
           <input matInput disabled [value]="getImageStatus()"/>
           <i class="fas fa-camera cursor-pointer text-primary" matSuffix></i>
         </mat-form-field>
@@ -90,7 +91,7 @@
 
   <div [@myAnimation] *ngSwitchCase="sections.addPhoto">
     <app-add-photo
-      [picPathBig]="mealToEdit?.picPathBig"
+      [imgSrc]="images?.Big || mealToEdit?.picPathBig"
       (close)="onAddPhotoClose($event)">
     </app-add-photo>
   </div>

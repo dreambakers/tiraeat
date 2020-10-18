@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,7 +29,7 @@ export class AddMealComponent implements OnInit {
   @Input() category;
   @Input() mealToEdit;
   destroy$: Subject<null> = new Subject();
-  images;
+  images: { Big: any, Small: any };
   loading = false;
 
   sections = {
@@ -39,7 +39,7 @@ export class AddMealComponent implements OnInit {
   }
   section = this.sections.manageMeal;
 
-  addMealForm;
+  addMealForm: FormGroup;
   user;
 
   constructor(
@@ -78,7 +78,7 @@ export class AddMealComponent implements OnInit {
   }
 
   getImageStatus() {
-    if (this.mealToEdit?.picPathBig || this.images) {
+    if (this.imgSet) {
       return this.translate.instant('messages.imgSet');
     }
     return this.translate.instant('messages.noImgSet');
@@ -115,6 +115,13 @@ export class AddMealComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
+    this.addMealForm.disable();
+
+    const handleErr = err => {
+      console.log(err)
+      this.loading = false;
+      this.addMealForm.enable();
+    }
 
     if (this.mealToEdit) {
       if (this.images) {
@@ -130,16 +137,10 @@ export class AddMealComponent implements OnInit {
                 updatedMeal => {
                   this.mealEdited.emit(updatedMeal);
                   this.close.emit();
-                }, err => {
-                  this.loading = false;
-                  console.log(err);
-                }
+                }, err => handleErr(err)
               );
             }
-          }, err => {
-            this.loading = false;
-            console.log(err);
-          }
+          }, err => handleErr(err)
         );
       } else {
         this.menuService.editMeal({
@@ -149,11 +150,8 @@ export class AddMealComponent implements OnInit {
           updatedMeal => {
             this.mealEdited.emit(updatedMeal);
             this.close.emit();
-          }, err => {
-            this.loading = false;
-            console.log(err);
-          }
-        );
+          }, err => handleErr(err)
+        )
       }
     } else {
       if (this.images) {
@@ -168,29 +166,24 @@ export class AddMealComponent implements OnInit {
                 newMeal => {
                   this.mealAdded.emit(newMeal);
                   this.close.emit();
-                }, err => {
-                  this.loading = false;
-                  console.log(err);
-                }
+                }, err => handleErr(err)
               );
             }
-          }, err => {
-            this.loading = false;
-            console.log(err);
-          }
+          }, err => handleErr(err)
         );
       } else {
         this.menuService.addMeal(this.addMealForm.value).subscribe(
           newMeal => {
             this.mealAdded.emit(newMeal);
             this.close.emit();
-          }, err => {
-            this.loading = false;
-            console.log(err);
-          }
+          }, err => handleErr(err)
         );
       }
     }
+  }
+
+  get imgSet() {
+    return this.mealToEdit?.picPathBig || this.images;
   }
 
   ngOnDestroy() {
