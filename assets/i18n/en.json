@@ -39,7 +39,10 @@
         "or": "Or",
         "addDrink": "Add drink",
         "volume": "Volume",
-        "ingredients": "Ingredients"
+        "ingredients": "Ingredients",
+        "option": "Option",
+        "item": "Item",
+        "isRequired": "is required"
     },
 
     "days": {
@@ -60,12 +63,15 @@
         "mealDeletionConfirmation": "The selected meal will be deleted.",
         "noMenuItems": "There are no items in your restaurant's menu. Add a new category using the add button below.",
         "noImgSet": "No image set",
-        "imgSet": "Image set"
+        "imgSet": "Image set",
+        "selectExistingOptions": "Select Existing Options"
     },
 
     "placeholders": {
         "enterRestaurantName": "Enter restaurant name here..."
+    },
+
+    "errors": {
+        "onlyHebrew": "Only hebrew alphabet allowed"
     }
-
-
 }
