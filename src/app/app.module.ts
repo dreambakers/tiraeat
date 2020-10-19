@@ -52,9 +52,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -96,7 +95,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
-    MatCardModule,
     MatSliderModule,
     TranslateModule.forRoot({
       loader: {
@@ -106,7 +104,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
       }
     }),
     DragDropModule,
-    MatStepperModule
+    MatRadioModule,
   ],
   providers: [
     AngularFireAuthGuard,

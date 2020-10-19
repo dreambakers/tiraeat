@@ -64,6 +64,56 @@
         <div class="flex-fill ml-3"></div>
       </div>
 
+      <div class="form-group" formArrayName="mealOptions" *ngFor="let control of getMealOptionControls(); let i = index;">
+        <div [formGroupName]="i" class="form-group d-flex flex-column justify-content-between align-items-between">
+          <div>
+            <mat-label>
+              {{ "labels.option" | translate }} {{i + 1}}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="opNameEn"/>
+              <i class="fas fa-trash cursor-pointer text-primary" matSuffix (click)="removeOption(i)"></i>
+            </mat-form-field>
+          </div>
+
+          <div class="d-flex justify-content-between">
+
+            <div class="d-flex flex-column justify-content-between">
+              <mat-label>
+                {{ "labels.selections" | translate }}
+              </mat-label>
+
+              <div class="d-flex align-items-end">
+                <button mat-raised-button class="selection-buttons" type="button" (click)="subtractSelection(i)">
+                  <i class="fas fa-minus"></i>
+                </button>
+
+                <mat-form-field appearance="outline" class="mx-2 mat-field-no-margin input-no-label" color="primary"
+                  style="width: 70px; top: 6px;">
+                  <input matInput formControlName="opLimit" type="number" min="0" />
+                </mat-form-field>
+
+                <button mat-raised-button type="button" class="selection-buttons" (click)="addSelection(i)">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column justify-content-between">
+              <mat-label>
+                {{ "labels.mandatory" | translate }}
+              </mat-label>
+
+              <div class="checkbox-container" [class.opacity-p6]="">
+                <input id="mandatory" type="checkbox" formControlName="mandatory" />
+                <label for="mandatory" class="m-0"><span></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button
         type="button"
         class="btn btn-info btn-block d-flex justify-content-center align-items-center"
@@ -98,7 +148,8 @@
 
   <div [@myAnimation] *ngSwitchCase="sections.addOptions">
     <app-add-option
-      (close)="updateSection(sections.manageMeal)">
+      [addedLists]="getAddedOptionLists()"
+      (close)="onAddOptionClose($event)">
     </app-add-option>
   </div>
 </div>

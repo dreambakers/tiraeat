@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from 'src/app/services/auth.service';
@@ -62,8 +62,49 @@ export class AddMealComponent implements OnInit {
       mealCat: [this.mealToEdit?.mealCat || this.category.name],
       positionByCat: [
         this.mealToEdit?.positionByCat || ((this.category?.meals?.length || 0) + 1)
-      ]
+      ],
+      mealOptions: this.formBuilder.array(this.setMealOptionsControls())
     });
+  }
+
+  setMealOptionsControls() {
+    const mealOptions = [];
+    if (this.mealToEdit?.mealOptions) {
+      for (let option of this.mealToEdit?.mealOptions) {
+        mealOptions.push(this.formBuilder.group({
+          opNameEn: option?.opNameEn,
+          opNameHeb: option?.opNameHeb,
+          opLimit: option?.opLimit,
+          mandatory: option?.mandatory
+        }));
+      }
+    }
+    return mealOptions;
+  }
+
+  getMealOptionControls() {
+    return (this.addMealForm.get('mealOptions') as FormArray).controls;
+  }
+
+  removeOption(itemIndex) {
+    const items = this.addMealForm.get('mealOptions') as FormArray;
+    items.removeAt(itemIndex);
+  }
+
+  addOption(optionListName) {
+    const mealOptions = this.addMealForm.get('mealOptions') as FormArray;
+    mealOptions.push(this.formBuilder.group({
+      opNameEn: '',
+      opNameHeb: optionListName,
+      opLimit: 0,
+      mandatory: false
+    }));
+  }
+
+  getAddedOptionLists() {
+   return this.addMealForm.get('mealOptions').value.map(
+    option => option.opNameHeb
+   );
   }
 
   updateSection(newSection) {
@@ -111,6 +152,27 @@ export class AddMealComponent implements OnInit {
     }
 
     return observables;
+  }
+
+  onAddOptionClose(optionList) {
+    this.updateSection(this.sections.manageMeal);
+    if (optionList) {
+      this.addOption(Object.keys(optionList)[0]);
+    }
+  }
+
+  addSelection(optionIndex) {
+    const optionControls = this.getMealOptionControls();
+    const currentValue = optionControls[optionIndex].get('opLimit').value;
+    optionControls[optionIndex].get('opLimit').setValue(currentValue + 1);
+  }
+
+  subtractSelection(optionIndex) {
+    const optionControls = this.getMealOptionControls();
+    const currentValue = optionControls[optionIndex].get('opLimit').value;
+    if (currentValue > 0) {
+      optionControls[optionIndex].get('opLimit').setValue(currentValue - 1);
+    }
   }
 
   onSubmit() {

@@ -76,18 +76,21 @@ export class MenuService {
   }
 
   updateCommonObject(newData) {
-    return this.fireAuth.authState.pipe(
-      switchMap((user) => {
-        return this.firestore
-        .collection('menu')
-        .doc(`${user.email.split('@')[0]}Common`)
-        .set({
-          ...newData,
-          restName: user.email.split('@')[0],
-          isCommon: true
-        }, { merge: true });
-      })
-    );
+    return this.getCommonObj().pipe(switchMap((commonObject) => {
+      return this.fireAuth.authState.pipe(
+        switchMap((user) => {
+          return this.firestore
+          .collection('menu')
+          .doc(`${user.email.split('@')[0]}Common`)
+          .set({
+            ...commonObject,
+            ...newData,
+            restName: user.email.split('@')[0],
+            isCommon: true
+          }, { merge: true });
+        })
+      )
+    }))
   }
 
   updateMenu(meals, commonObj) {

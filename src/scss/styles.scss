@@ -74,6 +74,11 @@ mat-label {
           margin-top: 0.25em;
       }
   }
+
+  .mat-form-field-subscript-wrapper {
+    padding: 0 !important;
+    top: 45px !important;
+  }
 }
 
 .mat-ink-bar {
@@ -89,7 +94,7 @@ mat-label {
 .heading-with-line {
   margin: 20px 0;
   div {
-      border-bottom: 1px solid #6FD1BC;
+    border-bottom: 1px solid $color-primary;
   }
 }
 
