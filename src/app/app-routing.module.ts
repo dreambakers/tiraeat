@@ -25,12 +25,14 @@ const routes: Routes = [
   {
     path: 'import',
     component: ImportComponent,
-    canActivate: [AngularFireAuthGuard]
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'export',
     component: ExportComponent,
     canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'dashboard', component: DashboardComponent,
