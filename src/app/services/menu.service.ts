@@ -104,6 +104,20 @@ export class MenuService {
     return batch.commit().catch(err => console.error(err));
   }
 
+  clearMenu() {
+    return this.getMenu().pipe(
+      take(1),
+      switchMap((meals) => {
+        let batch = this.firestore.firestore.batch();
+        meals.forEach((meal: any) => {
+          const sampleRef = this.firestore.collection('menu').doc(meal.id)
+          batch.delete(sampleRef.ref);
+        })
+        return batch.commit().catch(err => console.error(err));
+      })
+    );
+  }
+
   updateCategory(meals, commonObj, updatedCat) {
     let batch = this.firestore.firestore.batch();
     meals?.forEach((meal: any) => {
@@ -151,12 +165,13 @@ export class MenuService {
 
   bulkAdd(meals) {
     return this.fireAuth.authState.pipe(
+      take(1),
       switchMap((user) => {
-        return this.getMenu().pipe(
+        return this.clearMenu().pipe(
           take(1),
-          switchMap((menu) => {
+          switchMap(() => {
             let batch = this.firestore.firestore.batch();
-            let index = menu.length + 1;
+            let index = 0;
             meals.forEach((meal: any) => {
               const restName = user.email.split('@')[0];
               const mealId = meal.isCommon ? `${restName}Common`: (`${restName}${index}`);
@@ -167,9 +182,8 @@ export class MenuService {
               batch.set(sampleRef.ref, meal);
             })
             return batch.commit().catch(err => console.error(err));
-          })
-        )
-      })
-    );
+          }
+        ))
+      }))
   }
 }

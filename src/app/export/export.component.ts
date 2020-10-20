@@ -14,6 +14,7 @@ export class ExportComponent implements OnInit {
   data = {};
   downloadJsonHref;
   user;
+  downloaded = false;
 
   constructor(
     private menuService: MenuService,
@@ -41,11 +42,17 @@ export class ExportComponent implements OnInit {
     );
   }
 
-  generateDownloadJsonUri(myJson) {
+  downloadJsonFiles() {
+    this.generateDownloadJsonUri({ menu: this.data['menu'] }, 'menu');
+    this.generateDownloadJsonUri({ restaurant: this.data['restaurant'] }, 'restaurant');
+    this.downloaded = true;
+  }
+
+  generateDownloadJsonUri(myJson, section) {
     var sJson = JSON.stringify(myJson);
     var element = document.createElement('a');
     element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
-    element.setAttribute('download', `${this.user.email.split('@')[0]}.json`);
+    element.setAttribute('download', `${this.user.email.split('@')[0]}_${section}.json`);
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click(); // simulate click

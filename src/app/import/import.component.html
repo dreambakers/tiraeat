@@ -1,2 +1,53 @@
-<input type="file" value="Import" accept="application/JSON" #input/>
-<button id="import" (click)="onImportClicked(input)">Import</button>
+<div class="container p-5 border h-100">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+        <h3 class="text-center">
+            Import data
+        </h3>
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <p class="text-center">Click the button to download JSON files for the menu and the restaurant details.</p>
+
+            <div [hidden]="true">
+                <input type="file" value="Import" accept="application/JSON" #restInput (change)="setFile('restaurant', $event, restInput)"/>
+                <input type="file" value="Import" accept="application/JSON" #menuInput (change)="setFile('menu', $event, menuInput)"/>
+            </div>
+
+            <div class="form-group w-100" (click)="restInput.click()">
+                <mat-label>
+                    Restaurant file
+                </mat-label>
+
+                <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+                  <input matInput [value]="files.restaurant?.name" disabled/>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group w-100" (click)="menuInput.click()">
+                <mat-label>
+                    Menu file
+                </mat-label>
+
+                <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+                  <input matInput [value]="files.menu?.name" disabled/>
+                </mat-form-field>
+            </div>
+
+            <div class="alert alert-danger w-100" *ngIf="showError">
+                File(s) could not be imported. Ensure that you have selected the correct file.
+            </div>
+
+            <div class="alert alert-success w-100" *ngIf="showSuccess">
+                File(s) imported successfully. Go to <a [routerLink]="['']">dashboard</a>
+            </div>
+
+            <button class="btn btn-primary" (click)="onImportClicked()" [disabled]="(!files.restaurant && !files.menu) || loading">
+                <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <ng-template #notLoading>
+                    Import
+                </ng-template>
+            </button>
+        </div>
+    </div>
+</div>

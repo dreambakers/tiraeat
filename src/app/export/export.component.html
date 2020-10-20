@@ -1,5 +1,15 @@
-<p>Export data</p>
+<div class="container p-5 border h-100">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+        <h3 class="text-center">
+            Export data
+        </h3>
 
-<button class="btn btn-primary" (click)="generateDownloadJsonUri(data)">
-    Download
-</button>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <p class="text-center">Click the button to download JSON files for the menu and the restaurant details.</p>
+
+            <button class="btn btn-primary" (click)="downloadJsonFiles()" [disabled]="downloaded">
+                Download
+            </button>
+        </div>
+    </div>
+</div>

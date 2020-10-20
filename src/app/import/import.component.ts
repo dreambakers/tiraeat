@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MenuService } from '../services/menu.service';
-
+import { RestaurantService } from '../services/restaurant.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
@@ -8,30 +9,86 @@ import { MenuService } from '../services/menu.service';
 })
 export class ImportComponent implements OnInit {
   constructor(
-    private menuService: MenuService
+    private menuService: MenuService,
+    private restaurantService: RestaurantService
   ) {}
+
+  files = {
+    restaurant: null,
+    menu: null
+  }
+
+  loading = false;
+  showSuccess = false;
+  showError = false;
+
+  @ViewChild('restInput', { static: true }) restInput: ElementRef;
+  @ViewChild('menuInput', { static: true }) menuInput: ElementRef;
 
   ngOnInit(): void {
   }
 
-  onImportClicked(input) {
-    const files = input.files;
-    console.log(files);
-    if (files.length <= 0) {
-      return false;
-    }
-    const reader = new FileReader();
+  onImportClicked() {
+    this.loading = true;
+    this.showSuccess = false;
+    this.showError = false;
+    let promiseArr = [];
 
-    reader.onload = (event: any) => {
-      const data = JSON.parse(event.target.result);
-      if (data) {
-        this.menuService.bulkAdd(data.menu).subscribe(
-          res => {
-            console.log('done', res);
-          }
-        )
+    for (let key of Object.keys(this.files)) {
+      if (this.files[key]) {
+        let files;
+
+        if (key === 'restaurant') {
+          files = this.restInput.nativeElement.files;
+        } else {
+          files = this.menuInput.nativeElement.files;
+        }
+
+        const reader = new FileReader();
+        promiseArr.push(new Promise((resolve, reject) => {
+          reader.onload = (event: any) => {
+            try {
+              const data = JSON.parse(event.target.result);
+              if (data) {
+                if (data.restaurant) {
+                  this.restaurantService.createRestaurant(data.restaurant).subscribe(
+                    res => {
+                      resolve({ restaurant: 1 });
+                    }, err => {
+                      reject({ restaurant: 0 });
+                    }
+                  )
+                } else if (data.menu) {
+                  this.menuService.bulkAdd(data.menu).subscribe(
+                    res => {
+                      resolve({ menu: 1 });
+                    }, err => {
+                      reject({ menu: 0});
+                    }
+                  )
+                }
+              }
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.readAsText(files.item(0));
+        }))
       }
-    };
-    reader.readAsText(files.item(0));
+    }
+
+    Promise.all(promiseArr).then(
+      res => {
+        this.loading = false;
+        this.showSuccess = true;
+      }, err => {
+        this.loading = false;
+        this.showError = true;
+      }
+    );
+  }
+
+  setFile(fileType, event, input) {
+    this.files[fileType] = input.files[0];
   }
 }
