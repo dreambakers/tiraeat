@@ -58,6 +58,7 @@ import { MatRadioModule } from '@angular/material/radio';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/add-details-photo.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     ExportComponent,
     ImportComponent,
     AddDrinkComponent,
+    AddDetailsPhotoComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     FormsModule,
     LyImageCropperModule,
     LyIconModule,
-    LySliderModule,
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

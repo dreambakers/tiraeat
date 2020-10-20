@@ -3,24 +3,54 @@ import { TranslateService } from '@ngx-translate/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ImgCropperConfig } from '@alyle/ui/image-cropper';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
+  animations: [
+    trigger('sectionAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class DetailsComponent implements OnInit {
   user;
   restaurant;
   editMode = false;
+  loading = false;
   detailsForm: FormGroup;
   days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  sections = {
+    details: "details",
+    addPhoto: 'addPhoto'
+  }
+  pictureTypes = {
+    logo: 'logo',
+    cover: 'cover'
+  }
+  imagesToUpload = {
+    Logo: null,
+    Cover: null
+  };
+  section = this.sections.details;
+  logoPic;
+  coverPic;
+  sourceData;
+
   constructor(
     public translate: TranslateService,
     private restaurantService: RestaurantService,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +74,8 @@ export class DetailsComponent implements OnInit {
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
       if (restaurant) {
         this.restaurant = restaurant;
+        this.logoPic = this.restaurant.logoPic;
+        this.coverPic = this.restaurant.coverPic;
         this.populateForm();
       }
     });
@@ -145,8 +177,87 @@ export class DetailsComponent implements OnInit {
     }
   }
 
+  addPhoto(type) {
+    let cropperConfig: ImgCropperConfig;
+    if (type === this.pictureTypes.logo) {
+      cropperConfig= {
+        keepAspectRatio: true,
+        width: 150, // Default `250`
+        height: 150, // Default `200`
+        // type: 'image/png', // Or you can also use `image/jpeg`,
+        output: {
+          width: 150,
+          height: 150
+        },
+      }
+    } else {
+      cropperConfig= {
+        keepAspectRatio: true,
+        width: 200, // Default `250`
+        height: 100, // Default `200`
+        // type: 'image/png', // Or you can also use `image/jpeg`,
+        output: {
+          width: 400,
+          height: 200
+        },
+      }
+    }
+
+    this.sourceData = {
+      type,
+      cropperConfig,
+      imgSrc: type === this.pictureTypes.logo ? this.logoPic : this.coverPic
+    }
+    this.updateSection(this.sections.addPhoto)
+  }
+
+  dataURLtoFile(dataurl, filename) {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+  }
+
+  uploadImages() {
+    let observables: Observable<string>[] = [];
+
+    for (let key of Object.keys(this.imagesToUpload)) {
+      const img = this.imagesToUpload[key];
+
+      if (img) {
+        const mediaFolderPath = `${this.user.email.split('@')[0]}/picPath${key}/`;
+        const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
+          mediaFolderPath,
+          this.dataURLtoFile(img, `${key}`)
+        );
+        observables.push(downloadUrl$);
+      }
+    }
+    return observables;
+  }
+
+  onAddPhotoClose(event) {
+    this.updateSection(this.sections.details);
+    if (event?.updated) {
+      if (event?.type === 'logo') {
+        this.logoPic = event.imgSrc;
+        this.imagesToUpload.Logo = event.imgSrc;
+      } else if (event?.type === 'cover') {
+        this.coverPic = event.imgSrc;
+        this.imagesToUpload.Cover = event.imgSrc;
+      }
+    }
+  }
+
+  updateSection(section) {
+    this.section = section;
+  }
+
   onSubmit() {
-    const detailsToSubmit = {
+    this.loading = true;
+    let detailsToSubmit = {
       ...this.detailsForm.value
     };
 
@@ -156,19 +267,58 @@ export class DetailsComponent implements OnInit {
       }
     );
 
+    if (this.imagesToUpload.Logo || this.imagesToUpload.Cover) {
+      forkJoin(this.uploadImages()).subscribe(
+        results => {
+          let resultToImgMap = {};
+
+          if (this.imagesToUpload.Logo) {
+            resultToImgMap['logoPic'] = results[0];
+          }
+
+          if (this.imagesToUpload.Cover) {
+            if (this.imagesToUpload.Logo) {
+              resultToImgMap['coverPic'] = results[1];
+            } else {
+              resultToImgMap['coverPic'] = results[0];
+            }
+          }
+
+          detailsToSubmit = {
+            ...detailsToSubmit,
+            ...resultToImgMap
+          }
+          this.updateOrCreateRestaurant(detailsToSubmit);
+        }
+      )
+    } else {
+      this.updateOrCreateRestaurant(detailsToSubmit);
+    }
+    this.editMode = false;
+    this.detailsForm.disable();
+  }
+
+  updateOrCreateRestaurant(detailsToSubmit) {
     if (!this.restaurant) {
       this.restaurantService.createRestaurant(detailsToSubmit).subscribe(
         res => {
           console.log(res)
+          this.loading = false;
+        }, err => {
+          this.loading = false;
         }
       )
     } else {
       this.restaurantService.updateRestaurant(this.restaurant, {
         ...detailsToSubmit
-      });
+      }).then(
+        res => {
+          this.loading = false;
+        }, err => {
+          this.loading = false;
+        }
+      );
     }
-    this.editMode = false;
-    this.detailsForm.disable();
   }
 
   @HostListener('window:beforeunload')

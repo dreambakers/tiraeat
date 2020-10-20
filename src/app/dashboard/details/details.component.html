@@ -1,10 +1,34 @@
 <section id="details">
-  <div>
+  <div [hidden]="section !== sections.details">
     <div class="outer-div d-flex flex-column justify-content-end align-items-end">
       <div class="position-relative logo-container">
-        <img src="assets/c.jpeg" />
+        <div
+          class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
+          *ngIf="!logoPic; else restaurantLogo"
+          (click)="editMode && addPhoto(pictureTypes.logo)">
+          <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
+          <ng-template #noEdit>
+            <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+          </ng-template>
+        </div>
+        <ng-template #restaurantLogo>
+          <img [src]="logoPic" (click)="editMode && addPhoto(pictureTypes.logo)"/>
+        </ng-template>
       </div>
-      <img src="assets/banner.jpeg" />
+
+      <div
+        class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
+        *ngIf="!coverPic; else restaurantCover"
+        (click)="editMode && addPhoto(pictureTypes.cover)">
+        <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
+        <ng-template #noEdit>
+          <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+        </ng-template>
+      </div>
+
+      <ng-template #restaurantCover>
+        <img [src]="coverPic" (click)="editMode && addPhoto(pictureTypes.cover)"/>
+      </ng-template>
     </div>
 
     <form class="container py-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
@@ -29,15 +53,21 @@
             [placeholder]="translate.instant('placeholders.enterRestaurantName')"/>
         </ng-template>
 
-        <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode; else editBtn">
+        <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode && !loading; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
           <span>
             {{ "labels.editDetails" | translate }}
           </span>
         </p>
         <ng-template #editBtn>
-          <button class="btn btn-primary done-btn" type="submit">
-            {{ "labels.done" | translate }}
+          <button class="btn btn-primary done-btn" type="submit" [disabled]="loading">
+            <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+              <span class="sr-only">Loading...</span>
+            </div>
+
+            <ng-template #notLoading>
+              {{ "labels.done" | translate }}
+            </ng-template>
           </button>
         </ng-template>
       </div>
@@ -143,5 +173,12 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div [@sectionAnimation] *ngIf="section === sections.addPhoto">
+    <app-add-details-photo
+      [sourceData]="sourceData"
+      (close)="onAddPhotoClose($event)">
+    </app-add-details-photo>
   </div>
 </section>
