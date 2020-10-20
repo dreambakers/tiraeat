@@ -34,7 +34,8 @@ export class MenuComponent implements OnInit {
   sections = {
     menu: 'menu',
     manageCategory: 'manageCategory',
-    manageMeal: 'manageMeal'
+    manageMeal: 'manageMeal',
+    drinks: 'drinks'
   }
   section = this.sections.menu;
 
