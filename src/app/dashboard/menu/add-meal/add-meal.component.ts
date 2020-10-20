@@ -113,7 +113,7 @@ export class AddMealComponent implements OnInit {
 
   onAddPhotoClose(event) {
     this.updateSection(this.sections.manageMeal);
-    if (event?.images) {
+    if (event?.updated && event?.images) {
       this.images = event.images;
     }
   }

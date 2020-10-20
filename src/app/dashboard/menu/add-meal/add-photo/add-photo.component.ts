@@ -19,6 +19,7 @@ export class AddPhotoComponent implements OnInit {
   @Input() imgSrc;
   picture1: File;
   picture2: File;
+  updated = false;
 
   constructor(
     private readonly authService: AuthService,
@@ -34,6 +35,8 @@ export class AddPhotoComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    this.updated = false;
+
     const reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
 
@@ -81,6 +84,7 @@ export class AddPhotoComponent implements OnInit {
               if (picture2) {
                 this.picture2 = picture2;
                 this.imgSrc = this.picture1;
+                this.updated = true;
               }
               // 2nd dialog cancelled
               else {
@@ -95,6 +99,7 @@ export class AddPhotoComponent implements OnInit {
 
   returnPhotos() {
     this.close.emit({
+      updated: this.updated,
       images: {
         Big: this.picture1,
         Small: this.picture2

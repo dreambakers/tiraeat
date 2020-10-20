@@ -8,7 +8,12 @@
           (click)="editMode && addPhoto(pictureTypes.logo)">
           <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
           <ng-template #noEdit>
-            <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+            <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <ng-template #notLoading>
+              <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+            </ng-template>
           </ng-template>
         </div>
         <ng-template #restaurantLogo>
@@ -22,7 +27,12 @@
         (click)="editMode && addPhoto(pictureTypes.cover)">
         <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
         <ng-template #noEdit>
-          <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+          <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <ng-template #notLoading>
+            <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+          </ng-template>
         </ng-template>
       </div>
 

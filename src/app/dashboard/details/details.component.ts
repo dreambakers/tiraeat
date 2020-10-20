@@ -54,6 +54,7 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.detailsForm = this.formBuilder.group({
       nameUnique: [],
       restPhoneNumber: [],
@@ -72,12 +73,15 @@ export class DetailsComponent implements OnInit {
     });
 
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
+      this.loading = false;
       if (restaurant) {
         this.restaurant = restaurant;
         this.logoPic = this.restaurant.logoPic;
         this.coverPic = this.restaurant.coverPic;
         this.populateForm();
       }
+    }, err => {
+      this.loading = false;
     });
   }
 
