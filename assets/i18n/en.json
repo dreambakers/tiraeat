@@ -42,7 +42,8 @@
         "ingredients": "Ingredients",
         "option": "Option",
         "item": "Item",
-        "isRequired": "is required"
+        "isRequired": "is required",
+        "drink": "Drink"
     },
 
     "days": {
@@ -64,7 +65,9 @@
         "noMenuItems": "There are no items in your restaurant's menu. Add a new category using the add button below.",
         "noImgSet": "No image set",
         "imgSet": "Image set",
-        "selectExistingOptions": "Select Existing Options"
+        "selectExistingOptions": "Select Existing Options",
+        "deleteDrinkConfirmation": "This will delete the selected drink.",
+        "drinksAdded": "Drink(s) added!"
     },
 
     "placeholders": {
