@@ -43,7 +43,8 @@
         "option": "Option",
         "item": "Item",
         "isRequired": "is required",
-        "drink": "Drink"
+        "drink": "Drink",
+        "adjustPicture": "Adjust Picture"
     },
 
     "days": {
