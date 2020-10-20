@@ -78,7 +78,7 @@ export class AddCategoryComponent implements OnInit {
       }
 
       this.menuService
-      .updateCommonObject(updatedCommonObject)
+      .updateCommonObject({ mealsCategoriesOrder: updatedCommonObject.mealsCategoriesOrder })
       .subscribe((res) => {
         this.updateCommon.emit({ ...updatedCommonObject });
         this.close.emit();
