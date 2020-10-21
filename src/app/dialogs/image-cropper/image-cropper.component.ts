@@ -35,7 +35,7 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    this.imgCropperConfig = this.data.imageCropperConfig;
+    this.imgCropperConfig = { ...this.data.imageCropperConfig, type: 'image/jpeg' };
     if (this.data.source.image) {
       this.cropper.setImageUrl(this.data.source.image)
     } else {
