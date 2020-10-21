@@ -59,6 +59,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/add-details-photo.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/
       multi: false
     },
     // Gestures
-    { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig }
+    { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent]
 })

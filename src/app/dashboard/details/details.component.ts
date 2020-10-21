@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, observable } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 import { StorageService } from 'src/app/services/storage.service';
@@ -224,15 +224,15 @@ export class DetailsComponent implements OnInit {
     return new File([u8arr], filename, {type:mime});
   }
 
-  uploadImages() {
-    let observables: Observable<string>[] = [];
+  async uploadImages() {
+    let observables= [];
 
     for (let key of Object.keys(this.imagesToUpload)) {
       const img = this.imagesToUpload[key];
 
       if (img) {
         const mediaFolderPath = `${this.user.email.split('@')[0]}/picPath${key}/`;
-        const { downloadUrl$, uploadProgress$ } = this.storageService.uploadFileAndGetMetadata(
+        const downloadUrl$ = await this.storageService.uploadFileAndGetMetadata(
           mediaFolderPath,
           this.dataURLtoFile(img, `${key}`)
         );
@@ -259,7 +259,7 @@ export class DetailsComponent implements OnInit {
     this.section = section;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.loading = true;
     let detailsToSubmit = {
       ...this.detailsForm.value
@@ -272,7 +272,7 @@ export class DetailsComponent implements OnInit {
     );
 
     if (this.imagesToUpload.Logo || this.imagesToUpload.Cover) {
-      forkJoin(this.uploadImages()).subscribe(
+      forkJoin(await this.uploadImages()).subscribe(
         results => {
           let resultToImgMap = {};
 
