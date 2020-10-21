@@ -3,6 +3,7 @@ import { MenuService } from '../services/menu.service';
 import { RestaurantService } from '../services/restaurant.service';
 import { AuthService } from '../services/auth.service';
 import { take } from 'rxjs/operators';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-export',
@@ -43,19 +44,19 @@ export class ExportComponent implements OnInit {
   }
 
   downloadJsonFiles() {
-    this.generateDownloadJsonUri({ menu: this.data['menu'] }, 'menu');
-    this.generateDownloadJsonUri({ restaurant: this.data['restaurant'] }, 'restaurant');
-    this.downloaded = true;
-  }
+    var zip = new JSZip();
+    zip.file(`${this.user.email.split('@')[0]}_menu.json`, JSON.stringify({ menu: this.data['menu'] }));
+    zip.file(`${this.user.email.split('@')[0]}_restaurant.json`, JSON.stringify({ restaurant: this.data['restaurant'] }));
 
-  generateDownloadJsonUri(myJson, section) {
-    var sJson = JSON.stringify(myJson);
-    var element = document.createElement('a');
-    element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
-    element.setAttribute('download', `${this.user.email.split('@')[0]}_${section}.json`);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click(); // simulate click
-    document.body.removeChild(element);
+    zip.generateAsync({type:"base64"}).then((content) => {
+      var element = document.createElement('a');
+      element.setAttribute('href', "data:application/zip;base64," + content);
+      element.setAttribute('download', `${this.user.email.split('@')[0]}.zip`);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click(); // simulate click
+      document.body.removeChild(element);
+      this.downloaded = true;
+    });
   }
 }
