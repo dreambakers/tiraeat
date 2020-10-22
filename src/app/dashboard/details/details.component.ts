@@ -197,12 +197,12 @@ export class DetailsComponent implements OnInit {
     } else {
       cropperConfig= {
         keepAspectRatio: true,
-        width: 200, // Default `250`
-        height: 100, // Default `200`
+        width: 150, // Default `250`
+        height: 75, // Default `200`
         // type: 'image/png', // Or you can also use `image/jpeg`,
         output: {
-          width: 400,
-          height: 200
+          width: 600,
+          height: 300
         },
       }
     }

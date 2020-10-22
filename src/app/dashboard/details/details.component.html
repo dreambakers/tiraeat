@@ -1,11 +1,37 @@
 <section id="details">
   <div [hidden]="section !== sections.details">
-    <div class="outer-div d-flex flex-column justify-content-end align-items-end">
-      <div class="position-relative logo-container">
+
+    <form class="container-fluid" style="max-width: 600px;" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+      <div class="outer-div d-flex flex-column justify-content-end align-items-end">
+        <div class="position-relative logo-container" [class.edit-mode]="editMode">
+          <div
+            class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
+            *ngIf="!logoPic; else restaurantLogo"
+            (click)="editMode && addPhoto(pictureTypes.logo)">
+            <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
+            <ng-template #noEdit>
+              <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <ng-template #notLoading>
+                <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+              </ng-template>
+            </ng-template>
+          </div>
+          <ng-template #restaurantLogo>
+            <div
+              (click)="editMode && addPhoto(pictureTypes.logo)"
+              class="d-flex align-items-center justify-content-center position-relative w-100 h-100">
+              <i class="fas fa-pen position-relative text-white" style="left: 50%;" *ngIf="editMode"></i>
+              <img [src]="logoPic"/>
+            </div>
+          </ng-template>
+        </div>
+
         <div
           class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
-          *ngIf="!logoPic; else restaurantLogo"
-          (click)="editMode && addPhoto(pictureTypes.logo)">
+          *ngIf="!coverPic; else restaurantCover"
+          (click)="editMode && addPhoto(pictureTypes.cover)">
           <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
           <ng-template #noEdit>
             <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
@@ -16,52 +42,26 @@
             </ng-template>
           </ng-template>
         </div>
-        <ng-template #restaurantLogo>
-          <img [src]="logoPic" (click)="editMode && addPhoto(pictureTypes.logo)"/>
-        </ng-template>
-      </div>
 
-      <div
-        class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
-        *ngIf="!coverPic; else restaurantCover"
-        (click)="editMode && addPhoto(pictureTypes.cover)">
-        <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
-        <ng-template #noEdit>
-          <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
-            <span class="sr-only">Loading...</span>
+        <ng-template #restaurantCover>
+          <div
+            (click)="editMode && addPhoto(pictureTypes.cover)"
+            class="position-relative w-100">
+            <i class="fas fa-pen position-relative text-white change-cover-icon" style="left: 50%; top:50%" *ngIf="editMode"></i>
+            <img [class.blur]="editMode" [src]="coverPic"/>
           </div>
-          <ng-template #notLoading>
-            <span class="text-center">{{'messages.noImgSet' | translate}}</span>
-          </ng-template>
         </ng-template>
       </div>
 
-      <ng-template #restaurantCover>
-        <img [src]="coverPic" (click)="editMode && addPhoto(pictureTypes.cover)"/>
-      </ng-template>
-    </div>
-
-    <form class="container py-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-      <div class="d-flex flex-column justify-content-center align-items-center mb-3">
-        <h4 class="m-0 text-primary">
-          {{ "labels.restaurantName" | translate }}
-        </h4>
-        <div class="my-2" *ngIf="!editMode; else nameEdit">
-          <h4 class="mb-1" *ngIf="detailsForm.controls['nameUnique'].value; else noName">
+      <div class="d-flex flex-column justify-content-center align-items-center my-4">
+        <div class="my-2">
+          <h3 class="mb-1 font-weight-bold text-center" *ngIf="detailsForm.controls['nameUnique'].value; else noName">
             {{ detailsForm.controls['nameUnique'].value }}
-          </h4>
+          </h3>
           <ng-template #noName>
             <h4 class="text-muted"><i>-</i></h4>
           </ng-template>
         </div>
-
-        <ng-template #nameEdit>
-          <input
-            matInput
-            formControlName="nameUnique"
-            class="m-0 my-2 text-center name-input"
-            [placeholder]="translate.instant('placeholders.enterRestaurantName')"/>
-        </ng-template>
 
         <p class="m-0 text-muted cursor-pointer" (click)="enableEditMode()" *ngIf="!editMode && !loading; else editBtn">
           <span><i class="far fa-edit mr-2"></i></span>
@@ -80,6 +80,16 @@
             </ng-template>
           </button>
         </ng-template>
+      </div>
+
+      <div class="form-group">
+        <mat-label>
+          {{ "labels.restaurantName" | translate }}
+        </mat-label>
+
+        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+          <input matInput formControlName="nameUnique"/>
+        </mat-form-field>
       </div>
 
       <div class="form-group">
