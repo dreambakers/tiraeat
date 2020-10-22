@@ -31,7 +31,8 @@
         <div
           class="border d-flex flex-column justify-content-center align-items-center bg-white h-100 w-100"
           *ngIf="!coverPic; else restaurantCover"
-          (click)="editMode && addPhoto(pictureTypes.cover)">
+          (click)="editMode && addPhoto(pictureTypes.cover)"
+          style="min-height:200px;">
           <i class="fas fa-plus" *ngIf="editMode; else noEdit"></i>
           <ng-template #noEdit>
             <div class="spinner-border" role="status" *ngIf="loading; else notLoading">

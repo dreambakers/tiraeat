@@ -26,7 +26,7 @@
     }
 
     &.edit-mode {
-        top: calc(55px + 2rem);
+        top: calc(55px + 1rem);
         background: rgba(0,0,0,.65);
         img {
             position: relative;
@@ -60,6 +60,6 @@ input[type=time]::-webkit-datetime-edit-ampm-field {
 
 .change-cover-icon {
     z-index: 1;
-    font-size: 2rem;
+    // font-size: 2rem;
 }
 
