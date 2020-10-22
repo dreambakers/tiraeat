@@ -76,8 +76,8 @@ export class DetailsComponent implements OnInit {
       this.loading = false;
       if (restaurant) {
         this.restaurant = restaurant;
-        this.logoPic = this.restaurant.logoPic;
-        this.coverPic = this.restaurant.coverPic;
+        this.logoPic = this.restaurant.logoPath;
+        this.coverPic = this.restaurant.repPicPath;
         this.populateForm();
       }
     }, err => {
@@ -277,15 +277,11 @@ export class DetailsComponent implements OnInit {
           let resultToImgMap = {};
 
           if (this.imagesToUpload.Logo) {
-            resultToImgMap['logoPic'] = results[0];
+            resultToImgMap['logoPath'] = results[0];
           }
 
           if (this.imagesToUpload.Cover) {
-            if (this.imagesToUpload.Logo) {
-              resultToImgMap['coverPic'] = results[1];
-            } else {
-              resultToImgMap['coverPic'] = results[0];
-            }
+            resultToImgMap['repPicPath'] = this.imagesToUpload.Logo ? results[1] : results[0];
           }
 
           detailsToSubmit = {
