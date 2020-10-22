@@ -100,15 +100,15 @@ export class DetailsComponent implements OnInit {
   }
 
   populateForm() {
-    this.detailsForm.controls['nameUnique'].setValue(this.restaurant.nameUnique);
-    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber);
-    this.detailsForm.controls['latitude'].setValue(this.restaurant.latitude);
-    this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude);
-    this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc);
-    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber);
-    this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber);
-    this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime);
-    this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName);
+    this.detailsForm.controls['nameUnique'].setValue(this.restaurant.nameUnique || '');
+    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber || '');
+    this.detailsForm.controls['latitude'].setValue(this.restaurant.latitude || '');
+    this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude || '');
+    this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc || '');
+    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber || '');
+    this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber || '');
+    this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime || '');
+    this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName || '');
     const openHoursControls = this.getDayControls();
     for (let i = 0; i < this.days.length; i ++) {
       openHoursControls[i].setValue({
