@@ -23,6 +23,25 @@ export class RestaurantService {
     );
   }
 
+  importRestaurant(data) {
+    const restaurant = Object.values(data)[0];
+
+    for(let key of Object.keys(restaurant)) {
+      if (key.startsWith('_')) {
+        delete restaurant[key];
+      }
+    }
+
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.firestore
+        .collection('restaurants')
+        .doc(user.email.split('@')[0])
+        .set(restaurant)
+      })
+    );
+  }
+
   getRestaurant() {
     return this.fireAuth.authState.pipe(
       switchMap((user) => {

@@ -12,7 +12,8 @@ import * as JSZip from 'jszip';
 })
 export class ExportComponent implements OnInit {
 
-  data = {};
+  menu = {};
+  restaurant = {};
   downloadJsonHref;
   user;
   downloaded = false;
@@ -25,14 +26,20 @@ export class ExportComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuService.getMenu().pipe(take(1)).subscribe(
-      res => {
-        this.data['menu'] = res;
+      (menu: any) => {
+        for(let meal of menu) {
+          if (meal.positionByCat) {
+            const mealPost = `${meal.positionByCat}`;
+            meal.positionByCat= `${meal.mealCat}${mealPost.padStart(3,'0')}`
+          }
+          this.menu = {...this.menu, [meal.id]: meal}
+        }
       }
     );
 
     this.restaurantService.getRestaurant().pipe(take(1)).subscribe(
-      res => {
-        this.data['restaurant'] = res;
+      restaurant => {
+        this.restaurant = { [restaurant.id]: restaurant }
       }
     );
 
@@ -45,8 +52,8 @@ export class ExportComponent implements OnInit {
 
   downloadJsonFiles() {
     var zip = new JSZip();
-    zip.file(`${this.user.email.split('@')[0]}_menu.json`, JSON.stringify({ menu: this.data['menu'] }));
-    zip.file(`${this.user.email.split('@')[0]}_restaurant.json`, JSON.stringify({ restaurant: this.data['restaurant'] }));
+    zip.file(`${this.user.email.split('@')[0]}_menu.json`, JSON.stringify(this.menu));
+    zip.file(`${this.user.email.split('@')[0]}_restaurant.json`, JSON.stringify(this.restaurant));
 
     zip.generateAsync({type:"base64"}).then((content) => {
       var element = document.createElement('a');

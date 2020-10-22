@@ -50,16 +50,16 @@ export class ImportComponent implements OnInit {
             try {
               const data = JSON.parse(event.target.result);
               if (data) {
-                if (data.restaurant) {
-                  this.restaurantService.createRestaurant(data.restaurant).subscribe(
+                if (key === 'restaurant') {
+                  this.restaurantService.importRestaurant(data).subscribe(
                     res => {
                       resolve({ restaurant: 1 });
                     }, err => {
                       reject({ restaurant: 0 });
                     }
                   )
-                } else if (data.menu) {
-                  this.menuService.bulkAdd(data.menu).subscribe(
+                } else if (key === 'menu') {
+                  this.menuService.bulkAdd(data).subscribe(
                     res => {
                       resolve({ menu: 1 });
                     }, err => {

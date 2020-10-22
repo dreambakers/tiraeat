@@ -164,6 +164,7 @@ export class MenuService {
   }
 
   bulkAdd(meals) {
+    meals = Object.values(meals);
     return this.fireAuth.authState.pipe(
       take(1),
       switchMap((user) => {
@@ -171,12 +172,24 @@ export class MenuService {
           take(1),
           switchMap(() => {
             let batch = this.firestore.firestore.batch();
-            let index = 0;
+            let index = 1;
             meals.forEach((meal: any) => {
               const restName = user.email.split('@')[0];
               const mealId = meal.isCommon ? `${restName}Common`: (`${restName}${index}`);
               meal['restName'] = restName;
-              delete meal.id;
+              for(let key of Object.keys(meal)) {
+                if (key.startsWith('_')) {
+                  delete meal[key];
+                }
+              }
+              if (meal.id) {
+                delete meal.id;
+              }
+              if (meal.positionByCat) {
+                const mealPost = meal.positionByCat.split(meal.mealCat)[1];
+                meal.positionByCat = parseInt(mealPost, 10);
+              }
+
               index ++;
               const sampleRef = this.firestore.collection('menu').doc(mealId);
               batch.set(sampleRef.ref, meal);
