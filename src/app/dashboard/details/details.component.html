@@ -121,6 +121,7 @@
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
           <input matInput formControlName="restPhoneNumber"/>
+          <mat-error>{{ "labels.restaurantPhone" | translate }} {{ 'errors.digitsLong' | translate:{ digits: 9 } }}</mat-error>
         </mat-form-field>
       </div>
 
@@ -131,6 +132,7 @@
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
           <input matInput formControlName="contactName"/>
+          <mat-error>{{ "labels.contactName" | translate }} {{ 'errors.canContainOnlyText' | translate }}</mat-error>
         </mat-form-field>
       </div>
 
@@ -141,6 +143,7 @@
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
           <input matInput formControlName="contactNumber"/>
+          <mat-error>{{ "labels.contactNumber" | translate }} {{ 'errors.digitsLong' | translate:{ digits: 10 } }}</mat-error>
         </mat-form-field>
       </div>
 

@@ -56,14 +56,14 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.detailsForm = this.formBuilder.group({
-      nameUnique: [],
-      restPhoneNumber: [],
+      nameUnique: [''],
+      restPhoneNumber: ['', [Validators.pattern("^[0-9]{9}$")]],
       openHours: this.formBuilder.array(this.setDayControls()),
-      latitude: [],
-      longitude: [],
-      restDesc: [],
-      contactName: [],
-      contactNumber: [],
+      latitude: [''],
+      longitude: [''],
+      restDesc: [''],
+      contactName: ['', [Validators.pattern("^[a-zA-Z ]*$")]],
+      contactNumber: ['', [Validators.pattern("^[0-9]{10}$")]],
       preparingTime: []
     });
     this.detailsForm.disable();
@@ -105,7 +105,6 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['latitude'].setValue(this.restaurant.latitude || '');
     this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude || '');
     this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc || '');
-    this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber || '');
     this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber || '');
     this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime || '');
     this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName || '');
@@ -260,6 +259,12 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubmit() {
+
+    if (!this.detailsForm.valid) {
+      this.detailsForm.markAsDirty;
+      return;
+     }
+
     this.loading = true;
     let detailsToSubmit = {
       ...this.detailsForm.value
