@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { MenuService } from 'src/app/services/menu.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-category',
@@ -13,7 +13,7 @@ export class AddCategoryComponent implements OnInit {
   @Output() categoryEdited = new EventEmitter();
   @Input() commonObj;
   @Input() categoryToEdit;
-  addCategoryForm;
+  addCategoryForm: FormGroup;
 
   constructor(
     private menuService: MenuService,
@@ -31,6 +31,10 @@ export class AddCategoryComponent implements OnInit {
   }
 
   onSubmit() {
+    if (!this.addCategoryForm.valid) {
+      return this.addCategoryForm.markAsDirty();
+    }
+
     let updatedCommonObject;
     const categoryName = this.addCategoryForm.value['name'];
 

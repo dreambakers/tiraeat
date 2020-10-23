@@ -20,7 +20,11 @@
       </mat-label>
 
       <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-        <input matInput formControlName="name" required/>
+        <input matInput formControlName="name"/>
+        <mat-error>
+          {{ "labels.name" | translate }}
+          {{ "messages.isRequired" | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
 
