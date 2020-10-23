@@ -104,13 +104,14 @@
       </div>
 
       <button
+        *ngIf="editMode"
         (click)="openDrinksDialog()"
         class="btn btn-primary btn-block">
-        {{'labels.drinks' | translate}}
+        {{'labels.drinks' | translate}} ({{drinksCount}})
       </button>
 
       <button
-        *ngIf="commonObj?.mealsCategoriesOrder?.length"
+        *ngIf="editMode && commonObj?.mealsCategoriesOrder?.length"
         (click)="clearMenu()"
         class="btn btn-danger btn-block mt-3">
         {{'labels.clearMenu' | translate}}
@@ -145,10 +146,10 @@
     </app-add-meal>
   </div>
 
-  <div [@sectionAnimation] *ngSwitchCase="sections.drinks">
+  <!-- <div [@sectionAnimation] *ngSwitchCase="sections.drinks">
     <app-add-drink
       (close)="updateSection(sections.menu)">
     </app-add-drink>
-  </div>
+  </div> -->
 
 </div>

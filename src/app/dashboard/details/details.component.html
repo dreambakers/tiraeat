@@ -198,7 +198,7 @@
         </div>
       </div>
 
-      <button *ngIf="restaurant" class="btn btn-danger btn-block mt-5" (click)="clearDetails()">
+      <button *ngIf="restaurant && editMode" class="btn btn-danger btn-block mt-5" (click)="clearDetails()">
         {{ 'labels.clearDetails' | translate }}
       </button>
     </form>

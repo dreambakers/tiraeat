@@ -44,6 +44,7 @@ export class MenuComponent implements OnInit {
   mealToEdit;     // meal to edit
   commonObj;
   categoriesMealsMap = {};
+  drinksCount;
 
   constructor(
     private dialogService: DialogService,
@@ -55,7 +56,10 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenu().pipe(take(1)).subscribe((menu: any) => {
       this.menu = menu;
       for (let meal of menu) {
-        if (meal.isCommon) { continue; }
+        if (meal.isCommon) {
+          this.drinksCount = meal.drinks?.length || 0;
+          continue;
+        }
 
         if (meal?.mealCat in this.categoriesMealsMap) {
           this.categoriesMealsMap[meal.mealCat] = [
