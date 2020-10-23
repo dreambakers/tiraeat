@@ -66,7 +66,21 @@ export class DetailsComponent implements OnInit {
       restDesc: [''],
       contactName: ['', [Validators.pattern("^[a-zA-Z ]*$")]],
       contactNumber: ['', [Validators.pattern("^[0-9]{10}$")]],
-      preparingTime: []
+      preparingTime: [],
+      isClient: [],
+      isClosedManually: [],
+      positionInGrid: [],
+      isAvailable: [],
+      isDelivery:[],
+      isCredit: [],
+      searchTags: [],
+      aboutRest: [],
+      creditRate: [],
+      isCash: [],
+      isPickUp: [],
+      outerDiscountField: [],
+      nameHebInner: [],
+      nameHebOuter: []
     });
     this.detailsForm.disable();
 
@@ -110,6 +124,20 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber || '');
     this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime || '');
     this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName || '');
+    this.detailsForm.controls['isClient'].setValue(this.restaurant.isClient || false);
+    this.detailsForm.controls['positionInGrid'].setValue(this.restaurant.positionInGrid || 0);
+    this.detailsForm.controls['isClosedManually'].setValue(this.restaurant.isClosedManually || false);
+    this.detailsForm.controls['isAvailable'].setValue(this.restaurant.isAvailable || true);
+    this.detailsForm.controls['isDelivery'].setValue(this.restaurant.isDelivery || true);
+    this.detailsForm.controls['searchTags'].setValue(this.restaurant.searchTags || []);
+    this.detailsForm.controls['aboutRest'].setValue(this.restaurant.aboutRest || '');
+    this.detailsForm.controls['creditRate'].setValue(this.restaurant.creditRate || '');
+    this.detailsForm.controls['isCash'].setValue(this.restaurant.isCash || true);
+    this.detailsForm.controls['isPickUp'].setValue(this.restaurant.isPickUp || true);
+    this.detailsForm.controls['isCredit'].setValue(this.restaurant.isCredit || true);
+    this.detailsForm.controls['outerDiscountField'].setValue(this.restaurant.outerDiscountField || '');
+    this.detailsForm.controls['nameHebInner'].setValue(this.restaurant.nameHebInner || '');
+    this.detailsForm.controls['nameHebOuter'].setValue(this.restaurant.nameHebOuter || '');
     const openHoursControls = this.getDayControls();
     if (this.restaurant.openHours) {
       for (let i = 0; i < this.days.length; i ++) {
@@ -295,6 +323,8 @@ export class DetailsComponent implements OnInit {
       ...this.detailsForm.value
     };
 
+    detailsToSubmit['nameHebOuter'] = detailsToSubmit['nameUnique'];
+    detailsToSubmit['nameHebInner'] = detailsToSubmit['nameUnique'];
     detailsToSubmit.openHours.forEach(
       (hour, index) => {
         detailsToSubmit.openHours[index] = `${hour.from} - ${hour.to}`
