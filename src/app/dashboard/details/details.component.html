@@ -1,7 +1,7 @@
 <section id="details">
   <div [hidden]="section !== sections.details">
 
-    <form class="container-fluid" style="max-width: 600px;" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <form class="container-fluid pb-5" style="max-width: 600px;" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="outer-div d-flex flex-column justify-content-end align-items-end">
         <div class="position-relative logo-container" [class.edit-mode]="editMode">
           <div
@@ -197,6 +197,10 @@
           </div>
         </div>
       </div>
+
+      <button *ngIf="restaurant" class="btn btn-danger btn-block mt-5" (click)="clearDetails()">
+        {{ 'labels.clearDetails' | translate }}
+      </button>
     </form>
   </div>
 

@@ -7,6 +7,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 import { StorageService } from 'src/app/services/storage.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-details',
@@ -50,7 +51,8 @@ export class DetailsComponent implements OnInit {
     private restaurantService: RestaurantService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -109,12 +111,14 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime || '');
     this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName || '');
     const openHoursControls = this.getDayControls();
-    for (let i = 0; i < this.days.length; i ++) {
-      openHoursControls[i].setValue({
-        from: this.restaurant.openHours[i].split('-')[0].trim(),
-        to: this.restaurant.openHours[i].split('-')[1].trim(),
-        active: this.restaurant.openHours[i] !== '00:00 - 00:00'
-      });
+    if (this.restaurant.openHours) {
+      for (let i = 0; i < this.days.length; i ++) {
+        openHoursControls[i].setValue({
+          from: this.restaurant.openHours[i].split('-')[0].trim(),
+          to: this.restaurant.openHours[i].split('-')[1].trim(),
+          active: this.restaurant.openHours[i] !== '00:00 - 00:00'
+        });
+      }
     }
   }
 
@@ -261,6 +265,22 @@ export class DetailsComponent implements OnInit {
 
   updateSection(section) {
     this.section = section;
+  }
+
+  clearDetails() {
+    this.dialogService.confirm(
+      'messages.areYouSure', 'messages.clearDetailsConfirmation'
+    ).subscribe(
+      res => {
+        if (res) {
+          this.restaurantService.createRestaurant({}).subscribe(
+            res1 => {
+              window.location.reload();
+            }
+          );
+        }
+      }
+    );
   }
 
   onSubmit() {
