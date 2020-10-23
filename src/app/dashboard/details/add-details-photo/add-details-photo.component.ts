@@ -41,10 +41,12 @@ export class AddDetailsPhotoComponent implements OnInit {
       const img = new Image();
       img.src = reader.result as string;
       img.onload = () => {
-        if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
+        const requiredHeight = this.sourceData.cropperConfig.output.height;
+        const requiredWidth = this.sourceData.cropperConfig.output.width;
+        if (img.naturalHeight >= requiredHeight && img.naturalWidth >= requiredWidth) {
           this.cropPictures({ imageChangedEvent: event });
         } else {
-          alert('The photo is too small. Please select a photo with height of 250px and width of 400 pixels atleast');
+          alert(`The photo is too small. Please select a photo with height of ${requiredHeight} and width of ${requiredWidth} pixels atleast`);
         }
       };
     };
