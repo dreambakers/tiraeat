@@ -58,12 +58,14 @@ export class AddMealComponent implements OnInit {
     this.addMealForm = this.formBuilder.group({
       mealName: [this.mealToEdit?.mealName, [Validators.required]],
       mealDesc: [this.mealToEdit?.mealDesc],
-      price: [this.mealToEdit?.price],
+      price: [this.mealToEdit?.price, [Validators.pattern("^[0-9]*$")]],
       mealCat: [this.mealToEdit?.mealCat || this.category.name],
       positionByCat: [
         this.mealToEdit?.positionByCat || ((this.category?.meals?.length || 0) + 1)
       ],
-      mealOptions: this.formBuilder.array(this.setMealOptionsControls())
+      mealOptions: this.formBuilder.array(this.setMealOptionsControls()),
+      picPathBig: this.mealToEdit?.picPathBig || '',
+      picPathSmall: this.mealToEdit?.picPathSmall || '',
     });
   }
 
@@ -176,6 +178,10 @@ export class AddMealComponent implements OnInit {
   }
 
   onSubmit() {
+    if (!this.addMealForm.valid) {
+      return this.addMealForm.markAsDirty();
+    }
+
     this.loading = true;
     this.addMealForm.disable();
 

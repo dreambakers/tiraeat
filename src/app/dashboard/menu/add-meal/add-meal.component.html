@@ -25,7 +25,11 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput formControlName="mealName" required/>
+          <input matInput formControlName="mealName"/>
+          <mat-error>
+            {{ "labels.name" | translate }}
+            {{ "messages.isRequired" | translate }}
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -45,7 +49,11 @@
         </mat-label>
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput formControlName="price" type="number" step="0.01" min="0"/>
+          <input matInput formControlName="price" type="number" min="0"/>
+          <mat-error>
+            {{ "labels.price" | translate }}
+            {{ "errors.canContainOnlyDigits" | translate }}
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -110,8 +118,8 @@
               </mat-label>
 
               <div class="checkbox-container" [class.opacity-p6]="">
-                <input id="mandatory" type="checkbox" formControlName="mandatory" />
-                <label for="mandatory" class="m-0"><span></span></label>
+                <input [id]="i" type="checkbox" formControlName="mandatory" />
+                <label [for]="i" class="m-0"><span></span></label>
               </div>
             </div>
           </div>
