@@ -130,6 +130,11 @@ export class DetailsComponent implements OnInit {
     );
   }
 
+  clearLocation() {
+    this.detailsForm.controls['latitude'].setValue('');
+    this.detailsForm.controls['longitude'].setValue('');
+  }
+
   createRestaurant() {
     this.restaurantService.createRestaurant({
       uid: this.user.uid,

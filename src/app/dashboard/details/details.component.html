@@ -110,7 +110,8 @@
 
         <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
           <input matInput disabled [value]="getLocationValue()"/>
-          <i *ngIf="editMode" class="fas fa-location-arrow cursor-pointer text-primary" matSuffix (click)="setPosition()"></i>
+          <i *ngIf="editMode" class="fas fa-times cursor-pointer text-danger" matSuffix (click)="clearLocation()"></i>
+          <i *ngIf="editMode" class="fas fa-location-arrow cursor-pointer text-primary ml-3" matSuffix (click)="setPosition()"></i>
         </mat-form-field>
       </div>
 
