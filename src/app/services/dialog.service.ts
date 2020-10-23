@@ -20,6 +20,7 @@ export class DialogService {
     const dialogData = new ConfirmDialogModel(this.translate.instant(title), this.translate.instant(message));
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       minWidth: '300px',
+      maxWidth: '600px',
       data: dialogData
     });
     return dialogRef.afterClosed();

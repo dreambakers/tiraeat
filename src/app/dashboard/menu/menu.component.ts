@@ -201,6 +201,22 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  clearMenu() {
+    this.dialogService.confirm(
+      'messages.areYouSure', 'messages.clearMenuConfirmation'
+    ).subscribe(
+      res => {
+        if (res) {
+          this.menuService.clearMenu().subscribe(
+            res1 => {
+              window.location.reload();
+            }
+          );
+        }
+      }
+    );
+  }
+
   submit() {
     this.loading = true;
     // Update the positionByCat value for all meals

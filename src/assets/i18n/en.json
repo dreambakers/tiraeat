@@ -44,8 +44,9 @@
         "item": "Item",
         "isRequired": "is required",
         "drink": "Drink",
-        "adjustPicture": "Adjust Picture",
-        "drinks": "Drinks"
+        "adjustPicture": "Adjust picture",
+        "drinks": "Drinks",
+        "clearMenu": "Clear menu"
     },
 
     "days": {
@@ -69,7 +70,8 @@
         "imgSet": "Image set",
         "selectExistingOptions": "Select Existing Options",
         "deleteDrinkConfirmation": "This will delete the selected drink.",
-        "drinksAdded": "Drink(s) added!"
+        "drinksAdded": "Drink(s) added!",
+        "clearMenuConfirmation": "Warning! This will clear the entire menu. If you haven't exported your data, it will be lost forever. The page will reload after the menu is cleared. Are you sure you want to proceed? "
     },
 
     "placeholders": {
