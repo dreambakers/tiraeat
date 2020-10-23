@@ -76,6 +76,8 @@
     },
 
     "errors": {
-        "onlyHebrew": "Only hebrew alphabet allowed"
+        "onlyHebrew": "Only hebrew alphabet allowed",
+        "canContainOnlyText": "can only contain text",
+        "digitsLong": "must be {{digits}} digits long"
     }
 }
