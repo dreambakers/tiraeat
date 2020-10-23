@@ -18,6 +18,13 @@ jobs:
         base_href: /tiraeat/   # make sure this corresponds to https://<your_username>.github.io/<base_href>/
         deploy_branch: main # The branch the action should deploy to.
         build_folder: dist/tiraeat # The folder where your project is supposed to be after running ng build by the action.
-    - name: Update 404
-      run: |
-        cp index.html 404.html
+    - name: Copy file
+      # You may pin to the exact commit or the version.
+      # uses: canastro/copy-action@7ddff6fc153a2ea2cd0fb88ed9750544c051e399
+      uses: canastro/copy-action@0.0.2
+      with:
+        # Source file
+        source: dist/tiraeat/index.html
+        # Target file
+        target: ./404.html
+
