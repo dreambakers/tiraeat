@@ -16,6 +16,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 60% !important;
 }
 
+.visibility-none {
+  visibility: hidden !important;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 .cf-max-width {
   max-width: 600px;
 }
@@ -184,9 +198,9 @@ mat-label {
 }
 
 #addDrink {
-  @media (max-width: 529px) {
+  @media (max-width: 455px) {
     .mat-form-field-infix {
-      width: 120px !important;
+      width: 100px !important;
     }
   }
 }
