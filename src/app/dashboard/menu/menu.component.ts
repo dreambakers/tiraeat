@@ -238,6 +238,10 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  openDrinksDialog() {
+    this.dialogService.drinksList().subscribe();
+  }
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.editMode && (this.section === this.sections.menu);

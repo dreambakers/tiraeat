@@ -1,10 +1,9 @@
-<div class="container-fluid cf-max-width py-5" id="addDrink">
-
+<div mat-dialog-content class="p-3 w-100 m-0" id="addDrink">
   <div class="d-flex justify-content-center align-items-center mb-3">
     <h4 class="m-0 ml-auto text-uppercase">
       {{ "labels.drinksList" | translate }}
     </h4>
-    <button mat-icon-button class="ml-auto" (click)="close.emit()">
+    <button mat-icon-button class="ml-auto" (click)="dialogRef.close()">
       <i class="fas fa-times"></i>
     </button>
   </div>

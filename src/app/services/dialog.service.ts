@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCropperComponent } from '../dialogs/image-cropper/image-cropper.component';
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
+import { AddDrinkComponent } from '../dashboard/menu/add-meal/add-drink/add-drink.component';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,16 @@ export class DialogService {
       minWidth: '300px',
       maxWidth: '600px',
       data: dialogData
+    });
+    return dialogRef.afterClosed();
+  }
+
+  drinksList(): Observable<any> {
+    const dialogRef = this.dialog.open(AddDrinkComponent, {
+      minWidth: '320px',
+      maxWidth: '600px',
+      panelClass: 'drinks-dialog-container'
+      // data: dialogData
     });
     return dialogRef.afterClosed();
   }

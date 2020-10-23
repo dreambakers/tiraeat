@@ -197,10 +197,20 @@ mat-label {
   }
 }
 
-#addDrink {
-  @media (max-width: 455px) {
-    .mat-form-field-infix {
-      width: 100px !important;
+.drinks-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-dialog-content {
+    padding: 0;
+  }
+
+  #addDrink {
+    @media (max-width: 455px) {
+      .mat-form-field-infix {
+        width: 100px !important;
+      }
     }
   }
 }

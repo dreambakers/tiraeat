@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-drink',
@@ -20,7 +21,8 @@ export class AddDrinkComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private menuService: MenuService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public dialogRef: MatDialogRef<AddDrinkComponent>
   ) { }
 
   ngOnInit(): void {
