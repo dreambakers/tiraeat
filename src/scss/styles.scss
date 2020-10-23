@@ -182,3 +182,11 @@ mat-label {
     }
   }
 }
+
+#addDrink {
+  @media (max-width: 529px) {
+    .mat-form-field-infix {
+      width: 120px !important;
+    }
+  }
+}

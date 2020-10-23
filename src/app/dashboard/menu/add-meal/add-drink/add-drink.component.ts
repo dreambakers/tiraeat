@@ -11,11 +11,6 @@ import { DialogService } from 'src/app/services/dialog.service';
 export class AddDrinkComponent implements OnInit {
 
   addDrinkForm: FormGroup;
-  methods = {
-    addNew: 'addNew',
-    existing: 'existing'
-  }
-  selectedMethod = this.methods.addNew;
   drinks = [];
   showSuccessMsg = false;
   loading = false;
@@ -30,18 +25,14 @@ export class AddDrinkComponent implements OnInit {
 
   ngOnInit(): void {
     this.addDrinkForm = this.formBuilder.group({
-      drinks: this.formBuilder.array([
-        this.formBuilder.group({
-          name: ['', [Validators.required]],
-          price: '',
-          // volume: 0,
-          // ingredients: ''
-        })
-      ])
+      drinks: this.formBuilder.array([])
     });
 
     this.menuService.getCommonObj().subscribe((commonObj: any) => {
       this.drinks = commonObj?.drinks || [];
+      for (let drink of this.drinks) {
+        this.addDrink(drink);
+      }
     });
   }
 
@@ -50,56 +41,42 @@ export class AddDrinkComponent implements OnInit {
   }
 
   removeDrink(itemIndex) {
-    const items = this.addDrinkForm.get('drinks') as FormArray;
-    items.removeAt(itemIndex);
-  }
-
-  addDrink() {
-    const items = this.addDrinkForm.get('drinks') as FormArray;
-    items.push(this.formBuilder.group({
-      name: ['', [Validators.required]],
-      price: '',
-      // volume: 0,
-      // ingredients: ''
-    }));
-  }
-
-  deleteDrink(drink) {
     this.dialogService.confirm('messages.areYouSure', 'messages.deleteDrinkConfirmation').subscribe(
       res => {
         if (res) {
-          const drinks = this.drinks.filter(_drink => Object.values(_drink)[0] !== Object.values(drink)[0]);
-          this.menuService.updateCommonObject({ drinks }).subscribe(
-            res => {
-              this.drinks = [... drinks];
-            }
-          )
+          const drinks = this.addDrinkForm.get('drinks') as FormArray;
+          drinks.removeAt(itemIndex);
         }
       }
-    )
+    );
+  }
+
+  addDrink(drink = null) {
+    const drinks = this.addDrinkForm.get('drinks') as FormArray;
+    drinks.push(this.formBuilder.group({
+      name: [drink ? Object.keys(drink)[0] : '', [Validators.required]],
+      price: [drink ? Object.values(drink)[0] : '', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    }));
   }
 
   onSubmit() {
-    if (this.addDrinkForm.valid) {
-      this.loading = true;
-
-      const drinks = [...this.drinks];
-
-      for (let drink of this.addDrinkForm.value['drinks']) {
-        drinks.push({ [drink.price]: drink.name });
-      }
-
-      this.menuService.updateCommonObject({ drinks }).subscribe(
-        res => {
-          const drinkCtrls = this.addDrinkForm.get('drinks') as FormArray;
-          drinkCtrls.clear();
-          this.drinks = [...drinks];
-          this.showSuccessMsg = true;
-          this.loading = false;
-        }, err => {
-          this.loading = false;
-        }
-      )
+    if (!this.addDrinkForm.valid) {
+      return this.addDrinkForm.markAsDirty();
     }
+
+    this.loading = true;
+    const drinks = [];
+    for (let drink of this.addDrinkForm.value['drinks']) {
+      drinks.push({ [drink.name]: drink.price });
+    }
+
+    this.menuService.updateCommonObject({ drinks }).subscribe(
+      res => {
+        this.showSuccessMsg = true;
+        this.loading = false;
+      }, err => {
+        this.loading = false;
+      }
+    );
   }
 }

@@ -47,7 +47,8 @@
         "adjustPicture": "Adjust picture",
         "drinks": "Drinks",
         "clearMenu": "Clear menu",
-        "clearDetails": "Clear details"
+        "clearDetails": "Clear details",
+        "drinksList": "Drinks list"
     },
 
     "days": {
@@ -71,7 +72,7 @@
         "imgSet": "Image set",
         "selectExistingOptions": "Select Existing Options",
         "deleteDrinkConfirmation": "This will delete the selected drink.",
-        "drinksAdded": "Drink(s) added!",
+        "drinksUpdated": "Drinks list updated!",
         "clearMenuConfirmation": "Warning! This will clear the entire menu. If you haven't exported your data, it will be lost forever. The page will reload after the menu is cleared. Are you sure you want to proceed?",
         "clearDetailsConfirmation": "Warning! This will clear the restaurant details. If you haven't exported your data, it will be lost forever. The page will reload after the details are cleared. Are you sure you want to proceed?",
         "isRequired": "is required"
