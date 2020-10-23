@@ -1,6 +1,6 @@
 <div [ngSwitch]="section">
   <div *ngSwitchCase="sections.manageMeal">
-    <form class="container py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <form class="container-fluid cf-max-width py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="d-flex justify-content-center align-items-center mb-3">
         <h4 class="m-0 ml-auto text-uppercase">
           <span *ngIf="mealToEdit; else addMeal">

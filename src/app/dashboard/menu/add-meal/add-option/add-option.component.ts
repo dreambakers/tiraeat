@@ -61,7 +61,6 @@ export class AddOptionComponent implements OnInit {
         this.formBuilder.group({
           name: ['', [Validators.required]],
           price: '',
-          details: ''
         })
       ])
     });

@@ -1,7 +1,7 @@
 <section id="details">
   <div [hidden]="section !== sections.details">
 
-    <form class="container-fluid pb-5" style="max-width: 600px;" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+    <form class="container-fluid cf-max-width pb-5" [formGroup]="detailsForm" (ngSubmit)="onSubmit()" ngNativeValidate>
       <div class="outer-div d-flex flex-column justify-content-end align-items-end">
         <div class="position-relative logo-container" [class.edit-mode]="editMode">
           <div

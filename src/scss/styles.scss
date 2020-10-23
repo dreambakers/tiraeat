@@ -16,6 +16,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 60% !important;
 }
 
+.cf-max-width {
+  max-width: 600px;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }
