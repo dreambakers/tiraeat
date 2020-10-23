@@ -18,3 +18,6 @@ jobs:
         base_href: /tiraeat/   # make sure this corresponds to https://<your_username>.github.io/<base_href>/
         deploy_branch: main # The branch the action should deploy to.
         build_folder: dist/tiraeat # The folder where your project is supposed to be after running ng build by the action.
+    - name: Update 404
+      run: |
+        cp index.html 404.html
