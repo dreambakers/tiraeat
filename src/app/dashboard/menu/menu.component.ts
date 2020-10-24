@@ -245,8 +245,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     // flaten array
     const meals = [].concat(...Object.values(this.categoriesMealsMap))
-
-    this.menuService.updateMenu(meals, this.commonObj).then(
+    // pick out drinks from commonObj, since we don't want to edit it
+    let { drinks, ..._commonObj } = this.commonObj;
+    this.menuService.updateMenu(meals, _commonObj).then(
       res => {
         this.editMode = false;
       }
