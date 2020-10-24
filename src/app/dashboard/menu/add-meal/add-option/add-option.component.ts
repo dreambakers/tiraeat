@@ -1,6 +1,7 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-option',
@@ -9,8 +10,7 @@ import { MenuService } from 'src/app/services/menu.service';
 })
 export class AddOptionComponent implements OnInit {
   addOptionsForm: FormGroup;
-  @Output() close = new EventEmitter();
-  @Input() addedLists;
+  addedLists;
   hebrewToEnglishAlphabet = {
     א: 'A',
     ב: 'B',
@@ -39,6 +39,7 @@ export class AddOptionComponent implements OnInit {
     ר: 'R',
     ש: '8',
     ת: 't',
+    [' ']: '-'
   };
   selectedOptions;
   optionLists = [];
@@ -51,16 +52,19 @@ export class AddOptionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private menuService: MenuService
+    private menuService: MenuService,
+    public dialogRef: MatDialogRef<AddOptionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
+    this.addedLists = this.data.addedLists;
     this.addOptionsForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[אבגדהוזחטיכךלמםנןסעפףצץקרשת ]+$')]],
       items: this.formBuilder.array([
         this.formBuilder.group({
           name: ['', [Validators.required]],
-          price: '',
+          price: ['', [Validators.pattern("^[0-9]+$")]]
         })
       ])
     });
@@ -89,37 +93,37 @@ export class AddOptionComponent implements OnInit {
     const items = this.addOptionsForm.get('items') as FormArray;
     items.push(this.formBuilder.group({
       name: ['', [Validators.required]],
-      price: '',
-      details: []
+      price: ['', [Validators.pattern("^[0-9]+$")]]
     }));
   }
 
   onSubmit() {
     if (this.selectedMethod === this.methods.addNew) {
-      if (this.addOptionsForm.valid) {
-        const newListName = this.convertHebrewToEnglish(this.addOptionsForm.controls['name'].value);
-
-        const newOptionList = {
-          [newListName]: this.addOptionsForm.controls['items'].value.map(
-            item => {
-              if (item.price) {
-                return { [item.price]: item.name }
-              } else {
-                return item.name;
-              }
-            }
-          )
-        }
-
-        this.menuService.updateCommonObject(newOptionList).subscribe(
-          res => {
-            this.close.emit(newOptionList);
-          }
-        );
+      if (!this.addOptionsForm.valid) {
+        return this.addOptionsForm.markAsDirty();
       }
+
+      const newListName = this.convertHebrewToEnglish(this.addOptionsForm.controls['name'].value);
+      const newOptionList = {
+        [newListName]: this.addOptionsForm.controls['items'].value.map(
+          item => {
+            if (item.price) {
+              return { [item.price]: item.name }
+            } else {
+              return item.name;
+            }
+          }
+        )
+      }
+
+      this.menuService.updateCommonObject(newOptionList).subscribe(
+        res => {
+          this.dialogRef.close(newOptionList);
+        }
+      );
     } else {
       if (this.selectedList) {
-        this.close.emit({ [this.selectedList]: true });
+        this.dialogRef.close({ [this.selectedList]: true });
       }
     }
   }

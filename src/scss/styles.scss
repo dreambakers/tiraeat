@@ -219,6 +219,7 @@ mat-label {
 .drinks-dialog-container {
   .mat-dialog-container {
     padding: 0;
+    margin: 5px;
   }
 
   .mat-dialog-content {
@@ -226,6 +227,25 @@ mat-label {
   }
 
   #addDrink {
+    @media (max-width: 455px) {
+      .mat-form-field-infix {
+        width: 100px !important;
+      }
+    }
+  }
+}
+
+.options-dialog-container {
+  .mat-dialog-container {
+    padding: 0;
+    margin: 5px;
+  }
+
+  .mat-dialog-content {
+    padding: 0;
+  }
+
+  #addOption {
     @media (max-width: 455px) {
       .mat-form-field-infix {
         width: 100px !important;

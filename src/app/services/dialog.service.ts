@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ImageCropperComponent } from '../dialogs/image-cropper/image-cropper.component';
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 import { AddDrinkComponent } from '../dashboard/menu/add-meal/add-drink/add-drink.component';
+import { AddOptionComponent } from '../dashboard/menu/add-meal/add-option/add-option.component';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,18 @@ export class DialogService {
       maxWidth: '600px',
       panelClass: 'drinks-dialog-container'
       // data: dialogData
+    });
+    return dialogRef.afterClosed();
+  }
+
+  options(addedLists): Observable<any> {
+    const dialogRef = this.dialog.open(AddOptionComponent, {
+      minWidth: '320px',
+      maxWidth: '600px',
+      panelClass: 'options-dialog-container',
+      data: {
+        addedLists
+      }
     });
     return dialogRef.afterClosed();
   }

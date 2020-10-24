@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-add-meal',
@@ -47,7 +48,8 @@ export class AddMealComponent implements OnInit {
     private menuService: MenuService,
     private authService: AuthService,
     private storageService: StorageService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit(): void {
@@ -156,12 +158,22 @@ export class AddMealComponent implements OnInit {
     return observables;
   }
 
-  onAddOptionClose(optionList) {
-    this.updateSection(this.sections.manageMeal);
-    if (optionList) {
-      this.addOption(Object.keys(optionList)[0]);
-    }
+  openOptionsDialog() {
+    this.dialogService.options(this.getAddedOptionLists()).subscribe(
+      optionList => {
+        if (optionList) {
+          this.addOption(Object.keys(optionList)[0]);
+        }
+      }
+    );
   }
+
+  // onAddOptionClose(optionList) {
+  //   this.updateSection(this.sections.manageMeal);
+  //   if (optionList) {
+  //     this.addOption(Object.keys(optionList)[0]);
+  //   }
+  // }
 
   addSelection(optionIndex) {
     const optionControls = this.getMealOptionControls();

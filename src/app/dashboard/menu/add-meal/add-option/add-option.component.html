@@ -1,14 +1,13 @@
-<div class="container-fluid cf-max-width py-5">
+<div class="d-flex justify-content-center align-items-center mb-3">
+  <h4 class="m-0 ml-auto text-uppercase">
+    {{ "labels.addOption" | translate }}
+  </h4>
+  <button mat-icon-button class="ml-auto" (click)="dialogRef.close()">
+    <i class="fas fa-times"></i>
+  </button>
+</div>
 
-  <div class="d-flex justify-content-center align-items-center m-3">
-    <h4 class="m-0 ml-auto text-uppercase">
-      {{ "labels.addOption" | translate }}
-    </h4>
-    <button mat-icon-button class="ml-auto" (click)="close.emit()">
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-
+<div mat-dialog-content class="p-2 w-100 m-0" id="addOption">
   <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedMethod">
     <mat-radio-button [value]="methods.addNew" class="mr-3">Add new option list</mat-radio-button>
     <mat-radio-button [value]="methods.selectExisting">Select from exisiting list</mat-radio-button>
@@ -22,47 +21,61 @@
       </mat-label>
 
       <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary" style="text-align: start!important;">
-        <input matInput formControlName="name" required style="direction: rtl;"/>
-        <mat-error>{{ 'errors.onlyHebrew' | translate }}</mat-error>
+        <input matInput formControlName="name" style="direction: rtl;"/>
+        <mat-error *ngIf="addOptionsForm.get('name').hasError('required')">
+          {{ "labels.name" | translate }}
+          {{ "labels.isRequired" | translate }}
+        </mat-error>
+        <mat-error *ngIf="addOptionsForm.get('name').hasError('pattern')">
+          {{ 'errors.onlyHebrew' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
 
-    <div class="form-group" formArrayName="items" *ngFor="let control of getItemOptions(); let i = index;">
-      <div [formGroupName]="i" class="form-group d-flex flex-column justify-content-between align-items-between">
+    <div formArrayName="items" *ngFor="let control of getItemOptions(); let i = index;">
+      <div [formGroupName]="i" class="d-flex flex-column justify-content-between align-items-between">
 
-        <div class="heading-with-line d-flex align-items-end">
+        <div class="heading-with-line d-flex align-items-end" *ngIf="i == 0">
           <mat-label>
-            {{ "labels.item" | translate }} {{ i + 1 }}
+            {{ "labels.items" | translate }}
           </mat-label>
           <div class="flex-fill ml-3"></div>
-
-          <button mat-icon-button type="button" *ngIf="i > 0" (click)="removeItem(i)">
-            <i class="fas fa-trash text-primary mt-3"></i>
-          </button>
         </div>
 
-        <div class="form-group">
-          <mat-label>
-            {{ "labels.name" | translate }}
-          </mat-label>
-
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput formControlName="name" required/>
-            <mat-error>
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <mat-label [class.visibility-none]="i > 0">
               {{ "labels.name" | translate }}
-              {{ "labels.isRequired" | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
+            </mat-label>
 
-        <div class="form-group">
-          <mat-label>
-            {{ "labels.price" | translate }}
-          </mat-label>
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="name"/>
+              <mat-error>
+                {{ "labels.name" | translate }}
+                {{ "labels.isRequired" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-          <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-            <input matInput formControlName="price" />
-          </mat-form-field>
+          <div class="mx-1"></div>
+
+          <div>
+            <mat-label [class.visibility-none]="i > 0">
+              {{ "labels.price" | translate }}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="price" />
+              <mat-error>
+                {{ "labels.price" | translate }}
+                {{ "errors.canContainOnlyDigits" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <button mat-icon-button type="button" class="mt-4" (click)="removeItem(i)">
+            <i class="fas fa-trash text-primary"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -72,6 +85,9 @@
         {{ "labels.addOption" | translate }}
     </button>
 
+    <button type="submit" class="btn btn-red btn-block mt-3" [disabled]="!addOptionsForm.controls['items'].value.length">
+      {{ "labels.save" | translate }}
+    </button>
   </form>
 
   <!-- Existing options selection section -->
@@ -93,9 +109,9 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <button type="button" class="btn btn-red btn-block mt-5" (click)="onSubmit()">
-    {{ "labels.save" | translate }}
-  </button>
+    <button type="button" class="btn btn-red btn-block mt-3" (click)="onSubmit()" [disabled]="!selectedList">
+      {{ "labels.save" | translate }}
+    </button>
+  </div>
 </div>

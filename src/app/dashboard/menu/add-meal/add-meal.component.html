@@ -129,7 +129,7 @@
       <button
         type="button"
         class="btn btn-info btn-block d-flex justify-content-center align-items-center"
-        (click)="updateSection(sections.addOptions)">
+        (click)="openOptionsDialog()">
         <i class="fas fa-plus-circle mr-2"></i>
         {{ "labels.addOptions" | translate }}
       </button>
@@ -158,10 +158,10 @@
     </app-add-photo>
   </div>
 
-  <div [@myAnimation] *ngSwitchCase="sections.addOptions">
+  <!-- <div [@myAnimation] *ngSwitchCase="sections.addOptions">
     <app-add-option
       [addedLists]="getAddedOptionLists()"
       (close)="onAddOptionClose($event)">
     </app-add-option>
-  </div>
+  </div> -->
 </div>

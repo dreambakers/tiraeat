@@ -50,7 +50,8 @@
         "clearDetails": "Clear details",
         "drinksList": "Drinks list",
         "min": "Min",
-        "max": "Max"
+        "max": "Max",
+        "items": "Items"
     },
 
     "days": {
