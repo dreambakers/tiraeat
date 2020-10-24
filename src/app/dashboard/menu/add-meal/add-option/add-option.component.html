@@ -85,7 +85,7 @@
         {{ "labels.addOption" | translate }}
     </button>
 
-    <button type="submit" class="btn btn-red btn-block mt-3" [disabled]="!addOptionsForm.controls['items'].value.length">
+    <button type="submit" class="btn btn-red btn-block save-btn mt-3" [disabled]="!addOptionsForm.controls['items'].value.length">
       {{ "labels.save" | translate }}
     </button>
   </form>
@@ -110,7 +110,7 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-red btn-block mt-3" (click)="onSubmit()" [disabled]="!selectedList">
+    <button type="button" class="btn btn-red btn-block save-btn mt-3" (click)="onSubmit()" [disabled]="!selectedList">
       {{ "labels.save" | translate }}
     </button>
   </div>
