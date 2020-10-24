@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   trigger,
@@ -8,9 +8,11 @@ import {
   state,
 } from '@angular/animations';
 import { MenuService } from '../../services/menu.service';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { DialogService } from 'src/app/services/dialog.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { EmitterService } from 'src/app/services/emitter.service';
+import { constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-menu',
@@ -25,7 +27,9 @@ import { Observable } from 'rxjs';
     ]),
   ],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
+
+  constants = constants;
   menu;
   addMealCategory;
 
@@ -44,11 +48,13 @@ export class MenuComponent implements OnInit {
   mealToEdit;     // meal to edit
   commonObj;
   categoriesMealsMap = {};
-  drinksCount;
+  drinksCount = 0;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private dialogService: DialogService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private emitterService: EmitterService
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +88,13 @@ export class MenuComponent implements OnInit {
 
     this.menuService.getCommonObj().subscribe((commonObj) => {
       this.commonObj = commonObj || {};
+    });
+
+    this.emitterService.emitter.pipe(takeUntil(this.destroy$)).subscribe((emitted) => {
+      switch(emitted.event) {
+        case constants.emitterKeys.drinksUpdated:
+          return this.drinksCount = emitted.data;
+      }
     });
   }
 
@@ -249,5 +262,10 @@ export class MenuComponent implements OnInit {
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.editMode && (this.section === this.sections.menu);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
