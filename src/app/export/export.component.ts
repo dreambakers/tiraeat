@@ -32,14 +32,16 @@ export class ExportComponent implements OnInit {
             const mealPost = `${meal.positionByCat}`;
             meal.positionByCat= `${meal.mealCat}${mealPost.padStart(3,'0')}`
           }
-          this.menu = {...this.menu, [meal.id]: meal}
+          let { id, ..._meal } = meal; // pick out id from meal
+          this.menu = {...this.menu, [meal.id]: _meal}
         }
       }
     );
 
     this.restaurantService.getRestaurant().pipe(take(1)).subscribe(
       restaurant => {
-        this.restaurant = { [restaurant.id]: restaurant }
+        let { id, ..._restaurant } = restaurant; // pick out id from restaurant
+        this.restaurant = { [restaurant.id]: _restaurant }
       }
     );
 
