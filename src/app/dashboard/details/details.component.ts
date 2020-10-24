@@ -66,7 +66,6 @@ export class DetailsComponent implements OnInit {
       restDesc: [''],
       contactName: ['', [Validators.pattern("^[a-zA-Z ]*$")]],
       contactNumber: ['', [Validators.pattern("^[0-9]{10}$")]],
-      preparingTime: [],
       isClient: [],
       isClosedManually: [],
       positionInGrid: [],
@@ -80,7 +79,9 @@ export class DetailsComponent implements OnInit {
       isPickUp: [],
       outerDiscountField: [],
       nameHebInner: [],
-      nameHebOuter: []
+      nameHebOuter: [],
+      minCookTime: ['', Validators.pattern("^[0-9]*$")],
+      maxCookTime: ['', Validators.pattern("^[0-9]*$")]
     });
     this.detailsForm.disable();
 
@@ -122,7 +123,6 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude || '');
     this.detailsForm.controls['restDesc'].setValue(this.restaurant.restDesc || '');
     this.detailsForm.controls['contactNumber'].setValue(this.restaurant.contactNumber || '');
-    this.detailsForm.controls['preparingTime'].setValue(this.restaurant.preparingTime || '');
     this.detailsForm.controls['contactName'].setValue(this.restaurant.contactName || '');
     this.detailsForm.controls['isClient'].setValue(this.restaurant.isClient || false);
     this.detailsForm.controls['positionInGrid'].setValue(this.restaurant.positionInGrid || 0);
@@ -138,6 +138,8 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['outerDiscountField'].setValue(this.restaurant.outerDiscountField || '');
     this.detailsForm.controls['nameHebInner'].setValue(this.restaurant.nameHebInner || '');
     this.detailsForm.controls['nameHebOuter'].setValue(this.restaurant.nameHebOuter || '');
+    this.detailsForm.controls['minCookTime'].setValue(this.restaurant.minCookTime || '');
+    this.detailsForm.controls['maxCookTime'].setValue(this.restaurant.maxCookTime || '');
     const openHoursControls = this.getDayControls();
     if (this.restaurant.openHours) {
       for (let i = 0; i < this.days.length; i ++) {

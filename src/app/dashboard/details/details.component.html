@@ -14,7 +14,7 @@
                 <span class="sr-only">Loading...</span>
               </div>
               <ng-template #notLoading>
-                <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+                <span class="text-center text-muted">{{'messages.noImgSet' | translate}}</span>
               </ng-template>
             </ng-template>
           </div>
@@ -39,7 +39,7 @@
               <span class="sr-only">Loading...</span>
             </div>
             <ng-template #notLoading>
-              <span class="text-center">{{'messages.noImgSet' | translate}}</span>
+              <span class="text-center text-muted">{{'messages.noImgSet' | translate}}</span>
             </ng-template>
           </ng-template>
         </div>
@@ -153,9 +153,35 @@
           {{ "labels.preparingTime" | translate }}
         </mat-label>
 
-        <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-          <input matInput formControlName="preparingTime"/>
-        </mat-form-field>
+        <div class="d-flex justify-content-between">
+          <div class="form-group">
+            <mat-label class="cook-time-sub-label">
+              {{ "labels.min" | translate }}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="minCookTime"/>
+              <mat-error>
+                {{ "labels.min" | translate }}
+                {{ 'errors.canContainOnlyDigits' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <mat-label class="cook-time-sub-label">
+              {{ "labels.max" | translate }}
+            </mat-label>
+
+            <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
+              <input matInput formControlName="maxCookTime"/>
+              <mat-error>
+                {{ "labels.max" | translate }}
+                {{ 'errors.canContainOnlyDigits' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
 
       <div class="heading-with-line d-flex align-items-end">
