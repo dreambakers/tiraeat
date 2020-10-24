@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center mb-3">
+<div class="d-flex justify-content-center align-items-center m-3">
   <h4 class="m-0 ml-auto text-uppercase">
     {{ "labels.addOption" | translate }}
   </h4>
@@ -7,7 +7,7 @@
   </button>
 </div>
 
-<div mat-dialog-content class="p-2 w-100 m-0" id="addOption">
+<div mat-dialog-content class="p-3 w-100 m-0" id="addOption">
   <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedMethod">
     <mat-radio-button [value]="methods.addNew" class="mr-3">Add new option list</mat-radio-button>
     <mat-radio-button [value]="methods.selectExisting">Select from exisiting list</mat-radio-button>
