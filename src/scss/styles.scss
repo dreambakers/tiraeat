@@ -48,6 +48,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: 500 !important;
 }
 
+.btn-red {
+  background-color: #ac0000 !important;
+  border-color: #ac0000 !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: #a71a1a !important;
+    border-color: #a71a1a !important;
+  }
+
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgba(211, 19, 19, 0.5);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(211, 19, 19, 0.5);
+  }
+}
+
 mat-label {
   color: $color-primary !important;
   font-weight: 500;

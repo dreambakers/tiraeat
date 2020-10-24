@@ -16,7 +16,7 @@
             </span>
           </p>
           <ng-template #editBtn>
-            <button class="btn btn-primary done-btn" (click)="submit()" [disabled]="loading">
+            <button class="btn btn-red done-btn" (click)="submit()" [disabled]="loading">
               <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
                 <span class="sr-only">Loading...</span>
               </div>

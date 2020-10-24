@@ -134,7 +134,7 @@
         {{ "labels.addOptions" | translate }}
       </button>
 
-      <button type="button" class="btn btn-primary btn-block mt-5" type="submit" [disabled]="loading">
+      <button type="button" class="btn btn-red btn-block mt-5" type="submit" [disabled]="loading">
         <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
           <span class="sr-only">Loading...</span>
         </div>
