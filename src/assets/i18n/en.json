@@ -51,7 +51,8 @@
         "drinksList": "Drinks list",
         "min": "Min",
         "max": "Max",
-        "items": "Items"
+        "items": "Items",
+        "title": "Title"
     },
 
     "days": {

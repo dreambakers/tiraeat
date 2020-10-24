@@ -1,4 +1,5 @@
 @import '../../dashboard.component.scss';
+@import '../../../../scss/variables.scss';
 
 .outer-div{
     height:250px;
@@ -7,4 +8,45 @@
         width:100%;
         object-fit: cover;
     }
+}
+
+.options-section {
+
+    .control-section {
+        height: 80px;
+    }
+
+    .selection-ctrl {
+        width: 50px;
+    }
+
+    input {
+        font-size: 0.8rem;
+    }
+
+    .selection-buttons {
+        padding: 0;
+        min-width: 24px;
+        height: 24px;
+        background: $color-muted;
+    }
+
+    .mat-label-sm {
+        font-size: 0.8rem;
+    }
+
+    .checkbox-container {
+        input {
+            &:checked+label {
+                span {
+                    left: 30px !important;
+                }
+            }
+        }
+
+        label {
+            width: 54px !important;
+        }
+    }
+
 }

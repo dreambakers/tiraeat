@@ -253,3 +253,11 @@ mat-label {
     }
   }
 }
+
+#addMeal {
+  @media (max-width: 455px) {
+    .mat-form-field-infix {
+      width: 80px !important;
+    }
+  }
+}
