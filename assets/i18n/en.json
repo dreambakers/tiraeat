@@ -48,7 +48,9 @@
         "drinks": "Drinks",
         "clearMenu": "Clear menu",
         "clearDetails": "Clear details",
-        "drinksList": "Drinks list"
+        "drinksList": "Drinks list",
+        "min": "Min",
+        "max": "Max"
     },
 
     "days": {
