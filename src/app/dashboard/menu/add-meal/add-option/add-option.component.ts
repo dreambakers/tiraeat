@@ -123,7 +123,7 @@ export class AddOptionComponent implements OnInit {
       );
     } else {
       if (this.selectedList) {
-        this.dialogRef.close({ [this.selectedList]: true });
+        this.dialogRef.close({ [this.convertEnglishToHebrew(this.selectedList)]: true });
       }
     }
   }
