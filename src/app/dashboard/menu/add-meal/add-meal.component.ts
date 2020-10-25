@@ -61,7 +61,7 @@ export class AddMealComponent implements OnInit {
       mealName: [this.mealToEdit?.mealName, [Validators.required]],
       mealDesc: [this.mealToEdit?.mealDesc],
       price: [this.mealToEdit?.price, [Validators.pattern("^[0-9]*$")]],
-      mealCat: [this.mealToEdit?.mealCat || this.category.name],
+      mealCat: [this.mealToEdit ? this.mealToEdit.mealCat : this.category.name],
       positionByCat: [
         this.mealToEdit?.positionByCat || ((this.category?.meals?.length || 0) + 1)
       ],
