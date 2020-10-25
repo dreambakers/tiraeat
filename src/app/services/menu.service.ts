@@ -13,6 +13,16 @@ export class MenuService {
     private fireAuth: AngularFireAuth
   ) { }
 
+  getMaxMealsIndex(meals) {
+    let maxIndex = 0;
+    if (meals.length) {
+      for (let meal of meals) {
+        maxIndex = meal.id.split(meal.restName)[1] > maxIndex ? parseInt(meal.id.split(meal.restName)[1]) : maxIndex;
+      }
+    }
+    return maxIndex;
+  }
+
   addMeal(data) {
     return this.fireAuth.authState.pipe(
       switchMap((user) => {
@@ -20,7 +30,8 @@ export class MenuService {
           take(1),
           switchMap(
             meals => {
-              const mealId = (`${user.email.split('@')[0]}${meals.length}`)
+              const maxMealsIndex = this.getMaxMealsIndex(meals);
+              const mealId = (`${user.email.split('@')[0]}${maxMealsIndex + 1}`);
               return this.firestore
               .collection('menu')
               .doc(mealId)
