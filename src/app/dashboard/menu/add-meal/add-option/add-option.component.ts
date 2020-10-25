@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, Inject, Renderer2, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './add-option.component.html',
   styleUrls: ['./add-option.component.scss'],
 })
-export class AddOptionComponent implements OnInit {
+export class AddOptionComponent implements OnInit, OnDestroy {
   addOptionsForm: FormGroup;
   addedLists;
   hebrewToEnglishAlphabet = {
@@ -54,8 +54,11 @@ export class AddOptionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private menuService: MenuService,
     public dialogRef: MatDialogRef<AddOptionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data,
+    private renderer: Renderer2
+  ) {
+    this.renderer.addClass(document.body, 'dialog-open');
+  }
 
   ngOnInit(): void {
     this.addedLists = this.data.addedLists;
@@ -157,5 +160,9 @@ export class AddOptionComponent implements OnInit {
     return this.optionLists.filter(
       list => !this.addedLists.includes(list)
     );
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeClass(document.body, 'dialog-open');
   }
 }

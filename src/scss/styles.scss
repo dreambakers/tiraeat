@@ -3,7 +3,13 @@
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  &.dialog-open {
+    overflow: hidden;
+  }
+}
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :focus { outline:0 !important; }
