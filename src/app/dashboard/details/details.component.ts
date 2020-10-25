@@ -28,7 +28,7 @@ export class DetailsComponent implements OnInit {
   editMode = false;
   loading = false;
   detailsForm: FormGroup;
-  days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   sections = {
     details: "details",
     addPhoto: 'addPhoto'
@@ -64,7 +64,7 @@ export class DetailsComponent implements OnInit {
       latitude: [''],
       longitude: [''],
       restDesc: [''],
-      contactName: ['', [Validators.pattern("^[a-zA-Z ]*$")]],
+      contactName: ['', [Validators.pattern("^[אבגדהוזחטיכךלמםנןסעפףצץקרשת ]*$")]],
       contactNumber: ['', [Validators.pattern("^[0-9]{10}$")]],
       isClient: [],
       isClosedManually: [],
