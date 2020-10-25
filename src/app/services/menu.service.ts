@@ -99,7 +99,7 @@ export class MenuService {
       const sampleRef = this.firestore.collection('menu').doc(meal.id)
       batch.update(sampleRef.ref, {...meal});
     })
-    const commonObjRef = this.firestore.collection('menu').doc(`${commonObj.restName}Common`);
+    const commonObjRef = this.firestore.collection('menu').doc(commonObj.id);
     batch.update(commonObjRef.ref, {...commonObj});
     return batch.commit().catch(err => console.error(err));
   }
@@ -124,7 +124,7 @@ export class MenuService {
       const sampleRef = this.firestore.collection('menu').doc(meal.id)
       batch.update(sampleRef.ref, {...meal, mealCat: updatedCat });
     })
-    const commonObjRef = this.firestore.collection('menu').doc(`${commonObj.restName}Common`);
+    const commonObjRef = this.firestore.collection('menu').doc(commonObj.id);
     batch.update(commonObjRef.ref, {...commonObj});
     return batch.commit().catch(err => console.error(err));
   }
