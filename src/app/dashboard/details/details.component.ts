@@ -87,6 +87,7 @@ export class DetailsComponent implements OnInit {
 
     this.authService.user.subscribe((user) => {
       this.user = user;
+      this.detailsForm.controls['nameUnique'].setValue(user?.email.split('@')[0] || '');
     });
 
     this.restaurantService.getRestaurant().subscribe((restaurant) => {
@@ -117,7 +118,6 @@ export class DetailsComponent implements OnInit {
   }
 
   populateForm() {
-    this.detailsForm.controls['nameUnique'].setValue(this.restaurant.nameUnique || '');
     this.detailsForm.controls['restPhoneNumber'].setValue(this.restaurant.restPhoneNumber || '');
     this.detailsForm.controls['latitude'].setValue(this.restaurant.latitude || '');
     this.detailsForm.controls['longitude'].setValue(this.restaurant.longitude || '');
@@ -325,8 +325,7 @@ export class DetailsComponent implements OnInit {
       ...this.detailsForm.value
     };
 
-    detailsToSubmit['nameHebOuter'] = detailsToSubmit['nameUnique'];
-    detailsToSubmit['nameHebInner'] = detailsToSubmit['nameUnique'];
+    detailsToSubmit['nameHebOuter'] = detailsToSubmit['nameHebInner'];
     detailsToSubmit.openHours.forEach(
       (hour, index) => {
         detailsToSubmit.openHours[index] = `${hour.from} - ${hour.to}`
@@ -364,7 +363,7 @@ export class DetailsComponent implements OnInit {
     if (!this.restaurant) {
       this.restaurantService.createRestaurant(detailsToSubmit).subscribe(
         res => {
-          console.log(res)
+          this.restaurant = res;
           this.loading = false;
         }, err => {
           this.loading = false;
@@ -375,6 +374,7 @@ export class DetailsComponent implements OnInit {
         ...detailsToSubmit
       }).then(
         res => {
+          this.restaurant = res;
           this.loading = false;
         }, err => {
           this.loading = false;

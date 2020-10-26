@@ -19,6 +19,11 @@ export class RestaurantService {
         .collection('restaurants')
         .doc(user.email.split('@')[0])
         .set(data)
+        .then(
+          res => {
+            return { id: user.email.split('@')[0], ...data };
+          }
+        )
       })
     );
   }
@@ -69,6 +74,9 @@ export class RestaurantService {
     return this.firestore
       .collection('restaurants')
       .doc(restaurant.id)
-      .set({ ...newData }, { merge: true });
+      .set({ ...newData }, { merge: true })
+      .then((res) => {
+        return { id: restaurant.id, ...newData };
+      });
   }
 }
