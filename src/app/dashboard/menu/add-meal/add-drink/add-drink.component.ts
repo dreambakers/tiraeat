@@ -5,6 +5,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { EmitterService } from 'src/app/services/emitter.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { constants } from '../../../../app.constants';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 @Component({
   selector: 'app-add-drink',
@@ -42,6 +43,8 @@ export class AddDrinkComponent implements OnInit, OnDestroy {
         this.addDrink(drink);
       }
     });
+
+    disableBodyScroll(document.querySelector('#addDrink'));
   }
 
   getDrinkControls() {
@@ -90,6 +93,7 @@ export class AddDrinkComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearAllBodyScrollLocks();
     this.emitterService.emit(this.constants.emitterKeys.drinksUpdated, this.drinksCount);
   }
 }

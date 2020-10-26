@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input, Inject, Renderer2, OnDe
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 @Component({
   selector: 'app-add-option',
@@ -163,6 +163,6 @@ export class AddOptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    enableBodyScroll(document.querySelector('#addOption'));
+    clearAllBodyScrollLocks();
   }
 }
