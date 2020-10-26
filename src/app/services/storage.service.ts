@@ -17,12 +17,14 @@ export interface FilesUploadMetadata {
 export class StorageService {
   constructor(private readonly storage: AngularFireStorage) {}
 
+  // For now, assumption is that function is only for uploading pictures,
+  // So .jpeg extension is being hard-coded
   uploadFileAndGetMetadata(
     mediaFolderPath: string,
     fileToUpload: File,
   ): FilesUploadMetadata {
     const { name } = fileToUpload;
-    const filePath = `${mediaFolderPath}/${name}`;
+    const filePath = `${mediaFolderPath}/${name}.jpeg`;
     const uploadTask: AngularFireUploadTask = this.storage.upload(
       filePath,
       fileToUpload,

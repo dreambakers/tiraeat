@@ -29,6 +29,7 @@ export class AddMealComponent implements OnInit {
   @Output() mealEdited = new EventEmitter();
   @Input() category;
   @Input() mealToEdit;
+  @Input() meals;
   destroy$: Subject<null> = new Subject();
   images: { Big: any, Small: any };
   loading = false;
@@ -138,7 +139,8 @@ export class AddMealComponent implements OnInit {
     return new File([u8arr], filename, {type:mime});
   }
 
-  uploadImages(mealId = this.user.email.split('@')[0] + this.addMealForm.value['positionByCat']) {
+  uploadImages(mealId = null) {
+    mealId = mealId || this.user.email.split('@')[0] + (this.menuService.getMaxMealsIndex(this.meals) + 1);
     let observables: Observable<string>[];
 
     for (let key of Object.keys(this.images)) {

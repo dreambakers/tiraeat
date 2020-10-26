@@ -219,6 +219,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   clearMenu() {
+    this.editMode = false;
     this.dialogService.confirm(
       'messages.areYouSure', 'messages.clearMenuConfirmation'
     ).subscribe(
@@ -258,6 +259,10 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   openDrinksDialog() {
     this.dialogService.drinksList().subscribe();
+  }
+
+  getAllMealsFromMap() {
+    return Object.values(this.categoriesMealsMap).length ? [].concat(...Object.values(this.categoriesMealsMap)) : [];
   }
 
   @HostListener('window:beforeunload')

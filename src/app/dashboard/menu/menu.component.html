@@ -138,6 +138,7 @@
 
   <div [@sectionAnimation] *ngSwitchCase="sections.manageMeal">
     <app-add-meal
+      [meals]="getAllMealsFromMap()"
       [mealToEdit]="mealToEdit"
       [category]="addMealCategory"
       (close)="updateSection(sections.menu); mealToEdit = null"
