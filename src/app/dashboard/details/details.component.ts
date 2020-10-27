@@ -328,7 +328,7 @@ export class DetailsComponent implements OnInit {
     detailsToSubmit['nameHebOuter'] = detailsToSubmit['nameHebInner'];
     detailsToSubmit.openHours.forEach(
       (hour, index) => {
-        detailsToSubmit.openHours[index] = `${hour.from} - ${hour.to}`
+        detailsToSubmit.openHours[index] = `${hour.from}-${hour.to}`
       }
     );
 

@@ -104,10 +104,10 @@
       </div>
 
       <button
-        *ngIf="editMode"
         (click)="openDrinksDialog()"
-        class="btn btn-primary btn-block">
-        {{'labels.drinks' | translate}} ({{drinksCount}})
+        class="btn btn-primary btn-block"
+        [disabled]="!editMode">
+          {{'labels.drinks' | translate}} ({{drinksCount}})
       </button>
 
       <button

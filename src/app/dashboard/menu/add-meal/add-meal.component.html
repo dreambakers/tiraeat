@@ -145,18 +145,13 @@
         {{ "labels.addOptions" | translate }}
       </button>
 
-      <button type="button" class="btn btn-red btn-block mt-5" type="submit" [disabled]="loading">
+      <button type="button" class="btn btn-red btn-block mt-5 save-btn" type="submit" [disabled]="loading">
         <div class="spinner-border" role="status" *ngIf="loading; else notLoading">
           <span class="sr-only">Loading...</span>
         </div>
 
         <ng-template #notLoading>
-          <span *ngIf="mealToEdit; else addMeal">
-            {{ "labels.save" | translate }}
-          </span>
-          <ng-template #addMeal>
-            {{ "labels.add" | translate }}
-          </ng-template>
+          {{ "labels.save" | translate }}
         </ng-template>
       </button>
     </form>
