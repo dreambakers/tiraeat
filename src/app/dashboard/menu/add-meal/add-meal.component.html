@@ -16,7 +16,7 @@
       </div>
 
       <div class="outer-div mb-3" (click)="updateSection(sections.addPhoto)">
-        <img [src]="images?.Big || mealToEdit?.picPathBig || 'assets/no-image.jpg'" alt="">
+        <img [src]="images?.Big || mealToEdit?.picPathBig || constants.imgPath.noImg" alt="">
       </div>
 
       <div class="form-group">

@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogService } from 'src/app/services/dialog.service';
+import { constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-add-meal',
@@ -33,6 +34,7 @@ export class AddMealComponent implements OnInit {
   destroy$: Subject<null> = new Subject();
   images: { Big: any, Small: any };
   loading = false;
+  constants = constants;
 
   sections = {
     manageMeal: 'manageMeal',

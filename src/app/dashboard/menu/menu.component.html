@@ -73,7 +73,7 @@
                 <i class="mr-2 fas fa-bars drag-handle ml-2 noselect" cdkDragHandle *ngIf="editMode"></i>
                 <div class="flex-fill d-flex align-items-center">
                   <div class="w-50 text-ellipsis">
-                    <img [src]="meal?.picPathSmall" class="rounded mr-2" width="50" height="50" *ngIf="meal?.picPathSmall">
+                    <img [src]="meal?.picPathSmall || constants.imgPath.noImg" class="rounded mr-2" width="50" height="50">
                     <span class="meal-name font-weight-bold">{{meal.mealName}}</span>
                   </div>
                   <div class="flex-fill d-flex" *ngIf="editMode">
