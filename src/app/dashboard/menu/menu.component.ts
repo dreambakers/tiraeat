@@ -261,10 +261,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.dialogService.drinksList().subscribe();
   }
 
-  getAllMealsFromMap() {
-    return Object.values(this.categoriesMealsMap).length ? [].concat(...Object.values(this.categoriesMealsMap)) : [];
-  }
-
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.editMode && (this.section === this.sections.menu);

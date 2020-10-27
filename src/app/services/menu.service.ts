@@ -13,37 +13,39 @@ export class MenuService {
     private fireAuth: AngularFireAuth
   ) { }
 
-  getMaxMealsIndex(meals) {
-    let maxIndex = 0;
-    if (meals.length) {
-      for (let meal of meals) {
-        maxIndex = meal.id.split(meal.restName)[1] > maxIndex ? parseInt(meal.id.split(meal.restName)[1]) : maxIndex;
-      }
-    }
-    return maxIndex;
+  getMaxMealIndex() {
+    return this.getMenu().pipe(
+      take(1),
+      map((meals: any) => {
+        let maxIndex = 0;
+        if (meals.length) {
+          for (let meal of meals) {
+            maxIndex = parseInt(meal.id.split(meal.restName)[1]) > maxIndex ? parseInt(meal.id.split(meal.restName)[1]) : maxIndex;
+          }
+        }
+        return maxIndex;
+      })
+    );
   }
 
   addMeal(data) {
     return this.fireAuth.authState.pipe(
+      take(1),
       switchMap((user) => {
-        return this.getMenu().pipe(
+        return this.getMaxMealIndex().pipe(
           take(1),
-          switchMap(
-            meals => {
-              const maxMealsIndex = this.getMaxMealsIndex(meals);
-              const mealId = (`${user.email.split('@')[0]}${maxMealsIndex + 1}`);
-              return this.firestore
-              .collection('menu')
-              .doc(mealId)
-              .set({...data, restName: user.email.split('@')[0]})
-              .then(
-                res => {
-                  return {...data, id: mealId, restName: user.email.split('@')[0] }
-                }
-              )
-            }
-          )
-        )
+          switchMap(maxMealsIndex => {
+            const mealId = (`${user.email.split('@')[0]}${maxMealsIndex + 1}`);
+            return this.firestore
+            .collection('menu')
+            .doc(mealId)
+            .set({...data, restName: user.email.split('@')[0]})
+            .then(
+              res => {
+                return {...data, id: mealId, restName: user.email.split('@')[0] }
+              }
+            )
+        }))
       })
     );
   }

@@ -30,7 +30,6 @@ export class AddMealComponent implements OnInit {
   @Output() mealEdited = new EventEmitter();
   @Input() category;
   @Input() mealToEdit;
-  @Input() meals;
   destroy$: Subject<null> = new Subject();
   images: { Big: any, Small: any };
   loading = false;
@@ -141,8 +140,7 @@ export class AddMealComponent implements OnInit {
     return new File([u8arr], filename, {type:mime});
   }
 
-  uploadImages(mealId = null) {
-    mealId = mealId || this.user.email.split('@')[0] + (this.menuService.getMaxMealsIndex(this.meals) + 1);
+  uploadImages(mealId) {
     let observables: Observable<string>[];
 
     for (let key of Object.keys(this.images)) {
@@ -239,21 +237,26 @@ export class AddMealComponent implements OnInit {
       }
     } else {
       if (this.images) {
-        forkJoin(this.uploadImages()).subscribe(
-          results => {
-            if (results) {
-              this.menuService.addMeal({
-                ... this.addMealForm.value,
-                picPathBig: results[0],
-                picPathSmall: results[1]
-              }).subscribe(
-                newMeal => {
-                  this.mealAdded.emit(newMeal);
-                  this.close.emit();
-                }, err => handleErr(err)
-              );
-            }
-          }, err => handleErr(err)
+        this.menuService.getMaxMealIndex().subscribe(
+          maxMealIndex => {
+            const newMealId =`${this.user.email.split('@')[0]}${maxMealIndex + 1}`;
+            forkJoin(this.uploadImages(newMealId)).subscribe(
+              results => {
+                if (results) {
+                  this.menuService.addMeal({
+                    ... this.addMealForm.value,
+                    picPathBig: results[0],
+                    picPathSmall: results[1]
+                  }).subscribe(
+                    newMeal => {
+                      this.mealAdded.emit(newMeal);
+                      this.close.emit();
+                    }, err => handleErr(err)
+                  );
+                }
+              }, err => handleErr(err)
+            );
+          }
         );
       } else {
         this.menuService.addMeal(this.addMealForm.value).subscribe(
