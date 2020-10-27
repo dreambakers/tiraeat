@@ -52,7 +52,10 @@
         "min": "Min",
         "max": "Max",
         "items": "Items",
-        "title": "Title"
+        "title": "Title",
+        "addItem": "Add Item",
+        "newOption": "New option",
+        "existingOptions": "Existing options"
     },
 
     "days": {
