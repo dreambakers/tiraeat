@@ -44,6 +44,8 @@ import { AddOptionComponent } from './dashboard/menu/add-meal/add-option/add-opt
 import { ExportComponent } from './export/export.component';
 import { ImportComponent } from './import/import.component';
 import { AddDrinkComponent } from './dashboard/menu/add-meal/add-drink/add-drink.component';
+import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/add-details-photo.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { EnglishToHebrewPipe } from './pipes/english-to-hebrew.pipe';
 
@@ -60,7 +62,6 @@ import { MatRadioModule } from '@angular/material/radio';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/add-details-photo.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/
     AddDrinkComponent,
     AddDetailsPhotoComponent,
     EnglishToHebrewPipe,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
