@@ -2,6 +2,7 @@ export const constants = {
     version: '0.1',
     emitterKeys: {
         drinksUpdated: 'drinksUpdated',
+        tabChanged: 'tabChanged'
     },
     imgPath: {
         noImg: 'assets/no-image.jpg'

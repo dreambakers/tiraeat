@@ -94,6 +94,16 @@ export class MenuComponent implements OnInit, OnDestroy {
       switch(emitted.event) {
         case constants.emitterKeys.drinksUpdated:
           return this.drinksCount = emitted.data;
+
+        case constants.emitterKeys.tabChanged:
+          // if details tab selected
+          if (emitted.data == 1 && this.editMode) {
+            this.editMode = false;
+            this.updateSection(this.sections.menu);
+            // call to update any ordering change in db
+            this.submit();
+          }
+          return;
       }
     });
   }

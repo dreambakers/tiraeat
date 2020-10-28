@@ -1,4 +1,4 @@
-<mat-tab-group [selectedIndex]="1" class="h-100" id="dashboard">
+<mat-tab-group [selectedIndex]="1" (selectedTabChange)="onTabChanged($event)"  class="h-100" id="dashboard">
   <mat-tab disabled class="mr-auto p-0">
     <ng-template mat-tab-label>
       <div class="d-flex justify-content-start">

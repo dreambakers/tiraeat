@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { DialogService } from '../services/dialog.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { EmitterService } from '../services/emitter.service';
+import { constants } from '../app.constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +14,14 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
+  constants = constants;
+
   constructor(
     public translate: TranslateService,
     private authService: AuthService,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private emitterService: EmitterService
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +39,10 @@ export class DashboardComponent implements OnInit {
         }
       }
     );
+  }
+
+  onTabChanged(event) {
+    this.emitterService.emit(this.constants.emitterKeys.tabChanged, event.index);
   }
 
   @HostListener('window:beforeunload')
