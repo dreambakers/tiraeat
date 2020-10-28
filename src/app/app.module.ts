@@ -45,6 +45,8 @@ import { ExportComponent } from './export/export.component';
 import { ImportComponent } from './import/import.component';
 import { AddDrinkComponent } from './dashboard/menu/add-meal/add-drink/add-drink.component';
 
+import { EnglishToHebrewPipe } from './pipes/english-to-hebrew.pipe';
+
 import { PendingChangesGuard } from './guards/pending-changes.guard';
 
 import { MatTabsModule } from '@angular/material/tabs';
@@ -77,6 +79,7 @@ import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/
     ImportComponent,
     AddDrinkComponent,
     AddDetailsPhotoComponent,
+    EnglishToHebrewPipe,
   ],
   imports: [
     BrowserModule,

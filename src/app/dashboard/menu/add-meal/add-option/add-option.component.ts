@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-add-option',
@@ -10,38 +11,9 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
   styleUrls: ['./add-option.component.scss'],
 })
 export class AddOptionComponent implements OnInit, OnDestroy {
+  constants = constants;
   addOptionsForm: FormGroup;
   addedLists;
-  hebrewToEnglishAlphabet = {
-    א: 'A',
-    ב: 'B',
-    ג: 'G',
-    ד: 'D',
-    ה: 'H',
-    ו: 'O',
-    ז: 'Z',
-    ח: '7',
-    ט: 'T',
-    י: 'E',
-    כ: 'K',
-    ך: 'k',
-    ל: 'L',
-    מ: 'M',
-    ם: 'm',
-    נ: 'N',
-    ן: 'n',
-    ס: 'S',
-    ע: '3',
-    פ: 'P',
-    ף: 'p',
-    צ: 'X',
-    ץ: 'x',
-    ק: 'Q',
-    ר: 'R',
-    ש: '8',
-    ת: 't',
-    [' ']: '-'
-  };
   selectedOptions;
   optionLists = [];
   methods = {
@@ -101,12 +73,20 @@ export class AddOptionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const convertHebrewToEnglish = value => {
+      let converted = '__';
+      for (let character of value) {
+        converted += this.constants.hebrewToEnglishAlphabet[character] || '';
+      }
+      return converted;
+    }
+
     if (this.selectedMethod === this.methods.addNew) {
       if (!this.addOptionsForm.valid) {
         return this.addOptionsForm.markAsDirty();
       }
 
-      const newListName = this.convertHebrewToEnglish(this.addOptionsForm.controls['name'].value);
+      const newListName = convertHebrewToEnglish(this.addOptionsForm.controls['name'].value);
       const newOptionList = {
         [newListName]: this.addOptionsForm.controls['items'].value.map(
           item => {
@@ -129,31 +109,6 @@ export class AddOptionComponent implements OnInit, OnDestroy {
         this.dialogRef.close({ [this.selectedList]: true });
       }
     }
-  }
-
-  convertHebrewToEnglish(value) {
-    let converted = '';
-    for (let character of value) {
-      converted += this.hebrewToEnglishAlphabet[character] || '';
-    }
-    return converted;
-  }
-
-  convertEnglishToHebrew(value) {
-    let converted = '';
-    const englishToHebrewAlphabet = this.objectFlip(this.hebrewToEnglishAlphabet);
-    for (let character of value) {
-      converted += englishToHebrewAlphabet[character] || '';
-    }
-    return converted;
-  }
-
-  objectFlip(obj) {
-    const ret = {};
-    Object.keys(obj).forEach(key => {
-      ret[obj[key]] = key;
-    });
-    return ret;
   }
 
   getFilteredOptionLists() {

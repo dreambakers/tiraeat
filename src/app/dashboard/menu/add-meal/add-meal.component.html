@@ -81,7 +81,7 @@
 
           <div class="heading-with-line d-flex align-items-end">
             <mat-label class="m-0 text-primary">
-              {{ control.get('opNameHeb').value }}
+              {{ control.get('opNameHeb').value | englishToHebrew }}
             </mat-label>
             <div class="flex-fill ml-3"></div>
             <button class="position-relative" style="top:10px" mat-icon-button (click)="removeOption(i)">
