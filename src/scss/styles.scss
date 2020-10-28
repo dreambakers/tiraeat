@@ -150,6 +150,10 @@ mat-label {
   }
 }
 
+.mat-dialog-container {
+  margin: 5px;
+}
+
 .spinner-border {
   width: 1rem;
   height: 1rem;
@@ -222,7 +226,6 @@ mat-label {
 .drinks-dialog-container {
   .mat-dialog-container {
     padding: 0;
-    margin: 5px;
   }
 
   .mat-dialog-content {
@@ -241,7 +244,6 @@ mat-label {
 .options-dialog-container {
   .mat-dialog-container {
     padding: 0;
-    margin: 5px;
   }
 
   .mat-dialog-content {
