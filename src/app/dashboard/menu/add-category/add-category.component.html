@@ -1,7 +1,7 @@
 <div>
   <form class="container-fluid cf-max-width py-5" [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-    <div class="d-flex justify-content-center align-items-center mb-3">
-      <h4 class="m-0 ml-auto text-uppercase">
+    <div class="d-flex justify-content-center align-items-center position-relative mb-3">
+      <h4 class="m-0 text-uppercase">
         <span *ngIf="categoryToEdit; else addCategory">
           {{ "labels.editCategory" | translate }}
         </span>
@@ -9,7 +9,7 @@
           {{ "labels.addCategory" | translate }}
         </ng-template>
       </h4>
-      <button mat-icon-button class="ml-auto" (click)="close.emit()">
+      <button mat-icon-button class="position-absolute" style="right: 0;" (click)="close.emit()">
         <i class="fas fa-times"></i>
       </button>
     </div>

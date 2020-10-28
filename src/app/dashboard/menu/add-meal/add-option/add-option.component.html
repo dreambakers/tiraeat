@@ -1,17 +1,22 @@
-<div class="d-flex justify-content-center align-items-center m-3">
-  <h4 class="m-0 ml-auto text-uppercase">
-    {{ "labels.addOption" | translate }}
-  </h4>
-  <button mat-icon-button class="ml-auto" (click)="dialogRef.close()">
-    <i class="fas fa-times"></i>
-  </button>
+<div class="d-flex flex-column justify-content-center m-3">
+  <div class="d-flex justify-content-center align-items-center position-relative">
+    <h4 class="m-0 text-uppercase">
+      {{ "labels.addOption" | translate }}
+    </h4>
+    <button mat-icon-button class="position-absolute" style="right: 0;" (click)="dialogRef.close()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="mt-3">
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedMethod">
+      <mat-radio-button [value]="methods.addNew" class="mr-3">{{ 'labels.newOption' | translate }}</mat-radio-button>
+      <mat-radio-button [value]="methods.selectExisting">{{ 'labels.existingOptions' | translate }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
 </div>
 
-<div mat-dialog-content class="p-3 w-100 m-0" id="addOption">
-  <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedMethod">
-    <mat-radio-button [value]="methods.addNew" class="mr-3">{{ 'labels.newOption' | translate }}</mat-radio-button>
-    <mat-radio-button [value]="methods.selectExisting">{{ 'labels.existingOptions' | translate }}</mat-radio-button>
-  </mat-radio-group>
+<div mat-dialog-content class="px-3 pb-3 w-100 m-0" id="addOption">
 
   <form [formGroup]="addOptionsForm" (ngSubmit)="onSubmit()" ngNativeValidate [hidden]="selectedMethod !== methods.addNew">
 
