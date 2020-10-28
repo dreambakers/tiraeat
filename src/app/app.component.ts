@@ -10,6 +10,10 @@ export class AppComponent {
   title = 'tiraeat';
 
   constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
+    if (localStorage.getItem('lang')) {
+      translate.setDefaultLang(localStorage.getItem('lang'));
+    } else {
+      translate.setDefaultLang('he');
+    }
   }
 }

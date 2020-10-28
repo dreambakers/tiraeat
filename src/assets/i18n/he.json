@@ -55,7 +55,8 @@
     "title": "כיתוב",
     "addItem": "Add Item",
     "newOption": "New option",
-    "existingOptions": "Existing options"
+    "existingOptions": "Existing options",
+    "drinksCount": "({{count}}) משקאות"
   },
 
   "days": {

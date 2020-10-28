@@ -49,13 +49,14 @@
         "clearMenu": "Clear menu",
         "clearDetails": "Clear details",
         "drinksList": "Drinks list",
-        "min": "Min",
-        "max": "Max",
+        "min": "MIN",
+        "max": "MAX",
         "items": "Items",
         "title": "Title",
         "addItem": "Add Item",
         "newOption": "New option",
-        "existingOptions": "Existing options"
+        "existingOptions": "Existing options",
+        "drinksCount": "Drinks ({{count}})"
     },
 
     "days": {

@@ -107,7 +107,7 @@
         (click)="openDrinksDialog()"
         class="btn btn-primary btn-block"
         [disabled]="!editMode">
-          {{'labels.drinks' | translate}} ({{drinksCount}})
+          {{'labels.drinksCount' | translate:{ count: drinksCount } }}
       </button>
 
       <button
