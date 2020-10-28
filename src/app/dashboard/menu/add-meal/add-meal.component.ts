@@ -81,7 +81,7 @@ export class AddMealComponent implements OnInit {
           opNameEn: option?.opNameEn,
           opNameHeb: option?.opNameHeb,
           opLimit: option?.opLimit,
-          mandatory: option?.mandatory
+          mandatory: option?.mandatory || (option?.opNameHeb ? false : null)
         }));
       }
     }
