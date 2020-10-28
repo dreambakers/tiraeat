@@ -81,7 +81,9 @@ export class DetailsComponent implements OnInit {
       nameHebInner: [],
       nameHebOuter: [],
       minCookTime: ['', Validators.pattern("^[0-9]*$")],
-      maxCookTime: ['', Validators.pattern("^[0-9]*$")]
+      maxCookTime: ['', Validators.pattern("^[0-9]*$")],
+      isPending: [],
+      discountDisc: []
     });
     this.detailsForm.disable();
 
@@ -140,6 +142,8 @@ export class DetailsComponent implements OnInit {
     this.detailsForm.controls['nameHebOuter'].setValue(this.restaurant.nameHebOuter || '');
     this.detailsForm.controls['minCookTime'].setValue(this.restaurant.minCookTime || '');
     this.detailsForm.controls['maxCookTime'].setValue(this.restaurant.maxCookTime || '');
+    this.detailsForm.controls['isPending'].setValue(this.restaurant.isPending || false);
+    this.detailsForm.controls['discountDisc'].setValue(this.restaurant.discountDisc || '');
     const openHoursControls = this.getDayControls();
     if (this.restaurant.openHours) {
       for (let i = 0; i < this.days.length; i ++) {

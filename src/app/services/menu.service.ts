@@ -98,6 +98,7 @@ export class MenuService {
           .set({
             ...commonObject,
             ...newData,
+            positionByCat: 0,
             restName: user.email.split('@')[0],
             isCommon: true
           }, { merge: true });
