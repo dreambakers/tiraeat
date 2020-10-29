@@ -124,13 +124,6 @@ export class AddMealComponent implements OnInit {
     }
   }
 
-  getImageStatus() {
-    if (this.imgSet) {
-      return this.translate.instant('messages.imgSet');
-    }
-    return this.translate.instant('messages.noImgSet');
-  }
-
   dataURLtoFile(dataurl, filename) {
     let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -169,13 +162,6 @@ export class AddMealComponent implements OnInit {
       }
     );
   }
-
-  // onAddOptionClose(optionList) {
-  //   this.updateSection(this.sections.manageMeal);
-  //   if (optionList) {
-  //     this.addOption(Object.keys(optionList)[0]);
-  //   }
-  // }
 
   addSelection(optionIndex) {
     const optionControls = this.getMealOptionControls();
@@ -267,10 +253,6 @@ export class AddMealComponent implements OnInit {
         );
       }
     }
-  }
-
-  get imgSet() {
-    return this.mealToEdit?.picPathBig || this.images;
   }
 
   ngOnDestroy() {
