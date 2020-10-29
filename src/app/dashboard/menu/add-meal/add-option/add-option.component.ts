@@ -91,9 +91,9 @@ export class AddOptionComponent implements OnInit, OnDestroy {
         [newListName]: this.addOptionsForm.controls['items'].value.map(
           item => {
             if (item.price) {
-              return { [item.price]: item.name }
+              return { [item.name]: item.price }
             } else {
-              return item.name;
+              return { [item.name]: 0 };
             }
           }
         )

@@ -26,7 +26,6 @@ export class AddCategoryComponent implements OnInit {
         this.categoryToEdit?.name || '',
         [Validators.required]
       ],
-      description: [],
     });
   }
 
