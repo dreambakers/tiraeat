@@ -1,7 +1,7 @@
 <div [ngSwitch]="section" id="addMeal">
   <div *ngSwitchCase="sections.manageMeal">
     <form class="container-fluid cf-max-width py-5" [formGroup]="addMealForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-      <div class="d-flex justify-content-center align-items-center position-relative mb-3">
+      <div class="d-flex justify-content-center align-items-center position-relative mb-3" id="topScrollAnchor">
         <h4 class="m-0 text-uppercase">
           <span *ngIf="mealToEdit; else addMeal">
             {{ "labels.editMeal" | translate }}

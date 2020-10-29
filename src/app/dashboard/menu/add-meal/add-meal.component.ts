@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -23,7 +23,7 @@ import { constants } from 'src/app/app.constants';
     ]),
   ],
 })
-export class AddMealComponent implements OnInit {
+export class AddMealComponent implements OnInit, AfterViewInit {
 
   @Output() close = new EventEmitter();
   @Output() mealAdded = new EventEmitter();
@@ -53,6 +53,11 @@ export class AddMealComponent implements OnInit {
     private translate: TranslateService,
     private dialogService: DialogService
   ) { }
+
+  ngAfterViewInit(): void {
+    const scrollAnchor = document.getElementById("topScrollAnchor");
+    scrollAnchor.scrollIntoView(false);
+  }
 
   ngOnInit(): void {
     this.authService.user
