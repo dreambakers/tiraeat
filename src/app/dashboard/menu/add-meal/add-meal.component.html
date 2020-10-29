@@ -65,8 +65,7 @@
       </div>
 
       <div class="form-group" formArrayName="mealOptions" *ngFor="let control of getMealOptionControls(); let i = index;">
-        <div [formGroupName]="i" class="form-group d-flex flex-column justify-content-between align-items-between options-section">
-
+        <div *ngIf="control.get('opNameEn')" [formGroupName]="i" class="form-group d-flex flex-column justify-content-between align-items-between options-section">
           <div class="heading-with-line d-flex align-items-end">
             <mat-label class="m-0 text-primary">
               {{ control.get('opNameEn').value | englishToHebrew }}

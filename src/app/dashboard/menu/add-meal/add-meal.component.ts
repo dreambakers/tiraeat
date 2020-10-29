@@ -82,12 +82,16 @@ export class AddMealComponent implements OnInit, AfterViewInit {
     const mealOptions = [];
     if (this.mealToEdit?.mealOptions) {
       for (let option of this.mealToEdit?.mealOptions) {
-        mealOptions.push(this.formBuilder.group({
-          opNameEn: option?.opNameEn,
-          opNameHeb: option?.opNameHeb,
-          opLimit: option?.opLimit,
-          mandatory: option?.mandatory || (option?.opNameEn ? false : null)
-        }));
+        if (option?.opNameEn) {
+          mealOptions.push(this.formBuilder.group({
+            opNameEn: option?.opNameEn,
+            opNameHeb: option?.opNameHeb,
+            opLimit: option?.opLimit,
+            mandatory: option?.mandatory || (option?.opNameEn ? false : null)
+          }));
+        } else {
+          mealOptions.push(null);
+        }
       }
     }
     return mealOptions;
@@ -113,7 +117,9 @@ export class AddMealComponent implements OnInit, AfterViewInit {
   }
 
   getAddedOptionLists() {
-   return this.addMealForm.get('mealOptions').value.map(
+   return this.addMealForm.get('mealOptions').value.filter(
+    option => option?.opNameEn
+   ).map(
     option => option.opNameEn
    );
   }
