@@ -154,6 +154,12 @@ mat-label {
   margin: 5px;
 }
 
+.mat-button, .mat-icon-button, .mat-raised-button, .mat-stroked-button, .mat-flat-button {
+  &.d-flex {
+    display: flex !important;
+  }
+}
+
 .spinner-border {
   width: 1rem;
   height: 1rem;
