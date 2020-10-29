@@ -86,6 +86,7 @@ export class AddDrinkComponent implements OnInit, OnDestroy {
         this.showSuccessMsg = true;
         this.loading = false;
         this.drinksCount = drinks.length;
+        this.dialogRef.close();
       }, err => {
         this.loading = false;
       }
