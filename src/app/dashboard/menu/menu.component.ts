@@ -229,7 +229,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   clearMenu() {
-    this.editMode = false;
     this.dialogService.confirm(
       'messages.areYouSure', 'messages.clearMenuConfirmation'
     ).subscribe(
@@ -237,6 +236,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         if (res) {
           this.menuService.clearMenu().subscribe(
             res1 => {
+              this.editMode = false;
               window.location.reload();
             }
           );

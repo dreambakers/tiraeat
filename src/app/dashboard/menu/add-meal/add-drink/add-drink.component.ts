@@ -17,6 +17,7 @@ export class AddDrinkComponent implements OnInit, OnDestroy {
   addDrinkForm: FormGroup;
   drinks = [];
   showSuccessMsg = false;
+  listLoading = false;
   loading = false;
   drinksCount;
   constants = constants;
@@ -32,16 +33,21 @@ export class AddDrinkComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.listLoading = true;
+
     this.addDrinkForm = this.formBuilder.group({
       drinks: this.formBuilder.array([])
     });
 
     this.menuService.getCommonObj().subscribe((commonObj: any) => {
+      this.listLoading = false;
       this.drinks = commonObj?.drinks || [];
       this.drinksCount = this.drinks.length;
       for (let drink of this.drinks) {
         this.addDrink(drink);
       }
+    }, err => {
+      this.listLoading = false;
     });
 
     disableBodyScroll(document.querySelector('#addDrink'));
