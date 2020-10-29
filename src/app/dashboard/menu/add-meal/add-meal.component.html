@@ -93,7 +93,7 @@
               </mat-label>
 
               <div class="d-flex align-items-center">
-                <button mat-raised-button class="selection-buttons d-flex justify-content-center align-items-center" type="button" (click)="subtractSelection(i)">
+                <button class="selection-buttons d-flex justify-content-center align-items-center mat-elevation-z1 border" type="button" (click)="subtractSelection(i)">
                   <i class="fas fa-minus"></i>
                 </button>
 
@@ -104,7 +104,7 @@
                   <input matInput formControlName="opLimit" type="number" min="0" />
                 </mat-form-field>
 
-                <button mat-raised-button type="button" class="selection-buttons d-flex justify-content-center align-items-center" (click)="addSelection(i)">
+                <button type="button" class="selection-buttons d-flex justify-content-center align-items-center mat-elevation-z1 border" (click)="addSelection(i)">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
