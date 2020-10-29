@@ -81,7 +81,7 @@
 
           <div class="heading-with-line d-flex align-items-end">
             <mat-label class="m-0 text-primary">
-              {{ control.get('opNameHeb').value | englishToHebrew }}
+              {{ control.get('opNameEn').value | englishToHebrew }}
             </mat-label>
             <div class="flex-fill ml-3"></div>
             <button class="position-relative" style="top:10px" mat-icon-button (click)="removeOption(i)">
@@ -96,7 +96,7 @@
               </mat-label>
 
               <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-                <input matInput formControlName="opNameEn"/>
+                <input matInput formControlName="opNameHeb"/>
               </mat-form-field>
             </div>
 

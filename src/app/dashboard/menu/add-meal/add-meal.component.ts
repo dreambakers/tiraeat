@@ -81,7 +81,7 @@ export class AddMealComponent implements OnInit {
           opNameEn: option?.opNameEn,
           opNameHeb: option?.opNameHeb,
           opLimit: option?.opLimit,
-          mandatory: option?.mandatory || (option?.opNameHeb ? false : null)
+          mandatory: option?.mandatory || (option?.opNameEn ? false : null)
         }));
       }
     }
@@ -100,8 +100,8 @@ export class AddMealComponent implements OnInit {
   addOption(optionListName) {
     const mealOptions = this.addMealForm.get('mealOptions') as FormArray;
     mealOptions.push(this.formBuilder.group({
-      opNameEn: '',
-      opNameHeb: optionListName,
+      opNameEn: optionListName,
+      opNameHeb: '',
       opLimit: 0,
       mandatory: false
     }));
@@ -109,7 +109,7 @@ export class AddMealComponent implements OnInit {
 
   getAddedOptionLists() {
    return this.addMealForm.get('mealOptions').value.map(
-    option => option.opNameHeb
+    option => option.opNameEn
    );
   }
 
