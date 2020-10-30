@@ -7,7 +7,7 @@ import { constants } from '../app.constants';
 export class EnglishToHebrewPipe implements PipeTransform {
 
   transform(value: string): string {
-    var english = /^[A-Za-z0-9]*$/;
+    var english = /^[A-Za-z0-9-]*$/;
     let converted = value;
 
     // __ is a unique identifier used to indicate that the key is converted from hewbrew
