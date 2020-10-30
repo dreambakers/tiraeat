@@ -19,6 +19,7 @@ export class EnglishToHebrewPipe implements PipeTransform {
         converted += englishToHebrewAlphabet[character] || '';
       }
     }
+    converted = converted === 'drinks' ? 'משקאות' : converted;
     return converted;
   }
 
