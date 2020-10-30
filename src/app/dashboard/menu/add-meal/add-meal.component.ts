@@ -55,8 +55,10 @@ export class AddMealComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    const scrollAnchor = document.getElementById("topScrollAnchor");
-    scrollAnchor.scrollIntoView(false);
+    setTimeout(() => {
+      const scrollAnchor = document.getElementById("topScrollAnchor");
+      scrollAnchor.scrollIntoView(false);
+    }, 100);
   }
 
   ngOnInit(): void {
