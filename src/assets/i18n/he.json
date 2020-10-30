@@ -94,6 +94,7 @@
     "canContainOnlyText": "מותר רק טקסט",
     "digitsLong": "חייב להיות {{digits}} ספרות",
     "canContainOnlyDigits": "ספרות בלבד",
-    "invalidEmail": "Provide a valid email address"
+    "invalidEmail": "Provide a valid email address",
+    "categoryExists": "Category with the same name already exists"
   }
 }
