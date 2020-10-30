@@ -33,7 +33,7 @@ export class AddCategoryComponent implements OnInit {
     this.addCategoryForm = this.formBuilder.group({
       name: [
         this.categoryToEdit?.name || '',
-        [Validators.required, this.categoryNameValidator([...this.commonObj?.mealsCategoriesOrder], this.categoryToEdit?.name)]
+        [Validators.required, this.categoryNameValidator(this.commonObj?.mealsCategoriesOrder, this.categoryToEdit?.name)]
       ],
     });
   }
