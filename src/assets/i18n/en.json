@@ -94,6 +94,7 @@
         "onlyHebrew": "Only hebrew alphabet allowed",
         "canContainOnlyText": "can only contain text",
         "digitsLong": "must be {{digits}} digits long",
-        "canContainOnlyDigits": "can only contain digits"
+        "canContainOnlyDigits": "can only contain digits",
+        "invalidEmail": "Provide a valid email address"
     }
 }

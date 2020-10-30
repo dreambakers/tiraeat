@@ -93,6 +93,7 @@
     "onlyHebrew": "מותר רק אותיות בעברית",
     "canContainOnlyText": "מותר רק טקסט",
     "digitsLong": "חייב להיות {{digits}} ספרות",
-    "canContainOnlyDigits": "ספרות בלבד"
+    "canContainOnlyDigits": "ספרות בלבד",
+    "invalidEmail": "Provide a valid email address"
   }
 }

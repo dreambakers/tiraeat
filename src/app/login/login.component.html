@@ -1,4 +1,4 @@
-<div class="global-container">
+<div class="global-container" id="login">
   <div class="card login-form">
     <div class="card-body">
       <div class="d-flex justify-content-center">
@@ -14,23 +14,34 @@
                 <span>&times;</span>
             </button>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <mat-label>
               {{ "labels.email" | translate }}
             </mat-label>
 
             <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-              <input matInput formControlName="email" type="email" required/>
+              <input matInput formControlName="email" type="email"/>
+              <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                {{ "labels.email" | translate }}
+                {{ "labels.isRequired" | translate }}
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                {{ 'errors.invalidEmail' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
-          <div class="form-group">
+          <div class="form-group mt-2">
             <mat-label>
               {{ "labels.password" | translate }}
             </mat-label>
 
             <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-              <input matInput formControlName="password" type="password" required/>
+              <input matInput formControlName="password" type="password"/>
+              <mat-error>
+                {{ "labels.password" | translate }}
+                {{ "messages.isRequired" | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
           <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
