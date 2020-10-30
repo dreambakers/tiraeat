@@ -95,6 +95,7 @@
         "canContainOnlyText": "can only contain text",
         "digitsLong": "must be {{digits}} digits long",
         "canContainOnlyDigits": "can only contain digits",
-        "invalidEmail": "Provide a valid email address"
+        "invalidEmail": "Provide a valid email address",
+        "categoryExists": "Category with the same name already exists"
     }
 }

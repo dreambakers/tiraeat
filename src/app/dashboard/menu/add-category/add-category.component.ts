@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { MenuService } from 'src/app/services/menu.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-add-category',
@@ -15,6 +15,15 @@ export class AddCategoryComponent implements OnInit {
   @Input() categoryToEdit;
   addCategoryForm: FormGroup;
 
+  categoryNameValidator(categories: string[] = [], categoryToEdit = null): (AbstractControl) => ValidationErrors | null {
+    if (categoryToEdit) {
+      categories = categories.filter(cat => cat !== categoryToEdit);
+    }
+    return (control: AbstractControl): ValidationErrors | null => {
+      return categories.includes(control.value) ? { categoryExists: true } : null;
+    };
+  }
+
   constructor(
     private menuService: MenuService,
     private formBuilder: FormBuilder
@@ -24,7 +33,7 @@ export class AddCategoryComponent implements OnInit {
     this.addCategoryForm = this.formBuilder.group({
       name: [
         this.categoryToEdit?.name || '',
-        [Validators.required]
+        [Validators.required, this.categoryNameValidator([...this.commonObj?.mealsCategoriesOrder], this.categoryToEdit?.name)]
       ],
     });
   }
@@ -39,25 +48,30 @@ export class AddCategoryComponent implements OnInit {
 
     // if editing an existing category
     if (this.categoryToEdit) {
-      updatedCommonObject = {
-        ...this.commonObj
-      };
+      // in case name not edited, no need to send update call to firebase
+      if (this.categoryToEdit.name === categoryName) {
+        this.close.emit();
+      } else {
+        updatedCommonObject = {
+          ...this.commonObj
+        };
 
-      const categoryToEditIndex = updatedCommonObject.mealsCategoriesOrder.findIndex(
-        category => category === this.categoryToEdit.name
-      );
+        const categoryToEditIndex = updatedCommonObject.mealsCategoriesOrder.findIndex(
+          category => category === this.categoryToEdit.name
+        );
 
-      updatedCommonObject.mealsCategoriesOrder[categoryToEditIndex] = categoryName;
+        updatedCommonObject.mealsCategoriesOrder[categoryToEditIndex] = categoryName;
 
-      this.menuService.updateCategory(this.categoryToEdit.meals, updatedCommonObject, categoryName).then(
-        res => {
-          this.categoryEdited.emit({
-            oldName: this.categoryToEdit.name,
-            newName: categoryName
-          });
-          this.close.emit();
-        }
-      );
+        this.menuService.updateCategory(this.categoryToEdit.meals, updatedCommonObject, categoryName).then(
+          res => {
+            this.categoryEdited.emit({
+              oldName: this.categoryToEdit.name,
+              newName: categoryName
+            });
+            this.close.emit();
+          }
+        );
+      }
     }
 
     // New category being added
