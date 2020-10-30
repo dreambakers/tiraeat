@@ -159,8 +159,8 @@ export class DetailsComponent implements OnInit {
   setPosition() {
     navigator.geolocation.getCurrentPosition(
       (resp) => {
-        this.detailsForm.controls['latitude'].setValue(resp.coords.longitude);
-        this.detailsForm.controls['longitude'].setValue(resp.coords.latitude);
+        this.detailsForm.controls['latitude'].setValue(resp.coords.latitude);
+        this.detailsForm.controls['longitude'].setValue(resp.coords.longitude);
       },
       (err) => {
         console.log(err);
