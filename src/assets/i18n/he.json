@@ -26,8 +26,8 @@
     "done": "סיימתי",
     "cancel": "ביטול",
     "yes": "כן",
-    "editCategory": "ערוך קטיגוריה",
-    "editMeal": "ערוך מנה",
+    "editCategory": "עריכת קטיגוריה",
+    "editMeal": "עריכת מנה",
     "save": "שמור",
     "contactNumber": "טלפון איש קשר",
     "addPhoto": "הוסף תמונה",
@@ -35,7 +35,7 @@
     "adjustSecondPicture": "התאמת תמונה שניה",
     "selections": "תקרה",
     "mandatory": "חובה",
-    "addOption": "הוסף אופציה",
+    "addOption": "הוספת אופציה",
     "or": "או",
     "addDrink": "הוסף משקה",
     "volume": "נפח",
@@ -52,10 +52,10 @@
     "min": "MIN",
     "max": "MAX",
     "items": "פריטים",
-    "title": "כיתוב",
-    "addItem": "Add Item",
-    "newOption": "New option",
-    "existingOptions": "Existing options",
+    "title": "כותרת",
+    "addItem": "הוסף פריט",
+    "newOption": "אופציה חדשה",
+    "existingOptions": "אופציה קיימת",
     "drinksCount": "({{count}}) משקאות"
   },
 
@@ -94,7 +94,7 @@
     "canContainOnlyText": "מותר רק טקסט",
     "digitsLong": "חייב להיות {{digits}} ספרות",
     "canContainOnlyDigits": "ספרות בלבד",
-    "invalidEmail": "Provide a valid email address",
-    "categoryExists": "Category with the same name already exists"
+    "invalidEmail": "הכנס כתובת נכונה",
+    "categoryExists": "קטיגוריה זו קיימת כבר"
   }
 }
