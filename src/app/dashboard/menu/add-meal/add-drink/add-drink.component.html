@@ -47,7 +47,7 @@
             </mat-label>
 
             <mat-form-field appearance="outline" class="w-100 mat-field-no-margin input-no-label" color="primary">
-              <input matInput formControlName="price"/>
+              <input matInput formControlName="price" type="number"/>
               <mat-error *ngIf="control.get('price').hasError('required')">
                 {{ 'labels.price' | translate }}
                 {{ 'labels.isRequired' | translate }}
