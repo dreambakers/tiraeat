@@ -271,6 +271,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.dialogService.drinksList().subscribe();
   }
 
+  openEditOptionsDialog() {
+    this.dialogService.optionsEdit().subscribe();
+  }
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.editMode && (this.section === this.sections.menu);

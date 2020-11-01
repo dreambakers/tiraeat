@@ -111,6 +111,13 @@
       </button>
 
       <button
+        (click)="openEditOptionsDialog()"
+        class="btn btn-primary btn-block"
+        [disabled]="!editMode">
+          {{'labels.options' | translate }}
+      </button>
+
+      <button
         *ngIf="editMode && commonObj?.mealsCategoriesOrder?.length"
         (click)="clearMenu()"
         class="btn btn-danger btn-block mt-3">

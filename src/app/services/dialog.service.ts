@@ -7,6 +7,7 @@ import { ImageCropperComponent } from '../dialogs/image-cropper/image-cropper.co
 import { ImgCropperConfig } from '@alyle/ui/image-cropper';
 import { AddDrinkComponent } from '../dashboard/menu/add-meal/add-drink/add-drink.component';
 import { AddOptionComponent } from '../dashboard/menu/add-meal/add-option/add-option.component';
+import { EditOptionComponent } from '../dashboard/menu/edit-option/edit-option.component';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,15 @@ export class DialogService {
       data: {
         addedLists
       }
+    });
+    return dialogRef.afterClosed();
+  }
+
+  optionsEdit(): Observable<any> {
+    const dialogRef = this.dialog.open(EditOptionComponent, {
+      minWidth: '320px',
+      maxWidth: '600px',
+      panelClass: 'options-dialog-container'
     });
     return dialogRef.afterClosed();
   }

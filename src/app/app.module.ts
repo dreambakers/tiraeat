@@ -46,6 +46,7 @@ import { ImportComponent } from './import/import.component';
 import { AddDrinkComponent } from './dashboard/menu/add-meal/add-drink/add-drink.component';
 import { AddDetailsPhotoComponent } from './dashboard/details/add-details-photo/add-details-photo.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { EditOptionComponent } from './dashboard/menu/edit-option/edit-option.component';
 
 import { EnglishToHebrewPipe } from './pipes/english-to-hebrew.pipe';
 
@@ -82,6 +83,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     AddDetailsPhotoComponent,
     EnglishToHebrewPipe,
     NotFoundComponent,
+    EditOptionComponent,
   ],
   imports: [
     BrowserModule,

@@ -250,7 +250,7 @@ mat-label {
     padding: 0;
   }
 
-  #addOption {
+  #addOption, #editOptions {
     @media (max-width: 455px) {
       .mat-form-field-infix {
         width: 90px !important;

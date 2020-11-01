@@ -56,7 +56,8 @@
         "addItem": "Add Item",
         "newOption": "New option",
         "existingOptions": "Existing options",
-        "drinksCount": "Drinks ({{count}})"
+        "drinksCount": "Drinks ({{count}})",
+        "editOptions": "Edit options"
     },
 
     "days": {
