@@ -50,6 +50,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   categoriesMealsMap = {};
   drinksCount = 0;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  optionLists = [];
 
   constructor(
     private dialogService: DialogService,
@@ -88,6 +89,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     this.menuService.getCommonObj().subscribe((commonObj) => {
       this.commonObj = commonObj || {};
+
+      for (let key of Object.keys(commonObj)) {
+        if (Array.isArray(commonObj[key]) && !['mealsCategoriesOrder','drinks'].includes(key)) {
+          this.optionLists.push(key);
+        }
+      }
     });
 
     this.emitterService.emitter.pipe(takeUntil(this.destroy$)).subscribe((emitted) => {
@@ -104,6 +111,9 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.submit();
           }
           return;
+
+        case constants.emitterKeys.optionAdded:
+          this.optionLists.push(emitted.data);
       }
     });
   }
@@ -271,8 +281,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.dialogService.drinksList().subscribe();
   }
 
-  openEditOptionsDialog() {
-    this.dialogService.optionsEdit().subscribe();
+  openEditOptionsDialog(option) {
+    this.dialogService.optionsEdit(option).subscribe();
   }
 
   @HostListener('window:beforeunload')

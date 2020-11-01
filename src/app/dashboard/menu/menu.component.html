@@ -111,18 +111,19 @@
       </button>
 
       <button
-        (click)="openEditOptionsDialog()"
-        class="btn btn-primary btn-block"
-        [disabled]="!editMode">
-          {{'labels.options' | translate }}
-      </button>
-
-      <button
         *ngIf="editMode && commonObj?.mealsCategoriesOrder?.length"
         (click)="clearMenu()"
         class="btn btn-danger btn-block mt-3">
         {{'labels.clearMenu' | translate}}
       </button>
+
+      <div class="my-4">
+        <mat-chip-list>
+          <mat-chip color="primary" *ngFor="let option of optionLists" (click)="openEditOptionsDialog(option)">
+            {{ option | englishToHebrew }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
     </div>
 
     <div class="mr-4 preview-fab-container" *ngIf="editMode">

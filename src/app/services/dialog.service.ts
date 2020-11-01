@@ -51,11 +51,14 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  optionsEdit(): Observable<any> {
+  optionsEdit(option): Observable<any> {
     const dialogRef = this.dialog.open(EditOptionComponent, {
       minWidth: '320px',
       maxWidth: '600px',
-      panelClass: 'options-dialog-container'
+      panelClass: 'options-dialog-container',
+      data: {
+        optionKey: option
+      }
     });
     return dialogRef.afterClosed();
   }

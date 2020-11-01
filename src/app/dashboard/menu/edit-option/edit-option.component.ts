@@ -34,33 +34,27 @@ export class EditOptionComponent implements OnInit {
       this.listLoading = false;
       const optionListsControls = this.getOptionLists();
 
-      for (let key of Object.keys(commonObj)) {
+      const itemControls = this.formBuilder.array([]);
+      for (let item of commonObj[this.data.optionKey]) {
+        const name = item && (typeof item === 'object' ? Object.keys(item)[0] : item);
+        const price = item && (typeof item === 'object' ? Object.values(item)[0] : '');
 
-        if (Array.isArray(commonObj[key]) && !['mealsCategoriesOrder','drinks'].includes(key)) {
-
-          const itemControls = this.formBuilder.array([]);
-
-          for (let item of commonObj[key]) {
-            const name = item && (typeof item === 'object' ? Object.keys(item)[0] : item);
-            const price = item && (typeof item === 'object' ? Object.values(item)[0] : '');
-
-            itemControls.push(
-              this.formBuilder.group({
-                name: [name, [Validators.required]],
-                price: [price, [Validators.pattern('^[0-9]+$')]],
-                isFlat: typeof item !== 'object'
-              })
-            )
-          }
-
-          optionListsControls.push(
-            this.formBuilder.group({
-              name: [key],
-              items: itemControls
-            })
-          );
-        }
+        itemControls.push(
+          this.formBuilder.group({
+            name: [name, [Validators.required]],
+            price: [price, [Validators.pattern('^[0-9]+$')]],
+            isFlat: typeof item !== 'object'
+          })
+        )
       }
+
+      optionListsControls.push(
+        this.formBuilder.group({
+          name: [this.data.optionKey],
+          items: itemControls
+        })
+      );
+
     }, err => {
       this.listLoading = false;
     });

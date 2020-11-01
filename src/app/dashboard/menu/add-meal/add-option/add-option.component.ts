@@ -4,6 +4,7 @@ import { MenuService } from 'src/app/services/menu.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { constants } from 'src/app/app.constants';
+import { EmitterService } from 'src/app/services/emitter.service';
 
 @Component({
   selector: 'app-add-option',
@@ -28,6 +29,7 @@ export class AddOptionComponent implements OnInit, OnDestroy {
     private menuService: MenuService,
     public dialogRef: MatDialogRef<AddOptionComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
+    private emitterService: EmitterService
   ) {
   }
 
@@ -101,6 +103,7 @@ export class AddOptionComponent implements OnInit, OnDestroy {
 
       this.menuService.updateCommonObject(newOptionList).subscribe(
         res => {
+          this.emitterService.emit(constants.emitterKeys.optionAdded, newListName);
           this.dialogRef.close(newOptionList);
         }
       );
