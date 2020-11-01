@@ -57,7 +57,8 @@
         "newOption": "New option",
         "existingOptions": "Existing options",
         "drinksCount": "Drinks ({{count}})",
-        "editOptions": "Edit options"
+        "editOption": "Edit option",
+        "deleteWholeList": "Delete whole list"
     },
 
     "days": {
@@ -84,7 +85,8 @@
         "drinksUpdated": "Drinks list updated!",
         "clearMenuConfirmation": "Warning! This will clear the entire menu. If you haven't exported your data, it will be lost forever. The page will reload after the menu is cleared. Are you sure you want to proceed?",
         "clearDetailsConfirmation": "Warning! This will clear the restaurant details. If you haven't exported your data, it will be lost forever. The page will reload after the details are cleared. Are you sure you want to proceed?",
-        "isRequired": "is required"
+        "isRequired": "is required",
+        "deleteOptionListConfirmation": "This will delete the entire option list along with all the added items"
     },
 
     "placeholders": {

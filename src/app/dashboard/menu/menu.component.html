@@ -118,8 +118,12 @@
       </button>
 
       <div class="my-4">
-        <mat-chip-list>
-          <mat-chip color="primary" *ngFor="let option of optionLists" (click)="openEditOptionsDialog(option)">
+        <mat-chip-list [disabled]="!editMode">
+          <mat-chip
+            class="bg-primary"
+            selected="true"
+            *ngFor="let option of optionLists"
+            (click)="editMode && openEditOptionsDialog(option)">
             {{ option | englishToHebrew }}
           </mat-chip>
         </mat-chip-list>

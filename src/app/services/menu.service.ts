@@ -107,6 +107,18 @@ export class MenuService {
     }))
   }
 
+  deleteOptionList(updatedCommonObject) {
+    return this.fireAuth.authState.pipe(
+      switchMap((user) => {
+        return this.firestore
+        .collection('menu')
+        .doc(`${user.email.split('@')[0]}Common`)
+        .set(updatedCommonObject);
+      })
+    )
+  }
+
+
   updateMenu(meals, commonObj) {
     let batch = this.firestore.firestore.batch();
     meals.forEach((meal: any) => {

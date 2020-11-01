@@ -1,26 +1,34 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MenuService } from 'src/app/services/menu.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { constants } from 'src/app/app.constants';
+import { takeUntil, take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { EmitterService } from 'src/app/services/emitter.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-edit-option',
   templateUrl: './edit-option.component.html',
   styleUrls: ['./edit-option.component.scss'],
 })
-export class EditOptionComponent implements OnInit {
+export class EditOptionComponent implements OnInit, OnDestroy {
   constants = constants;
   editOptionsForm: FormGroup;
   listLoading = false;
   loading = false;
+  optionListInUse = true;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
     private menuService: MenuService,
     public dialogRef: MatDialogRef<EditOptionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data
+    @Inject(MAT_DIALOG_DATA) public data,
+    private emitterService: EmitterService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +38,17 @@ export class EditOptionComponent implements OnInit {
       optionLists: this.formBuilder.array([]),
     });
 
-    this.menuService.getCommonObj().subscribe((commonObj) => {
+    this.menuService.getMenu().pipe(takeUntil(this.destroy$)).subscribe(
+      (meals: any) => {
+        this.optionListInUse = meals.some(
+          meal => meal.mealOptions && meal.mealOptions.some(
+            mealOption => mealOption && mealOption?.opNameEn === this.data.optionKey
+          )
+        );
+      }
+    );
+
+    this.menuService.getCommonObj().pipe(take(1)).subscribe((commonObj) => {
       this.listLoading = false;
       const optionListsControls = this.getOptionLists();
 
@@ -88,6 +106,28 @@ export class EditOptionComponent implements OnInit {
     );
   }
 
+  deleteOptionList() {
+    if (!this.optionListInUse) {
+      this.dialogService.confirm('messages.areYouSure', 'messages.deleteOptionListConfirmation').subscribe(
+        res => {
+          if (res) {
+            this.menuService.getCommonObj().pipe(take(1)).subscribe(
+              commonObj => {
+                delete commonObj[this.data.optionKey];
+                this.menuService.deleteOptionList(commonObj).subscribe(
+                  res => {
+                    this.emitterService.emit(this.constants.emitterKeys.optionDeleted, this.data.optionKey);
+                    this.dialogRef.close()
+                  }
+                );
+              }
+            );
+          }
+        }
+      );
+    }
+  }
+
   onSubmit() {
 
     this.loading = true;
@@ -120,7 +160,7 @@ export class EditOptionComponent implements OnInit {
       }
     }
 
-    this.menuService.updateCommonObject(data).subscribe(
+    this.menuService.updateCommonObject(data).pipe(take(1)).subscribe(
       res => {
         this.dialogRef.close();
       }, err => {
@@ -131,6 +171,7 @@ export class EditOptionComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.destroy$.next(true);
     clearAllBodyScrollLocks();
   }
 }

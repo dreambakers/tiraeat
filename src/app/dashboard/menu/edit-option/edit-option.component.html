@@ -1,7 +1,7 @@
 <div class="d-flex flex-column justify-content-center m-3">
     <div class="d-flex justify-content-center align-items-center position-relative">
       <h4 class="m-0 text-uppercase">
-        {{ "labels.editOptions" | translate }}
+        {{ "labels.editOption" | translate }}
       </h4>
       <button mat-icon-button class="position-absolute" style="right: 0;" (click)="dialogRef.close()">
         <i class="fas fa-times"></i>
@@ -81,6 +81,14 @@
 
         </div>
       </div>
+
+      <button
+        type="button"
+        class="btn btn-danger btn-block mt-3"
+        [disabled]="optionListInUse"
+        (click)="deleteOptionList()">
+          {{ "labels.deleteWholeList" | translate }}
+      </button>
 
       <button type="submit" class="btn btn-red btn-block save-btn mt-3" [disabled]="loading">
         <div class="spinner-border" role="status" *ngIf="loading; else notLoading">

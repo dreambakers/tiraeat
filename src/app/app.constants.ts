@@ -3,7 +3,8 @@ export const constants = {
     emitterKeys: {
         drinksUpdated: 'drinksUpdated',
         tabChanged: 'tabChanged',
-        optionAdded: 'optionAdded'
+        optionAdded: 'optionAdded',
+        optionDeleted: 'optionDeleted'
     },
     imgPath: {
         noImg: 'assets/no-image.jpg'

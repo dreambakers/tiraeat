@@ -113,7 +113,12 @@ export class MenuComponent implements OnInit, OnDestroy {
           return;
 
         case constants.emitterKeys.optionAdded:
-          this.optionLists.push(emitted.data);
+          return this.optionLists.push(emitted.data);
+
+        case constants.emitterKeys.optionDeleted:
+          return this.optionLists = this.optionLists.filter(
+            optionList => optionList !== emitted.data
+          );
       }
     });
   }
