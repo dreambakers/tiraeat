@@ -110,13 +110,6 @@
           {{'labels.drinksCount' | translate:{ count: drinksCount } }}
       </button>
 
-      <button
-        *ngIf="editMode && commonObj?.mealsCategoriesOrder?.length"
-        (click)="clearMenu()"
-        class="btn btn-danger btn-block mt-3">
-        {{'labels.clearMenu' | translate}}
-      </button>
-
       <div class="my-4">
         <mat-chip-list [disabled]="!editMode">
           <mat-chip
@@ -127,6 +120,14 @@
             {{ option | englishToHebrew }}
           </mat-chip>
         </mat-chip-list>
+      </div>
+
+      <div class="d-flex justify-content-center" style="margin-top:110px" *ngIf="editMode && commonObj?.mealsCategoriesOrder?.length">
+        <button
+          (click)="clearMenu()"
+          class="btn btn-danger">
+          {{'labels.clearMenu' | translate}}
+        </button>
       </div>
     </div>
 
