@@ -57,8 +57,8 @@
     "newOption": "אופציה חדשה",
     "existingOptions": "אופציה קיימת",
     "drinksCount": "({{count}}) משקאות",
-    "editOption": "Edit option",
-    "deleteWholeList": "Delete whole list"
+    "editOption": "עריכת אופציה",
+    "deleteWholeList": "מחק רשימה"
   },
 
   "days": {
@@ -85,7 +85,7 @@
     "clearMenuConfirmation": "אזהרה! כל התפריט יימחק, וכל המידע ייעלם. האם אתה בטוח שברצונך להמשיך?",
     "clearDetailsConfirmation": "אזהרה! כל פרטי המסעדה בדף זה יימחקו. האם אתה בטוח שברצונך להמשיך?",
     "isRequired": "נדרש",
-    "deleteOptionListConfirmation": "This will delete the entire option list along with all the added items"
+    "deleteOptionListConfirmation": "האם למחוק את כל הרשימה?"
   },
 
   "placeholders": {
