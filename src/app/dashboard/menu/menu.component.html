@@ -45,7 +45,7 @@
           [cdkDragDisabled]="!editMode">
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center" style="max-width: 30%;">
-              <i class="mr-2 fas fa-bars drag-handle noselect" cdkDragHandle *ngIf="editMode"></i>
+              <i class="p-2 fas fa-bars drag-handle noselect" cdkDragHandle *ngIf="editMode"></i>
               <mat-label class="text-ellipsis font-weight-bold">{{category}}</mat-label>
             </div>
             <div class="flex-fill border-bottom w-auto mx-3"></div>
@@ -70,7 +70,7 @@
               [cdkDragDisabled]="!editMode"
               class="my-2">
               <div class="d-flex align-items-center">
-                <i class="mr-2 fas fa-bars drag-handle ml-2 noselect" cdkDragHandle *ngIf="editMode"></i>
+                <i class="p-2 mr-2 fas fa-bars drag-handle ml-2 noselect" cdkDragHandle *ngIf="editMode"></i>
                 <div class="flex-fill d-flex align-items-center">
                   <div class="w-50 text-ellipsis">
                     <img [src]="meal?.picPathSmall || constants.imgPath.noImg" class="rounded mr-2" width="50" height="50">

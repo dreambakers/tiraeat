@@ -44,7 +44,7 @@ export class AddPhotoComponent implements OnInit {
       const img = new Image();
       img.src = reader.result as string;
       img.onload = () => {
-        if (img.naturalHeight >= 250 && img.naturalWidth >= 400) {
+        if (img.naturalHeight >= 375 && img.naturalWidth >= 600) {
           this.cropPictures({ imageChangedEvent: event });
         } else {
           alert('The photo is too small. Please select a photo with height of 250px and width of 400 pixels atleast');
@@ -60,8 +60,8 @@ export class AddPhotoComponent implements OnInit {
       height: 125, // Default `200`
       // type: 'image/png', // Or you can also use `image/jpeg`,
       output: {
-        width: 400,
-        height: 250
+        width: 600,
+        height: 375
       },
     }
 
