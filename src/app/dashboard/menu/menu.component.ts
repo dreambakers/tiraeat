@@ -131,11 +131,25 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.updateSection(this.sections.manageMeal);
   }
 
+  scrollToMeal(meal) {
+    setTimeout(() => {
+      const scrollAnchor = document.getElementById(meal.id);
+      scrollAnchor.scrollIntoView({block: "center"});
+    }, 10);
+  }
+
+  onManageMealClose() {
+    this.mealToEdit && this.scrollToMeal(this.mealToEdit);
+    this.updateSection(this.sections.menu);
+    this.mealToEdit = null;
+  }
+
   onMealAdded(newMeal) {
     this.categoriesMealsMap[newMeal.mealCat] = [
       ...this.categoriesMealsMap[newMeal.mealCat] || [],
       newMeal
     ];
+    this.scrollToMeal(newMeal);
   }
 
   onMealEdited(updatedMeal) {

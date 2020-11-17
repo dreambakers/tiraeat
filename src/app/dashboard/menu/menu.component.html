@@ -69,7 +69,7 @@
               cdkDrag
               [cdkDragDisabled]="!editMode"
               class="my-2">
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center" [id]="meal.id">
                 <i class="p-2 mr-2 fas fa-bars drag-handle ml-2 noselect" cdkDragHandle *ngIf="editMode"></i>
                 <div class="flex-fill d-flex align-items-center">
                   <div class="w-50 text-ellipsis">
@@ -153,7 +153,7 @@
     <app-add-meal
       [mealToEdit]="mealToEdit"
       [category]="addMealCategory"
-      (close)="updateSection(sections.menu); mealToEdit = null"
+      (close)="onManageMealClose()"
       (mealAdded)="onMealAdded($event)"
       (mealEdited)="onMealEdited($event)">
     </app-add-meal>
