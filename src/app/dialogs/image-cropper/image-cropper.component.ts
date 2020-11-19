@@ -45,6 +45,10 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
       res => {
         setTimeout(() => {
           this.cropper.center();
+          // for some reason, the cropper isn't perfectly centered the first time around :(
+          setTimeout(() => {
+            this.cropper.center();
+          },50);
         },100);
       }
     );
@@ -59,7 +63,6 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
   }
 
   onConfirm() {
-    this.cropper.center();
     this.cropper.crop();
   }
 
