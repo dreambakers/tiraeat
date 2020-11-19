@@ -59,6 +59,7 @@ export class ImageCropperComponent implements WithStyles, AfterViewInit {
   }
 
   onConfirm() {
+    this.cropper.center();
     this.cropper.crop();
   }
 
