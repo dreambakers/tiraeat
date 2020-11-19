@@ -72,8 +72,8 @@ export class AddPhotoComponent implements OnInit {
 
           const secondPictureConfig: ImgCropperConfig = {
            keepAspectRatio: true,
-            width: 150,
-            height: 150,
+            width: 250,
+            height: 250,
             output: {
               width: 150,
               height: 150
