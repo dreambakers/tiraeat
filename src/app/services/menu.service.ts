@@ -208,7 +208,8 @@ export class MenuService {
               const mealId = meal.isCommon ? `${restName}Common`: (`${restName}${index}`);
               meal['restName'] = restName;
               for(let key of Object.keys(meal)) {
-                if (key.startsWith('_')) {
+                // __collections__ is a reserved key that firebase uses so we can't explicitly insert it ourself
+                if (key == '__collections__') {
                   delete meal[key];
                 }
               }
