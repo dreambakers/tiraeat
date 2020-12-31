@@ -59,7 +59,7 @@ export class DetailsComponent implements OnInit {
     this.loading = true;
     this.detailsForm = this.formBuilder.group({
       nameUnique: [''],
-      restPhoneNumber: ['', [Validators.pattern("^[0-9]{9}$")]],
+      restPhoneNumber: [''],
       openHours: this.formBuilder.array(this.setDayControls()),
       latitude: [''],
       longitude: [''],
